@@ -294,5 +294,9 @@ ggplot(sim1, aes(x, y)) +
   theme_bw()
 ```
 
+Al comparar el valor de los parámetros obtenidos mediante el método de optimización con los coeficientes estimados por la función de modelo lineal, observamos que son los mismos.
 
+```{r}
+summary(lm(y~x, data=sim1))
+```
 
