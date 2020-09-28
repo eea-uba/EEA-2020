@@ -37,12 +37,14 @@ La función `map` toma como argumentos:
  
 map(VECTOR_O_LIST_INPUT, FUNCTION_A_APLICAR, OTROS_OPCIONALES)
 
-Veamos un ejemplo con un vector numerico
+Veamos un ejemplo con un vector numérico
 
 ```{r}
 # Aplicamos la función log10 sobre un vector
 map(.x = c(10,100,1000), .f=log10)
 ```
+
+### Map: tipos específicos
 
 Veamos que el resultado de map es una lista. Si sabemos cuál es el tipo de dato de nuestros resultados podemos usar variaciones de map que explicitan el tipo de dato y devuelven los resultados en un vector. Algunas de ellas son:
 
@@ -58,6 +60,37 @@ Volvamos a ver nuestro ejemplo usando `map_dbl`
 map_dbl(.x = c(10,100,1000), .f=log10)
 ```
 
+### Map: funciones
+
+Se pueden aplicar funciones de R base o de las librerías como así también funciones definidas por el usuario.  Muchas veces no es necesario definir una función de antemano, sino que podemos usar **funciones anónimas** o **funciones lambda**
+
+#### Funciones anónimas
+
+La función se define en una única linea
+
+```{r}
+# Calculamos una función cuadrática para el vector
+map_dbl(.x = c(1:10), .f = function(x) x^2+1)
+```
+
+A partir de un vector de strings queremos contar la cantidad de letras "A" en cada elemento. Para eso combinamos las funciones `str_to_upper` y `str_count`
+
+```{r}
+map_dbl(.x = c("papas FRITAS", "batatas HERVIDAS", "boniato AL HORNO"),
+        .f = function(x) str_count(string = str_to_upper(x), pattern = "A"))
+```
+
+#### Funciones lambda
+
+Son una forma aún más concisa de declarar funciones, aunque pueden ser más limitadas. Las variables se declaran como .x
+
+```{r}
+# Calculamos otra función cuadrática para el vector
+map_dbl(.x = c(1:10), .f =  ~.x^2 - .x)
+```
+
+### Map: Multiples argumentos
+ 
 
 Usamos __map2__ cuando tenemos que pasar dos input, que se aplican sobre una función:
 
@@ -71,53 +104,6 @@ Si tenemos más de dos...
 
 
 Por ejemplo. Si queremos utilizar la función prueba sobre los datos del dataframe ABC_123
-
-
-
-La salida de los `map()` es una __lista__, no un vector, por lo que si lo metemos dentro de un dataframe se vería así:
-
-```{r}
-ABC_123 %>% 
-  mutate(resultado= map2(.x = Letras,.y = Num,.f = funcion_prueba))
-
-```
-
-Al ponerlo dentro del dataframe desarma la lista y guarda cada elemento por separado.
-La magia de eso es que podemos __guardar cualquier cosa en el dataframe__ no sólo valores, sino también listas, funciones, dataframes, etc.
-
-Si queremos recuperar los valores originales en este caso podemos usar `unlist()`
-
-```{r}
-# Recuperamos los tres primeros elementos de la lista resultados
-resultado[1:3] %>% unlist()
-
-# Recuperamos el elemento de la lista para cada par letra-numero (cada fila)
-ABC_123 %>% 
-  mutate(resultado= unlist(map2(.x = Letras,.y = Num,.f = funcion_prueba)))
-```
-
-Si lo que queríamos era que la función nos haga todas las combinaciones de letras y número, entonces lo que necesitamos es pasarle el segúndo parametro como algo _fijo_, poniendolo después de la función. 
-
-Notemos que estamos utilizando `map()` que toma un único input, en lugar de `map2()`
-
-```{r}
-#Combinacion de todas las letras con todos los numeros
-map(.x = ABC_123$Letras,.f = funcion_prueba,ABC_123$Num)[1:2]
-```
-
-En este caso, el map itera sobre cada elemento de `letras`, y para cada elemento _i_ hace 
-`funcion_prueba(i,ABC$Num)` y guarda el resultado en la lista
-
-Si lo queremos meter en el dataframe:
-
-```{r}
-# Asignar resultado al dataframe
-ABC_123 %>% 
-  mutate(resultado= map(Letras,funcion_prueba,Num))
-```
-
-Ahora cada fila tiene una lista de 20 elementos guardado en la columna **resultado**
-
 
 
 ## Ejemplo: Iterando en la EPH
