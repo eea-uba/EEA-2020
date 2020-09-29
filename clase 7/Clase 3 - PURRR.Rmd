@@ -91,20 +91,115 @@ map_dbl(.x = c(1:10), .f =  ~.x^2 - .x)
 
 ### Map: Multiples argumentos
  
-
-Usamos __map2__ cuando tenemos que pasar dos input, que se aplican sobre una función:
+Usamos `map2` cuando queremos aplicar una función sobre dos listas o vectores:
 
 - map2(.x, .y, .f, ...)
 - map2(INPUT_UNO, INPUT_DOS, FUNCTION_A_APLICAR, OTROS_OPCIONALES)
 
-Si tenemos más de dos...
+Veamos un ejemplo para generar observaciones de distribuciones normales a partir de los vectores de mu y sigma (este es el ejemplo del libro *R for Data Science*)
+
+La funcion `rnorm` toma los parámetros n (cantidad de observaciones), mu y sigma
+
+```{r}
+# Vector de mu
+mu = c(0, 3, -5, 2.1)
+# Vector de sigma
+sigma = c(1, 0.5, 5, 0.01)
+
+# Generamos 10 observaciones a partir de nuestros vectores
+map2(.x = mu, .y = sigma, .f= rnorm, n = 10)
+```
+
+Ahora veamos con un ejemplo para crear una lista de compras
+
+```{r}
+# Vectores
+kilos = c(10, 1, 6, 8, 3)
+verduras =  c("papa", "batata", "zapallo", "boniato", "zanahoria")
+
+map2_chr(.x = verduras, .y =kilos, .f = function(x,y) str_c(str_to_title(x),y, sep=": "))
+```
+  
+Usamos `pmap` cuando queremos aplicar una función sobre una lista de argumentos:
 
 - pmap(.l, .f, ...)
-- pmap(VECTOR_O_LIST_INPUT, FUNCTION_A_APLICAR, OTROS_OPCIONALES)
+- pmap(VECTOR_O_LIST_DE_INPUTS, FUNCTION_A_APLICAR, OTROS_OPCIONALES)
+
+Volvamos al ejemplo para generar observaciones de distribuciones normales a partir de los vectores de mu y sigma, pero ahora incorporamos la cantidad de observaciones como un argumento adicional (este ejemplo también es del libro *R for Data Science*)
+
+```{r}
+# Vector de mu
+mu = c(0, 3, -5, 2.1)
+# Vector de sigma
+sigma = c(1, 0.5, 5, 0.01)
+# Vector de cantidad de observaciones 
+n = c(1:4)
+# Lista de argumentos
+argumentos <- list(n, mu, sigma)
+
+# Generamos las observaciones a partir de nuestra lista de parámetros
+pmap(.l = argumentos, .f = rnorm)
+```
+
+## PURRR: Dataframes y modelos
+
+### Dataframes
+
+Las funciones de PURRR se pueden utilizar para realizar operaciones sobre dataframes. La sintaxis que vamos a utilizar es:
+
+`map(dataframe, funcion)`
+
+De esta manera vamos a estar aplicando la función sobre todas las columnas del dataframe
+
+```{r}
+encuesta_sueldos_limpia = read_csv("~/Fuentes/encuesta_sueldos_it_limpia.csv")
+```
+
+Comencemos analizando la cantidad de valores distintos para cada columna. Para ello usamos la función `n_distinct`
+
+```{r}
+map(encuesta_sueldos_limpia, n_distinct) %>%
+  str() # Agregamos str para que la salida luzca mejor
+```
+
+Ahora calculamos el promedio sobre las columnas numéricas
+
+```{r}
+encuesta_sueldos_limpia %>% 
+  select_if(is.numeric) %>% 
+  map(mean) %>% 
+  str()
+```
+
+Calculamos la mediana sobre las columnas numéricas, sabiendo que el resultado de la función es un número podemos usar la función `map_dbl`
+
+```{r}
+encuesta_sueldos_limpia %>% 
+  select_if(is.numeric) %>% 
+  map_dbl(median)
+```
+
+### Modelos
 
 
-Por ejemplo. Si queremos utilizar la función prueba sobre los datos del dataframe ABC_123
 
+```{r}
+modelos_por_perfil = encuesta_sueldos_limpia %>% 
+                        split(.$perfil) %>% 
+                        map(~lm(salario_neto ~ edad, data = .))
+
+```
+
+El resultado de esto es una lista con los modelos
+
+
+```{r}
+modelos_por_perfil %>% map(broom::tidy)
+```
+
+```{r}
+modelos_por_perfil %>% map(summary) %>% map_dbl("r.squared")
+```
 
 ## Ejemplo: Iterando en la EPH
 
