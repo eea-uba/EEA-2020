@@ -1,7 +1,7 @@
 ---
-title: "PURRR"
+title: "Tidyverse: PURRR"
 author: "Juan Barriola y Sofía Perini"
-date: "19 de Septiembre de 2020"
+date: "17 de Octubre de 2020"
 output:
   html_notebook:
     theme: spacelab
@@ -19,111 +19,187 @@ library(ggthemes)
 library(fs)
 ```
 
-# PURRR^[basado en https://jennybc.github.io/purrr-tutorial/ls03_map-function-syntax.html]
+Basado en los [tutoriales de PURRR](https://jennybc.github.io/purrr-tutorial/index.html) de Jenny Bryan y el capítulo [Iteration](https://r4ds.had.co.nz/iteration.html) del libro R for Data Science de Garrett Grolemund y Hadley Wickham
 
-MAP es la forma _tidy_ de hacer loops. Además de ser más prolijo el código, es mucho más eficiente.
+# PURRR
 
-La función __map__ toma un input, una función para aplicar, y alguna otra cosa (por ejemplo parametros que necesite la función)
+[PURRR](https://purrr.tidyverse.org/) es una librería en R que contiene funciones y métodos de programación funcional dentro del entorno de tidyverse.
 
-- map(.x, .f, ...)
-- map(VECTOR_O_LIST_INPUT, FUNCTION_A_APLICAR, OTROS_OPCIONALES)
+## MAP
 
+MAP es una **función** para aplicar una función a cada elemento de una estructura de datos como una lista o vector. El funcionamiento de map consiste en recorrer ("loopear") la estructura aplicando la función a cada elemento y guardando los resultados. De esta manera podemos reemplazar los loops por una forma más legible y clara de código.
 
-Usamos __map2__ cuando tenemos que pasar dos input, que se aplican sobre una función:
+La función `map` toma como argumentos:
+ 
+ * .x: un vector o lista input
+ 
+ * .f: una función para aplicar
+ 
+map(VECTOR_O_LIST_INPUT, FUNCTION_A_APLICAR, OTROS_OPCIONALES)
+
+Veamos un ejemplo con un vector numérico
+
+```{r}
+# Aplicamos la función log10 sobre un vector
+map(.x = c(10,100,1000), .f=log10)
+```
+
+### Map: tipos específicos
+
+Veamos que el resultado de map es una lista. Si sabemos cuál es el tipo de dato de nuestros resultados podemos usar variaciones de map que explicitan el tipo de dato y devuelven los resultados en un vector. Algunas de ellas son:
+
+  * map_lgl() devuelve un vector de booleanos
+ 
+  * map_dbl() devuelve un vector de numéricos
+
+  * map_chr() devuelve un vector de strings 
+
+Volvamos a ver nuestro ejemplo usando `map_dbl`
+
+```{r}
+map_dbl(.x = c(10,100,1000), .f=log10)
+```
+
+### Map: funciones
+
+Se pueden aplicar funciones de R base o de las librerías como así también funciones definidas por el usuario.  Muchas veces no es necesario definir una función de antemano, sino que podemos usar **funciones anónimas** o **funciones lambda**
+
+#### Funciones anónimas
+
+La función se define en una única linea
+
+```{r}
+# Calculamos una función cuadrática para el vector
+map_dbl(.x = c(1:10), .f = function(x) x^2+1)
+```
+
+A partir de un vector de strings queremos contar la cantidad de letras "A" en cada elemento. Para eso combinamos las funciones `str_to_upper` y `str_count`
+
+```{r}
+map_dbl(.x = c("papas FRITAS", "batatas HERVIDAS", "boniato AL HORNO"),
+        .f = function(x) str_count(string = str_to_upper(x), pattern = "A"))
+```
+
+#### Funciones lambda
+
+Son una forma aún más concisa de declarar funciones, aunque pueden ser más limitadas. Las variables se declaran como .x
+
+```{r}
+# Calculamos otra función cuadrática para el vector
+map_dbl(.x = c(1:10), .f =  ~.x^2 - .x)
+```
+
+### Map: Multiples argumentos
+ 
+Usamos `map2` cuando queremos aplicar una función sobre dos listas o vectores:
 
 - map2(.x, .y, .f, ...)
 - map2(INPUT_UNO, INPUT_DOS, FUNCTION_A_APLICAR, OTROS_OPCIONALES)
 
-Si tenemos más de dos...
+Veamos un ejemplo para generar observaciones de distribuciones normales a partir de los vectores de mu y sigma (este es el ejemplo del libro *R for Data Science*)
+
+La funcion `rnorm` toma los parámetros n (cantidad de observaciones), mu y sigma
+
+```{r}
+# Vector de mu
+mu = c(0, 3, -5, 2.1)
+# Vector de sigma
+sigma = c(1, 0.5, 5, 0.01)
+
+# Generamos 10 observaciones a partir de nuestros vectores
+map2(.x = mu, .y = sigma, .f= rnorm, n = 10)
+```
+
+Ahora veamos con un ejemplo para crear una lista de compras
+
+```{r}
+# Vectores
+kilos = c(10, 1, 6, 8, 3)
+verduras =  c("papa", "batata", "zapallo", "boniato", "zanahoria")
+
+map2_chr(.x = verduras, .y =kilos, .f = function(x,y) str_c(str_to_title(x),y, sep=": "))
+```
+  
+Usamos `pmap` cuando queremos aplicar una función sobre una lista de argumentos:
 
 - pmap(.l, .f, ...)
-- pmap(VECTOR_O_LIST_INPUT, FUNCTION_A_APLICAR, OTROS_OPCIONALES)
+- pmap(VECTOR_O_LIST_DE_INPUTS, FUNCTION_A_APLICAR, OTROS_OPCIONALES)
 
+Volvamos al ejemplo para generar observaciones de distribuciones normales a partir de los vectores de mu y sigma, pero ahora incorporamos la cantidad de observaciones como un argumento adicional (este ejemplo también es del libro *R for Data Science*)
 
-Por ejemplo. Si queremos utilizar la función prueba sobre los datos del dataframe ABC_123
+```{r}
+# Vector de mu
+mu = c(0, 3, -5, 2.1)
+# Vector de sigma
+sigma = c(1, 0.5, 5, 0.01)
+# Vector de cantidad de observaciones 
+n = c(1:4)
+# Lista de argumentos
+argumentos <- list(n, mu, sigma)
+
+# Generamos las observaciones a partir de nuestra lista de parámetros
+pmap(.l = argumentos, .f = rnorm)
+```
+
+## PURRR: Dataframes y modelos
+
+### Dataframes
+
+Las funciones de PURRR se pueden utilizar para realizar operaciones sobre dataframes. La sintaxis que vamos a utilizar es:
+
+`map(dataframe, funcion)`
+
+De esta manera vamos a estar aplicando la función sobre todas las columnas del dataframe
+
+```{r}
+encuesta_sueldos_limpia = read_csv("~/Fuentes/encuesta_sueldos_it_limpia.csv")
+```
+
+Comencemos analizando la cantidad de valores distintos para cada columna. Para ello usamos la función `n_distinct`
+
+```{r}
+map(encuesta_sueldos_limpia, n_distinct) %>%
+  str() # Agregamos str para que la salida luzca mejor
+```
+
+Ahora calculamos el promedio sobre las columnas numéricas
+
+```{r}
+encuesta_sueldos_limpia %>% 
+  select_if(is.numeric) %>% 
+  map(mean) %>% 
+  str()
+```
+
+Calculamos la mediana sobre las columnas numéricas, sabiendo que el resultado de la función es un número podemos usar la función `map_dbl`
+
+```{r}
+encuesta_sueldos_limpia %>% 
+  select_if(is.numeric) %>% 
+  map_dbl(median)
+```
+
+### Modelos
+
 
 
 ```{r}
-ABC_123 <- data.frame(Letras = LETTERS[1:20],Num = 1:20)
-funcion_prueba
+modelos_por_perfil = encuesta_sueldos_limpia %>% 
+                        split(.$perfil) %>% 
+                        map(~lm(salario_neto ~ edad, data = .))
+
 ```
 
-Si el resultado que queremos es que junte cada fila, necesitamos pasarle dos parámetros: utilizamos `map2()`, Noten que la función se le pasa a `map()` sin paréntesis ni argumentos.
+El resultado de esto es una lista con los modelos
 
 
 ```{r}
-resultado <- map2(.x = ABC_123$Letras, .y = ABC_123$Num,.f = funcion_prueba)
-resultado[1:3]
-
+modelos_por_perfil %>% map(broom::tidy)
 ```
-
-La salida de los `map()` es una __lista__, no un vector, por lo que si lo metemos dentro de un dataframe se vería así:
 
 ```{r}
-ABC_123 %>% 
-  mutate(resultado= map2(.x = Letras,.y = Num,.f = funcion_prueba))
-
+modelos_por_perfil %>% map(summary) %>% map_dbl("r.squared")
 ```
-
-Al ponerlo dentro del dataframe desarma la lista y guarda cada elemento por separado.
-La magia de eso es que podemos __guardar cualquier cosa en el dataframe__ no sólo valores, sino también listas, funciones, dataframes, etc.
-
-Si queremos recuperar los valores originales en este caso podemos usar `unlist()`
-
-```{r}
-# Recuperamos los tres primeros elementos de la lista resultados
-resultado[1:3] %>% unlist()
-
-# Recuperamos el elemento de la lista para cada par letra-numero (cada fila)
-ABC_123 %>% 
-  mutate(resultado= unlist(map2(.x = Letras,.y = Num,.f = funcion_prueba)))
-```
-
-Si lo que queríamos era que la función nos haga todas las combinaciones de letras y número, entonces lo que necesitamos es pasarle el segúndo parametro como algo _fijo_, poniendolo después de la función. 
-
-Notemos que estamos utilizando `map()` que toma un único input, en lugar de `map2()`
-
-```{r}
-#Combinacion de todas las letras con todos los numeros
-map(.x = ABC_123$Letras,.f = funcion_prueba,ABC_123$Num)[1:2]
-```
-
-En este caso, el map itera sobre cada elemento de `letras`, y para cada elemento _i_ hace 
-`funcion_prueba(i,ABC$Num)` y guarda el resultado en la lista
-
-Si lo queremos meter en el dataframe:
-
-```{r}
-# Asignar resultado al dataframe
-ABC_123 %>% 
-  mutate(resultado= map(Letras,funcion_prueba,Num))
-```
-
-Ahora cada fila tiene una lista de 20 elementos guardado en la columna **resultado**
-
-##  Funciones implícitas/anonimas
-
-No es necesario que definamos la función de antemano. Podemos usar _funciones implícitas_
-
-```{r}
-# Calculamos el cuadrado de cada elemento
-map_dbl(.x = c(1:10), .f = function(x) x^2) 
-# Calculamos el producto para los elementos x e y
-map2_dbl(.x = c(1:10),.y = c(11:20),.f =  function(x,y) x*y)
-```
-
-## Funciones lambda
-
-Incluso más conciso que las funciones implíictas son las __funciones lambda__ donde definimos las variables como _.x_ _.y_, etc. La flexibilidad de estas expresiones es limitada, pero puede ser útil en algunos casos. 
-
-```{r}
-# Calculamos el cuadrado de cada elemento
-map_dbl(.x = c(1:10),.f = ~.x^2)
-# Calculamos el producto para los elementos x e y
-map2_dbl(.x = c(1:10),.y = c(11:20),.f = ~.x*.y)
-```
-
-Todas las funciones devuelven un vector de la misma longitud que .x. Dependiendo la función que especifiquemos nos devolverá un vector diferente, por ejemplo: map() devuelve una lista, map_lgl() un vector lógico, map_int() un vector entero, map_dbl() un vector doble y map_chr() un vector de caracteres.
 
 ## Ejemplo: Iterando en la EPH
 

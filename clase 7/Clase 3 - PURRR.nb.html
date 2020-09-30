@@ -12,7 +12,7 @@
 <meta name="author" content="Juan Barriola y Sofía Perini" />
 
 
-<title>PURRR</title>
+<title>Tidyverse: PURRR</title>
 
 <script>/*! jQuery v1.11.3 | (c) 2005, 2015 jQuery Foundation, Inc. | jquery.org/license */
 !function(a,b){"object"==typeof module&&"object"==typeof module.exports?module.exports=a.document?b(a,!0):function(a){if(!a.document)throw new Error("jQuery requires a window with a document");return b(a)}:b(a)}("undefined"!=typeof window?window:this,function(a,b){var c=[],d=c.slice,e=c.concat,f=c.push,g=c.indexOf,h={},i=h.toString,j=h.hasOwnProperty,k={},l="1.11.3",m=function(a,b){return new m.fn.init(a,b)},n=/^[\s\uFEFF\xA0]+|[\s\uFEFF\xA0]+$/g,o=/^-ms-/,p=/-([\da-z])/gi,q=function(a,b){return b.toUpperCase()};m.fn=m.prototype={jquery:l,constructor:m,selector:"",length:0,toArray:function(){return d.call(this)},get:function(a){return null!=a?0>a?this[a+this.length]:this[a]:d.call(this)},pushStack:function(a){var b=m.merge(this.constructor(),a);return b.prevObject=this,b.context=this.context,b},each:function(a,b){return m.each(this,a,b)},map:function(a){return this.pushStack(m.map(this,function(b,c){return a.call(b,c,b)}))},slice:function(){return this.pushStack(d.apply(this,arguments))},first:function(){return this.eq(0)},last:function(){return this.eq(-1)},eq:function(a){var b=this.length,c=+a+(0>a?b:0);return this.pushStack(c>=0&&b>c?[this[c]]:[])},end:function(){return this.prevObject||this.constructor(null)},push:f,sort:c.sort,splice:c.splice},m.extend=m.fn.extend=function(){var a,b,c,d,e,f,g=arguments[0]||{},h=1,i=arguments.length,j=!1;for("boolean"==typeof g&&(j=g,g=arguments[h]||{},h++),"object"==typeof g||m.isFunction(g)||(g={}),h===i&&(g=this,h--);i>h;h++)if(null!=(e=arguments[h]))for(d in e)a=g[d],c=e[d],g!==c&&(j&&c&&(m.isPlainObject(c)||(b=m.isArray(c)))?(b?(b=!1,f=a&&m.isArray(a)?a:[]):f=a&&m.isPlainObject(a)?a:{},g[d]=m.extend(j,f,c)):void 0!==c&&(g[d]=c));return g},m.extend({expando:"jQuery"+(l+Math.random()).replace(/\D/g,""),isReady:!0,error:function(a){throw new Error(a)},noop:function(){},isFunction:function(a){return"function"===m.type(a)},isArray:Array.isArray||function(a){return"array"===m.type(a)},isWindow:function(a){return null!=a&&a==a.window},isNumeric:function(a){return!m.isArray(a)&&a-parseFloat(a)+1>=0},isEmptyObject:function(a){var b;for(b in a)return!1;return!0},isPlainObject:function(a){var b;if(!a||"object"!==m.type(a)||a.nodeType||m.isWindow(a))return!1;try{if(a.constructor&&!j.call(a,"constructor")&&!j.call(a.constructor.prototype,"isPrototypeOf"))return!1}catch(c){return!1}if(k.ownLast)for(b in a)return j.call(a,b);for(b in a);return void 0===b||j.call(a,b)},type:function(a){return null==a?a+"":"object"==typeof a||"function"==typeof a?h[i.call(a)]||"object":typeof a},globalEval:function(b){b&&m.trim(b)&&(a.execScript||function(b){a.eval.call(a,b)})(b)},camelCase:function(a){return a.replace(o,"ms-").replace(p,q)},nodeName:function(a,b){return a.nodeName&&a.nodeName.toLowerCase()===b.toLowerCase()},each:function(a,b,c){var d,e=0,f=a.length,g=r(a);if(c){if(g){for(;f>e;e++)if(d=b.apply(a[e],c),d===!1)break}else for(e in a)if(d=b.apply(a[e],c),d===!1)break}else if(g){for(;f>e;e++)if(d=b.call(a[e],e,a[e]),d===!1)break}else for(e in a)if(d=b.call(a[e],e,a[e]),d===!1)break;return a},trim:function(a){return null==a?"":(a+"").replace(n,"")},makeArray:function(a,b){var c=b||[];return null!=a&&(r(Object(a))?m.merge(c,"string"==typeof a?[a]:a):f.call(c,a)),c},inArray:function(a,b,c){var d;if(b){if(g)return g.call(b,a,c);for(d=b.length,c=c?0>c?Math.max(0,d+c):c:0;d>c;c++)if(c in b&&b[c]===a)return c}return-1},merge:function(a,b){var c=+b.length,d=0,e=a.length;while(c>d)a[e++]=b[d++];if(c!==c)while(void 0!==b[d])a[e++]=b[d++];return a.length=e,a},grep:function(a,b,c){for(var d,e=[],f=0,g=a.length,h=!c;g>f;f++)d=!b(a[f],f),d!==h&&e.push(a[f]);return e},map:function(a,b,c){var d,f=0,g=a.length,h=r(a),i=[];if(h)for(;g>f;f++)d=b(a[f],f,c),null!=d&&i.push(d);else for(f in a)d=b(a[f],f,c),null!=d&&i.push(d);return e.apply([],i)},guid:1,proxy:function(a,b){var c,e,f;return"string"==typeof b&&(f=a[b],b=a,a=f),m.isFunction(a)?(c=d.call(arguments,2),e=function(){return a.apply(b||this,c.concat(d.call(arguments)))},e.guid=a.guid=a.guid||m.guid++,e):void 0},now:function(){return+new Date},support:k}),m.each("Boolean Number String Function Array Date RegExp Object Error".split(" "),function(a,b){h["[object "+b+"]"]=b.toLowerCase()});function r(a){var b="length"in a&&a.length,c=m.type(a);return"function"===c||m.isWindow(a)?!1:1===a.nodeType&&b?!0:"array"===c||0===b||"number"==typeof b&&b>0&&b-1 in a}var s=function(a){var b,c,d,e,f,g,h,i,j,k,l,m,n,o,p,q,r,s,t,u="sizzle"+1*new Date,v=a.document,w=0,x=0,y=ha(),z=ha(),A=ha(),B=function(a,b){return a===b&&(l=!0),0},C=1<<31,D={}.hasOwnProperty,E=[],F=E.pop,G=E.push,H=E.push,I=E.slice,J=function(a,b){for(var c=0,d=a.length;d>c;c++)if(a[c]===b)return c;return-1},K="checked|selected|async|autofocus|autoplay|controls|defer|disabled|hidden|ismap|loop|multiple|open|readonly|required|scoped",L="[\\x20\\t\\r\\n\\f]",M="(?:\\\\.|[\\w-]|[^\\x00-\\xa0])+",N=M.replace("w","w#"),O="\\["+L+"*("+M+")(?:"+L+"*([*^$|!~]?=)"+L+"*(?:'((?:\\\\.|[^\\\\'])*)'|\"((?:\\\\.|[^\\\\\"])*)\"|("+N+"))|)"+L+"*\\]",P=":("+M+")(?:\\((('((?:\\\\.|[^\\\\'])*)'|\"((?:\\\\.|[^\\\\\"])*)\")|((?:\\\\.|[^\\\\()[\\]]|"+O+")*)|.*)\\)|)",Q=new RegExp(L+"+","g"),R=new RegExp("^"+L+"+|((?:^|[^\\\\])(?:\\\\.)*)"+L+"+$","g"),S=new RegExp("^"+L+"*,"+L+"*"),T=new RegExp("^"+L+"*([>+~]|"+L+")"+L+"*"),U=new RegExp("="+L+"*([^\\]'\"]*?)"+L+"*\\]","g"),V=new RegExp(P),W=new RegExp("^"+N+"$"),X={ID:new RegExp("^#("+M+")"),CLASS:new RegExp("^\\.("+M+")"),TAG:new RegExp("^("+M.replace("w","w*")+")"),ATTR:new RegExp("^"+O),PSEUDO:new RegExp("^"+P),CHILD:new RegExp("^:(only|first|last|nth|nth-last)-(child|of-type)(?:\\("+L+"*(even|odd|(([+-]|)(\\d*)n|)"+L+"*(?:([+-]|)"+L+"*(\\d+)|))"+L+"*\\)|)","i"),bool:new RegExp("^(?:"+K+")$","i"),needsContext:new RegExp("^"+L+"*[>+~]|:(even|odd|eq|gt|lt|nth|first|last)(?:\\("+L+"*((?:-\\d)?\\d*)"+L+"*\\)|)(?=[^-]|$)","i")},Y=/^(?:input|select|textarea|button)$/i,Z=/^h\d$/i,$=/^[^{]+\{\s*\[native \w/,_=/^(?:#([\w-]+)|(\w+)|\.([\w-]+))$/,aa=/[+~]/,ba=/'|\\/g,ca=new RegExp("\\\\([\\da-f]{1,6}"+L+"?|("+L+")|.)","ig"),da=function(a,b,c){var d="0x"+b-65536;return d!==d||c?b:0>d?String.fromCharCode(d+65536):String.fromCharCode(d>>10|55296,1023&d|56320)},ea=function(){m()};try{H.apply(E=I.call(v.childNodes),v.childNodes),E[v.childNodes.length].nodeType}catch(fa){H={apply:E.length?function(a,b){G.apply(a,I.call(b))}:function(a,b){var c=a.length,d=0;while(a[c++]=b[d++]);a.length=c-1}}}function ga(a,b,d,e){var f,h,j,k,l,o,r,s,w,x;if((b?b.ownerDocument||b:v)!==n&&m(b),b=b||n,d=d||[],k=b.nodeType,"string"!=typeof a||!a||1!==k&&9!==k&&11!==k)return d;if(!e&&p){if(11!==k&&(f=_.exec(a)))if(j=f[1]){if(9===k){if(h=b.getElementById(j),!h||!h.parentNode)return d;if(h.id===j)return d.push(h),d}else if(b.ownerDocument&&(h=b.ownerDocument.getElementById(j))&&t(b,h)&&h.id===j)return d.push(h),d}else{if(f[2])return H.apply(d,b.getElementsByTagName(a)),d;if((j=f[3])&&c.getElementsByClassName)return H.apply(d,b.getElementsByClassName(j)),d}if(c.qsa&&(!q||!q.test(a))){if(s=r=u,w=b,x=1!==k&&a,1===k&&"object"!==b.nodeName.toLowerCase()){o=g(a),(r=b.getAttribute("id"))?s=r.replace(ba,"\\$&"):b.setAttribute("id",s),s="[id='"+s+"'] ",l=o.length;while(l--)o[l]=s+ra(o[l]);w=aa.test(a)&&pa(b.parentNode)||b,x=o.join(",")}if(x)try{return H.apply(d,w.querySelectorAll(x)),d}catch(y){}finally{r||b.removeAttribute("id")}}}return i(a.replace(R,"$1"),b,d,e)}function ha(){var a=[];function b(c,e){return a.push(c+" ")>d.cacheLength&&delete b[a.shift()],b[c+" "]=e}return b}function ia(a){return a[u]=!0,a}function ja(a){var b=n.createElement("div");try{return!!a(b)}catch(c){return!1}finally{b.parentNode&&b.parentNode.removeChild(b),b=null}}function ka(a,b){var c=a.split("|"),e=a.length;while(e--)d.attrHandle[c[e]]=b}function la(a,b){var c=b&&a,d=c&&1===a.nodeType&&1===b.nodeType&&(~b.sourceIndex||C)-(~a.sourceIndex||C);if(d)return d;if(c)while(c=c.nextSibling)if(c===b)return-1;return a?1:-1}function ma(a){return function(b){var c=b.nodeName.toLowerCase();return"input"===c&&b.type===a}}function na(a){return function(b){var c=b.nodeName.toLowerCase();return("input"===c||"button"===c)&&b.type===a}}function oa(a){return ia(function(b){return b=+b,ia(function(c,d){var e,f=a([],c.length,b),g=f.length;while(g--)c[e=f[g]]&&(c[e]=!(d[e]=c[e]))})})}function pa(a){return a&&"undefined"!=typeof a.getElementsByTagName&&a}c=ga.support={},f=ga.isXML=function(a){var b=a&&(a.ownerDocument||a).documentElement;return b?"HTML"!==b.nodeName:!1},m=ga.setDocument=function(a){var b,e,g=a?a.ownerDocument||a:v;return g!==n&&9===g.nodeType&&g.documentElement?(n=g,o=g.documentElement,e=g.defaultView,e&&e!==e.top&&(e.addEventListener?e.addEventListener("unload",ea,!1):e.attachEvent&&e.attachEvent("onunload",ea)),p=!f(g),c.attributes=ja(function(a){return a.className="i",!a.getAttribute("className")}),c.getElementsByTagName=ja(function(a){return a.appendChild(g.createComment("")),!a.getElementsByTagName("*").length}),c.getElementsByClassName=$.test(g.getElementsByClassName),c.getById=ja(function(a){return o.appendChild(a).id=u,!g.getElementsByName||!g.getElementsByName(u).length}),c.getById?(d.find.ID=function(a,b){if("undefined"!=typeof b.getElementById&&p){var c=b.getElementById(a);return c&&c.parentNode?[c]:[]}},d.filter.ID=function(a){var b=a.replace(ca,da);return function(a){return a.getAttribute("id")===b}}):(delete d.find.ID,d.filter.ID=function(a){var b=a.replace(ca,da);return function(a){var c="undefined"!=typeof a.getAttributeNode&&a.getAttributeNode("id");return c&&c.value===b}}),d.find.TAG=c.getElementsByTagName?function(a,b){return"undefined"!=typeof b.getElementsByTagName?b.getElementsByTagName(a):c.qsa?b.querySelectorAll(a):void 0}:function(a,b){var c,d=[],e=0,f=b.getElementsByTagName(a);if("*"===a){while(c=f[e++])1===c.nodeType&&d.push(c);return d}return f},d.find.CLASS=c.getElementsByClassName&&function(a,b){return p?b.getElementsByClassName(a):void 0},r=[],q=[],(c.qsa=$.test(g.querySelectorAll))&&(ja(function(a){o.appendChild(a).innerHTML="<a id='"+u+"'></a><select id='"+u+"-\f]' msallowcapture=''><option selected=''></option></select>",a.querySelectorAll("[msallowcapture^='']").length&&q.push("[*^$]="+L+"*(?:''|\"\")"),a.querySelectorAll("[selected]").length||q.push("\\["+L+"*(?:value|"+K+")"),a.querySelectorAll("[id~="+u+"-]").length||q.push("~="),a.querySelectorAll(":checked").length||q.push(":checked"),a.querySelectorAll("a#"+u+"+*").length||q.push(".#.+[+~]")}),ja(function(a){var b=g.createElement("input");b.setAttribute("type","hidden"),a.appendChild(b).setAttribute("name","D"),a.querySelectorAll("[name=d]").length&&q.push("name"+L+"*[*^$|!~]?="),a.querySelectorAll(":enabled").length||q.push(":enabled",":disabled"),a.querySelectorAll("*,:x"),q.push(",.*:")})),(c.matchesSelector=$.test(s=o.matches||o.webkitMatchesSelector||o.mozMatchesSelector||o.oMatchesSelector||o.msMatchesSelector))&&ja(function(a){c.disconnectedMatch=s.call(a,"div"),s.call(a,"[s!='']:x"),r.push("!=",P)}),q=q.length&&new RegExp(q.join("|")),r=r.length&&new RegExp(r.join("|")),b=$.test(o.compareDocumentPosition),t=b||$.test(o.contains)?function(a,b){var c=9===a.nodeType?a.documentElement:a,d=b&&b.parentNode;return a===d||!(!d||1!==d.nodeType||!(c.contains?c.contains(d):a.compareDocumentPosition&&16&a.compareDocumentPosition(d)))}:function(a,b){if(b)while(b=b.parentNode)if(b===a)return!0;return!1},B=b?function(a,b){if(a===b)return l=!0,0;var d=!a.compareDocumentPosition-!b.compareDocumentPosition;return d?d:(d=(a.ownerDocument||a)===(b.ownerDocument||b)?a.compareDocumentPosition(b):1,1&d||!c.sortDetached&&b.compareDocumentPosition(a)===d?a===g||a.ownerDocument===v&&t(v,a)?-1:b===g||b.ownerDocument===v&&t(v,b)?1:k?J(k,a)-J(k,b):0:4&d?-1:1)}:function(a,b){if(a===b)return l=!0,0;var c,d=0,e=a.parentNode,f=b.parentNode,h=[a],i=[b];if(!e||!f)return a===g?-1:b===g?1:e?-1:f?1:k?J(k,a)-J(k,b):0;if(e===f)return la(a,b);c=a;while(c=c.parentNode)h.unshift(c);c=b;while(c=c.parentNode)i.unshift(c);while(h[d]===i[d])d++;return d?la(h[d],i[d]):h[d]===v?-1:i[d]===v?1:0},g):n},ga.matches=function(a,b){return ga(a,null,null,b)},ga.matchesSelector=function(a,b){if((a.ownerDocument||a)!==n&&m(a),b=b.replace(U,"='$1']"),!(!c.matchesSelector||!p||r&&r.test(b)||q&&q.test(b)))try{var d=s.call(a,b);if(d||c.disconnectedMatch||a.document&&11!==a.document.nodeType)return d}catch(e){}return ga(b,n,null,[a]).length>0},ga.contains=function(a,b){return(a.ownerDocument||a)!==n&&m(a),t(a,b)},ga.attr=function(a,b){(a.ownerDocument||a)!==n&&m(a);var e=d.attrHandle[b.toLowerCase()],f=e&&D.call(d.attrHandle,b.toLowerCase())?e(a,b,!p):void 0;return void 0!==f?f:c.attributes||!p?a.getAttribute(b):(f=a.getAttributeNode(b))&&f.specified?f.value:null},ga.error=function(a){throw new Error("Syntax error, unrecognized expression: "+a)},ga.uniqueSort=function(a){var b,d=[],e=0,f=0;if(l=!c.detectDuplicates,k=!c.sortStable&&a.slice(0),a.sort(B),l){while(b=a[f++])b===a[f]&&(e=d.push(f));while(e--)a.splice(d[e],1)}return k=null,a},e=ga.getText=function(a){var b,c="",d=0,f=a.nodeType;if(f){if(1===f||9===f||11===f){if("string"==typeof a.textContent)return a.textContent;for(a=a.firstChild;a;a=a.nextSibling)c+=e(a)}else if(3===f||4===f)return a.nodeValue}else while(b=a[d++])c+=e(b);return c},d=ga.selectors={cacheLength:50,createPseudo:ia,match:X,attrHandle:{},find:{},relative:{">":{dir:"parentNode",first:!0}," ":{dir:"parentNode"},"+":{dir:"previousSibling",first:!0},"~":{dir:"previousSibling"}},preFilter:{ATTR:function(a){return a[1]=a[1].replace(ca,da),a[3]=(a[3]||a[4]||a[5]||"").replace(ca,da),"~="===a[2]&&(a[3]=" "+a[3]+" "),a.slice(0,4)},CHILD:function(a){return a[1]=a[1].toLowerCase(),"nth"===a[1].slice(0,3)?(a[3]||ga.error(a[0]),a[4]=+(a[4]?a[5]+(a[6]||1):2*("even"===a[3]||"odd"===a[3])),a[5]=+(a[7]+a[8]||"odd"===a[3])):a[3]&&ga.error(a[0]),a},PSEUDO:function(a){var b,c=!a[6]&&a[2];return X.CHILD.test(a[0])?null:(a[3]?a[2]=a[4]||a[5]||"":c&&V.test(c)&&(b=g(c,!0))&&(b=c.indexOf(")",c.length-b)-c.length)&&(a[0]=a[0].slice(0,b),a[2]=c.slice(0,b)),a.slice(0,3))}},filter:{TAG:function(a){var b=a.replace(ca,da).toLowerCase();return"*"===a?function(){return!0}:function(a){return a.nodeName&&a.nodeName.toLowerCase()===b}},CLASS:function(a){var b=y[a+" "];return b||(b=new RegExp("(^|"+L+")"+a+"("+L+"|$)"))&&y(a,function(a){return b.test("string"==typeof a.className&&a.className||"undefined"!=typeof a.getAttribute&&a.getAttribute("class")||"")})},ATTR:function(a,b,c){return function(d){var e=ga.attr(d,a);return null==e?"!="===b:b?(e+="","="===b?e===c:"!="===b?e!==c:"^="===b?c&&0===e.indexOf(c):"*="===b?c&&e.indexOf(c)>-1:"$="===b?c&&e.slice(-c.length)===c:"~="===b?(" "+e.replace(Q," ")+" ").indexOf(c)>-1:"|="===b?e===c||e.slice(0,c.length+1)===c+"-":!1):!0}},CHILD:function(a,b,c,d,e){var f="nth"!==a.slice(0,3),g="last"!==a.slice(-4),h="of-type"===b;return 1===d&&0===e?function(a){return!!a.parentNode}:function(b,c,i){var j,k,l,m,n,o,p=f!==g?"nextSibling":"previousSibling",q=b.parentNode,r=h&&b.nodeName.toLowerCase(),s=!i&&!h;if(q){if(f){while(p){l=b;while(l=l[p])if(h?l.nodeName.toLowerCase()===r:1===l.nodeType)return!1;o=p="only"===a&&!o&&"nextSibling"}return!0}if(o=[g?q.firstChild:q.lastChild],g&&s){k=q[u]||(q[u]={}),j=k[a]||[],n=j[0]===w&&j[1],m=j[0]===w&&j[2],l=n&&q.childNodes[n];while(l=++n&&l&&l[p]||(m=n=0)||o.pop())if(1===l.nodeType&&++m&&l===b){k[a]=[w,n,m];break}}else if(s&&(j=(b[u]||(b[u]={}))[a])&&j[0]===w)m=j[1];else while(l=++n&&l&&l[p]||(m=n=0)||o.pop())if((h?l.nodeName.toLowerCase()===r:1===l.nodeType)&&++m&&(s&&((l[u]||(l[u]={}))[a]=[w,m]),l===b))break;return m-=e,m===d||m%d===0&&m/d>=0}}},PSEUDO:function(a,b){var c,e=d.pseudos[a]||d.setFilters[a.toLowerCase()]||ga.error("unsupported pseudo: "+a);return e[u]?e(b):e.length>1?(c=[a,a,"",b],d.setFilters.hasOwnProperty(a.toLowerCase())?ia(function(a,c){var d,f=e(a,b),g=f.length;while(g--)d=J(a,f[g]),a[d]=!(c[d]=f[g])}):function(a){return e(a,0,c)}):e}},pseudos:{not:ia(function(a){var b=[],c=[],d=h(a.replace(R,"$1"));return d[u]?ia(function(a,b,c,e){var f,g=d(a,null,e,[]),h=a.length;while(h--)(f=g[h])&&(a[h]=!(b[h]=f))}):function(a,e,f){return b[0]=a,d(b,null,f,c),b[0]=null,!c.pop()}}),has:ia(function(a){return function(b){return ga(a,b).length>0}}),contains:ia(function(a){return a=a.replace(ca,da),function(b){return(b.textContent||b.innerText||e(b)).indexOf(a)>-1}}),lang:ia(function(a){return W.test(a||"")||ga.error("unsupported lang: "+a),a=a.replace(ca,da).toLowerCase(),function(b){var c;do if(c=p?b.lang:b.getAttribute("xml:lang")||b.getAttribute("lang"))return c=c.toLowerCase(),c===a||0===c.indexOf(a+"-");while((b=b.parentNode)&&1===b.nodeType);return!1}}),target:function(b){var c=a.location&&a.location.hash;return c&&c.slice(1)===b.id},root:function(a){return a===o},focus:function(a){return a===n.activeElement&&(!n.hasFocus||n.hasFocus())&&!!(a.type||a.href||~a.tabIndex)},enabled:function(a){return a.disabled===!1},disabled:function(a){return a.disabled===!0},checked:function(a){var b=a.nodeName.toLowerCase();return"input"===b&&!!a.checked||"option"===b&&!!a.selected},selected:function(a){return a.parentNode&&a.parentNode.selectedIndex,a.selected===!0},empty:function(a){for(a=a.firstChild;a;a=a.nextSibling)if(a.nodeType<6)return!1;return!0},parent:function(a){return!d.pseudos.empty(a)},header:function(a){return Z.test(a.nodeName)},input:function(a){return Y.test(a.nodeName)},button:function(a){var b=a.nodeName.toLowerCase();return"input"===b&&"button"===a.type||"button"===b},text:function(a){var b;return"input"===a.nodeName.toLowerCase()&&"text"===a.type&&(null==(b=a.getAttribute("type"))||"text"===b.toLowerCase())},first:oa(function(){return[0]}),last:oa(function(a,b){return[b-1]}),eq:oa(function(a,b,c){return[0>c?c+b:c]}),even:oa(function(a,b){for(var c=0;b>c;c+=2)a.push(c);return a}),odd:oa(function(a,b){for(var c=1;b>c;c+=2)a.push(c);return a}),lt:oa(function(a,b,c){for(var d=0>c?c+b:c;--d>=0;)a.push(d);return a}),gt:oa(function(a,b,c){for(var d=0>c?c+b:c;++d<b;)a.push(d);return a})}},d.pseudos.nth=d.pseudos.eq;for(b in{radio:!0,checkbox:!0,file:!0,password:!0,image:!0})d.pseudos[b]=ma(b);for(b in{submit:!0,reset:!0})d.pseudos[b]=na(b);function qa(){}qa.prototype=d.filters=d.pseudos,d.setFilters=new qa,g=ga.tokenize=function(a,b){var c,e,f,g,h,i,j,k=z[a+" "];if(k)return b?0:k.slice(0);h=a,i=[],j=d.preFilter;while(h){(!c||(e=S.exec(h)))&&(e&&(h=h.slice(e[0].length)||h),i.push(f=[])),c=!1,(e=T.exec(h))&&(c=e.shift(),f.push({value:c,type:e[0].replace(R," ")}),h=h.slice(c.length));for(g in d.filter)!(e=X[g].exec(h))||j[g]&&!(e=j[g](e))||(c=e.shift(),f.push({value:c,type:g,matches:e}),h=h.slice(c.length));if(!c)break}return b?h.length:h?ga.error(a):z(a,i).slice(0)};function ra(a){for(var b=0,c=a.length,d="";c>b;b++)d+=a[b].value;return d}function sa(a,b,c){var d=b.dir,e=c&&"parentNode"===d,f=x++;return b.first?function(b,c,f){while(b=b[d])if(1===b.nodeType||e)return a(b,c,f)}:function(b,c,g){var h,i,j=[w,f];if(g){while(b=b[d])if((1===b.nodeType||e)&&a(b,c,g))return!0}else while(b=b[d])if(1===b.nodeType||e){if(i=b[u]||(b[u]={}),(h=i[d])&&h[0]===w&&h[1]===f)return j[2]=h[2];if(i[d]=j,j[2]=a(b,c,g))return!0}}}function ta(a){return a.length>1?function(b,c,d){var e=a.length;while(e--)if(!a[e](b,c,d))return!1;return!0}:a[0]}function ua(a,b,c){for(var d=0,e=b.length;e>d;d++)ga(a,b[d],c);return c}function va(a,b,c,d,e){for(var f,g=[],h=0,i=a.length,j=null!=b;i>h;h++)(f=a[h])&&(!c||c(f,d,e))&&(g.push(f),j&&b.push(h));return g}function wa(a,b,c,d,e,f){return d&&!d[u]&&(d=wa(d)),e&&!e[u]&&(e=wa(e,f)),ia(function(f,g,h,i){var j,k,l,m=[],n=[],o=g.length,p=f||ua(b||"*",h.nodeType?[h]:h,[]),q=!a||!f&&b?p:va(p,m,a,h,i),r=c?e||(f?a:o||d)?[]:g:q;if(c&&c(q,r,h,i),d){j=va(r,n),d(j,[],h,i),k=j.length;while(k--)(l=j[k])&&(r[n[k]]=!(q[n[k]]=l))}if(f){if(e||a){if(e){j=[],k=r.length;while(k--)(l=r[k])&&j.push(q[k]=l);e(null,r=[],j,i)}k=r.length;while(k--)(l=r[k])&&(j=e?J(f,l):m[k])>-1&&(f[j]=!(g[j]=l))}}else r=va(r===g?r.splice(o,r.length):r),e?e(null,g,r,i):H.apply(g,r)})}function xa(a){for(var b,c,e,f=a.length,g=d.relative[a[0].type],h=g||d.relative[" "],i=g?1:0,k=sa(function(a){return a===b},h,!0),l=sa(function(a){return J(b,a)>-1},h,!0),m=[function(a,c,d){var e=!g&&(d||c!==j)||((b=c).nodeType?k(a,c,d):l(a,c,d));return b=null,e}];f>i;i++)if(c=d.relative[a[i].type])m=[sa(ta(m),c)];else{if(c=d.filter[a[i].type].apply(null,a[i].matches),c[u]){for(e=++i;f>e;e++)if(d.relative[a[e].type])break;return wa(i>1&&ta(m),i>1&&ra(a.slice(0,i-1).concat({value:" "===a[i-2].type?"*":""})).replace(R,"$1"),c,e>i&&xa(a.slice(i,e)),f>e&&xa(a=a.slice(e)),f>e&&ra(a))}m.push(c)}return ta(m)}function ya(a,b){var c=b.length>0,e=a.length>0,f=function(f,g,h,i,k){var l,m,o,p=0,q="0",r=f&&[],s=[],t=j,u=f||e&&d.find.TAG("*",k),v=w+=null==t?1:Math.random()||.1,x=u.length;for(k&&(j=g!==n&&g);q!==x&&null!=(l=u[q]);q++){if(e&&l){m=0;while(o=a[m++])if(o(l,g,h)){i.push(l);break}k&&(w=v)}c&&((l=!o&&l)&&p--,f&&r.push(l))}if(p+=q,c&&q!==p){m=0;while(o=b[m++])o(r,s,g,h);if(f){if(p>0)while(q--)r[q]||s[q]||(s[q]=F.call(i));s=va(s)}H.apply(i,s),k&&!f&&s.length>0&&p+b.length>1&&ga.uniqueSort(i)}return k&&(w=v,j=t),r};return c?ia(f):f}return h=ga.compile=function(a,b){var c,d=[],e=[],f=A[a+" "];if(!f){b||(b=g(a)),c=b.length;while(c--)f=xa(b[c]),f[u]?d.push(f):e.push(f);f=A(a,ya(e,d)),f.selector=a}return f},i=ga.select=function(a,b,e,f){var i,j,k,l,m,n="function"==typeof a&&a,o=!f&&g(a=n.selector||a);if(e=e||[],1===o.length){if(j=o[0]=o[0].slice(0),j.length>2&&"ID"===(k=j[0]).type&&c.getById&&9===b.nodeType&&p&&d.relative[j[1].type]){if(b=(d.find.ID(k.matches[0].replace(ca,da),b)||[])[0],!b)return e;n&&(b=b.parentNode),a=a.slice(j.shift().value.length)}i=X.needsContext.test(a)?0:j.length;while(i--){if(k=j[i],d.relative[l=k.type])break;if((m=d.find[l])&&(f=m(k.matches[0].replace(ca,da),aa.test(j[0].type)&&pa(b.parentNode)||b))){if(j.splice(i,1),a=f.length&&ra(j),!a)return H.apply(e,f),e;break}}}return(n||h(a,o))(f,b,!p,e,aa.test(a)&&pa(b.parentNode)||b),e},c.sortStable=u.split("").sort(B).join("")===u,c.detectDuplicates=!!l,m(),c.sortDetached=ja(function(a){return 1&a.compareDocumentPosition(n.createElement("div"))}),ja(function(a){return a.innerHTML="<a href='#'></a>","#"===a.firstChild.getAttribute("href")})||ka("type|href|height|width",function(a,b,c){return c?void 0:a.getAttribute(b,"type"===b.toLowerCase()?1:2)}),c.attributes&&ja(function(a){return a.innerHTML="<input/>",a.firstChild.setAttribute("value",""),""===a.firstChild.getAttribute("value")})||ka("value",function(a,b,c){return c||"input"!==a.nodeName.toLowerCase()?void 0:a.defaultValue}),ja(function(a){return null==a.getAttribute("disabled")})||ka(K,function(a,b,c){var d;return c?void 0:a[b]===!0?b.toLowerCase():(d=a.getAttributeNode(b))&&d.specified?d.value:null}),ga}(a);m.find=s,m.expr=s.selectors,m.expr[":"]=m.expr.pseudos,m.unique=s.uniqueSort,m.text=s.getText,m.isXMLDoc=s.isXML,m.contains=s.contains;var t=m.expr.match.needsContext,u=/^<(\w+)\s*\/?>(?:<\/\1>|)$/,v=/^.[^:#\[\.,]*$/;function w(a,b,c){if(m.isFunction(b))return m.grep(a,function(a,d){return!!b.call(a,d,a)!==c});if(b.nodeType)return m.grep(a,function(a){return a===b!==c});if("string"==typeof b){if(v.test(b))return m.filter(b,a,c);b=m.filter(b,a)}return m.grep(a,function(a){return m.inArray(a,b)>=0!==c})}m.filter=function(a,b,c){var d=b[0];return c&&(a=":not("+a+")"),1===b.length&&1===d.nodeType?m.find.matchesSelector(d,a)?[d]:[]:m.find.matches(a,m.grep(b,function(a){return 1===a.nodeType}))},m.fn.extend({find:function(a){var b,c=[],d=this,e=d.length;if("string"!=typeof a)return this.pushStack(m(a).filter(function(){for(b=0;e>b;b++)if(m.contains(d[b],this))return!0}));for(b=0;e>b;b++)m.find(a,d[b],c);return c=this.pushStack(e>1?m.unique(c):c),c.selector=this.selector?this.selector+" "+a:a,c},filter:function(a){return this.pushStack(w(this,a||[],!1))},not:function(a){return this.pushStack(w(this,a||[],!0))},is:function(a){return!!w(this,"string"==typeof a&&t.test(a)?m(a):a||[],!1).length}});var x,y=a.document,z=/^(?:\s*(<[\w\W]+>)[^>]*|#([\w-]*))$/,A=m.fn.init=function(a,b){var c,d;if(!a)return this;if("string"==typeof a){if(c="<"===a.charAt(0)&&">"===a.charAt(a.length-1)&&a.length>=3?[null,a,null]:z.exec(a),!c||!c[1]&&b)return!b||b.jquery?(b||x).find(a):this.constructor(b).find(a);if(c[1]){if(b=b instanceof m?b[0]:b,m.merge(this,m.parseHTML(c[1],b&&b.nodeType?b.ownerDocument||b:y,!0)),u.test(c[1])&&m.isPlainObject(b))for(c in b)m.isFunction(this[c])?this[c](b[c]):this.attr(c,b[c]);return this}if(d=y.getElementById(c[2]),d&&d.parentNode){if(d.id!==c[2])return x.find(a);this.length=1,this[0]=d}return this.context=y,this.selector=a,this}return a.nodeType?(this.context=this[0]=a,this.length=1,this):m.isFunction(a)?"undefined"!=typeof x.ready?x.ready(a):a(m):(void 0!==a.selector&&(this.selector=a.selector,this.context=a.context),m.makeArray(a,this))};A.prototype=m.fn,x=m(y);var B=/^(?:parents|prev(?:Until|All))/,C={children:!0,contents:!0,next:!0,prev:!0};m.extend({dir:function(a,b,c){var d=[],e=a[b];while(e&&9!==e.nodeType&&(void 0===c||1!==e.nodeType||!m(e).is(c)))1===e.nodeType&&d.push(e),e=e[b];return d},sibling:function(a,b){for(var c=[];a;a=a.nextSibling)1===a.nodeType&&a!==b&&c.push(a);return c}}),m.fn.extend({has:function(a){var b,c=m(a,this),d=c.length;return this.filter(function(){for(b=0;d>b;b++)if(m.contains(this,c[b]))return!0})},closest:function(a,b){for(var c,d=0,e=this.length,f=[],g=t.test(a)||"string"!=typeof a?m(a,b||this.context):0;e>d;d++)for(c=this[d];c&&c!==b;c=c.parentNode)if(c.nodeType<11&&(g?g.index(c)>-1:1===c.nodeType&&m.find.matchesSelector(c,a))){f.push(c);break}return this.pushStack(f.length>1?m.unique(f):f)},index:function(a){return a?"string"==typeof a?m.inArray(this[0],m(a)):m.inArray(a.jquery?a[0]:a,this):this[0]&&this[0].parentNode?this.first().prevAll().length:-1},add:function(a,b){return this.pushStack(m.unique(m.merge(this.get(),m(a,b))))},addBack:function(a){return this.add(null==a?this.prevObject:this.prevObject.filter(a))}});function D(a,b){do a=a[b];while(a&&1!==a.nodeType);return a}m.each({parent:function(a){var b=a.parentNode;return b&&11!==b.nodeType?b:null},parents:function(a){return m.dir(a,"parentNode")},parentsUntil:function(a,b,c){return m.dir(a,"parentNode",c)},next:function(a){return D(a,"nextSibling")},prev:function(a){return D(a,"previousSibling")},nextAll:function(a){return m.dir(a,"nextSibling")},prevAll:function(a){return m.dir(a,"previousSibling")},nextUntil:function(a,b,c){return m.dir(a,"nextSibling",c)},prevUntil:function(a,b,c){return m.dir(a,"previousSibling",c)},siblings:function(a){return m.sibling((a.parentNode||{}).firstChild,a)},children:function(a){return m.sibling(a.firstChild)},contents:function(a){return m.nodeName(a,"iframe")?a.contentDocument||a.contentWindow.document:m.merge([],a.childNodes)}},function(a,b){m.fn[a]=function(c,d){var e=m.map(this,b,c);return"Until"!==a.slice(-5)&&(d=c),d&&"string"==typeof d&&(e=m.filter(d,e)),this.length>1&&(C[a]||(e=m.unique(e)),B.test(a)&&(e=e.reverse())),this.pushStack(e)}});var E=/\S+/g,F={};function G(a){var b=F[a]={};return m.each(a.match(E)||[],function(a,c){b[c]=!0}),b}m.Callbacks=function(a){a="string"==typeof a?F[a]||G(a):m.extend({},a);var b,c,d,e,f,g,h=[],i=!a.once&&[],j=function(l){for(c=a.memory&&l,d=!0,f=g||0,g=0,e=h.length,b=!0;h&&e>f;f++)if(h[f].apply(l[0],l[1])===!1&&a.stopOnFalse){c=!1;break}b=!1,h&&(i?i.length&&j(i.shift()):c?h=[]:k.disable())},k={add:function(){if(h){var d=h.length;!function f(b){m.each(b,function(b,c){var d=m.type(c);"function"===d?a.unique&&k.has(c)||h.push(c):c&&c.length&&"string"!==d&&f(c)})}(arguments),b?e=h.length:c&&(g=d,j(c))}return this},remove:function(){return h&&m.each(arguments,function(a,c){var d;while((d=m.inArray(c,h,d))>-1)h.splice(d,1),b&&(e>=d&&e--,f>=d&&f--)}),this},has:function(a){return a?m.inArray(a,h)>-1:!(!h||!h.length)},empty:function(){return h=[],e=0,this},disable:function(){return h=i=c=void 0,this},disabled:function(){return!h},lock:function(){return i=void 0,c||k.disable(),this},locked:function(){return!i},fireWith:function(a,c){return!h||d&&!i||(c=c||[],c=[a,c.slice?c.slice():c],b?i.push(c):j(c)),this},fire:function(){return k.fireWith(this,arguments),this},fired:function(){return!!d}};return k},m.extend({Deferred:function(a){var b=[["resolve","done",m.Callbacks("once memory"),"resolved"],["reject","fail",m.Callbacks("once memory"),"rejected"],["notify","progress",m.Callbacks("memory")]],c="pending",d={state:function(){return c},always:function(){return e.done(arguments).fail(arguments),this},then:function(){var a=arguments;return m.Deferred(function(c){m.each(b,function(b,f){var g=m.isFunction(a[b])&&a[b];e[f[1]](function(){var a=g&&g.apply(this,arguments);a&&m.isFunction(a.promise)?a.promise().done(c.resolve).fail(c.reject).progress(c.notify):c[f[0]+"With"](this===d?c.promise():this,g?[a]:arguments)})}),a=null}).promise()},promise:function(a){return null!=a?m.extend(a,d):d}},e={};return d.pipe=d.then,m.each(b,function(a,f){var g=f[2],h=f[3];d[f[1]]=g.add,h&&g.add(function(){c=h},b[1^a][2].disable,b[2][2].lock),e[f[0]]=function(){return e[f[0]+"With"](this===e?d:this,arguments),this},e[f[0]+"With"]=g.fireWith}),d.promise(e),a&&a.call(e,e),e},when:function(a){var b=0,c=d.call(arguments),e=c.length,f=1!==e||a&&m.isFunction(a.promise)?e:0,g=1===f?a:m.Deferred(),h=function(a,b,c){return function(e){b[a]=this,c[a]=arguments.length>1?d.call(arguments):e,c===i?g.notifyWith(b,c):--f||g.resolveWith(b,c)}},i,j,k;if(e>1)for(i=new Array(e),j=new Array(e),k=new Array(e);e>b;b++)c[b]&&m.isFunction(c[b].promise)?c[b].promise().done(h(b,k,c)).fail(g.reject).progress(h(b,j,i)):--f;return f||g.resolveWith(k,c),g.promise()}});var H;m.fn.ready=function(a){return m.ready.promise().done(a),this},m.extend({isReady:!1,readyWait:1,holdReady:function(a){a?m.readyWait++:m.ready(!0)},ready:function(a){if(a===!0?!--m.readyWait:!m.isReady){if(!y.body)return setTimeout(m.ready);m.isReady=!0,a!==!0&&--m.readyWait>0||(H.resolveWith(y,[m]),m.fn.triggerHandler&&(m(y).triggerHandler("ready"),m(y).off("ready")))}}});function I(){y.addEventListener?(y.removeEventListener("DOMContentLoaded",J,!1),a.removeEventListener("load",J,!1)):(y.detachEvent("onreadystatechange",J),a.detachEvent("onload",J))}function J(){(y.addEventListener||"load"===event.type||"complete"===y.readyState)&&(I(),m.ready())}m.ready.promise=function(b){if(!H)if(H=m.Deferred(),"complete"===y.readyState)setTimeout(m.ready);else if(y.addEventListener)y.addEventListener("DOMContentLoaded",J,!1),a.addEventListener("load",J,!1);else{y.attachEvent("onreadystatechange",J),a.attachEvent("onload",J);var c=!1;try{c=null==a.frameElement&&y.documentElement}catch(d){}c&&c.doScroll&&!function e(){if(!m.isReady){try{c.doScroll("left")}catch(a){return setTimeout(e,50)}I(),m.ready()}}()}return H.promise(b)};var K="undefined",L;for(L in m(k))break;k.ownLast="0"!==L,k.inlineBlockNeedsLayout=!1,m(function(){var a,b,c,d;c=y.getElementsByTagName("body")[0],c&&c.style&&(b=y.createElement("div"),d=y.createElement("div"),d.style.cssText="position:absolute;border:0;width:0;height:0;top:0;left:-9999px",c.appendChild(d).appendChild(b),typeof b.style.zoom!==K&&(b.style.cssText="display:inline;margin:0;border:0;padding:1px;width:1px;zoom:1",k.inlineBlockNeedsLayout=a=3===b.offsetWidth,a&&(c.style.zoom=1)),c.removeChild(d))}),function(){var a=y.createElement("div");if(null==k.deleteExpando){k.deleteExpando=!0;try{delete a.test}catch(b){k.deleteExpando=!1}}a=null}(),m.acceptData=function(a){var b=m.noData[(a.nodeName+" ").toLowerCase()],c=+a.nodeType||1;return 1!==c&&9!==c?!1:!b||b!==!0&&a.getAttribute("classid")===b};var M=/^(?:\{[\w\W]*\}|\[[\w\W]*\])$/,N=/([A-Z])/g;function O(a,b,c){if(void 0===c&&1===a.nodeType){var d="data-"+b.replace(N,"-$1").toLowerCase();if(c=a.getAttribute(d),"string"==typeof c){try{c="true"===c?!0:"false"===c?!1:"null"===c?null:+c+""===c?+c:M.test(c)?m.parseJSON(c):c}catch(e){}m.data(a,b,c)}else c=void 0}return c}function P(a){var b;for(b in a)if(("data"!==b||!m.isEmptyObject(a[b]))&&"toJSON"!==b)return!1;
@@ -2915,9 +2915,9 @@ div.tocify {
 
 
 
-<h1 class="title toc-ignore">PURRR</h1>
+<h1 class="title toc-ignore">Tidyverse: PURRR</h1>
 <h4 class="author">Juan Barriola y Sofía Perini</h4>
-<h4 class="date">19 de Septiembre de 2020</h4>
+<h4 class="date">17 de Octubre de 2020</h4>
 
 </div>
 
@@ -2934,152 +2934,333 @@ library(fs)</code></pre>
 <!-- rnb-source-end -->
 <!-- rnb-chunk-end -->
 <!-- rnb-text-begin -->
+<p>Basado en los <a href="https://jennybc.github.io/purrr-tutorial/index.html">tutoriales de PURRR</a> de Jenny Bryan y el capítulo <a href="https://r4ds.had.co.nz/iteration.html">Iteration</a> del libro R for Data Science de Garrett Grolemund y Hadley Wickham</p>
 <div id="purrr" class="section level1">
-<h1>PURRR<a href="#fn1" class="footnote-ref" id="fnref1"><sup>1</sup></a></h1>
-<p>MAP es la forma <em>tidy</em> de hacer loops. Además de ser más prolijo el código, es mucho más eficiente.</p>
-<p>La función <strong>map</strong> toma un input, una función para aplicar, y alguna otra cosa (por ejemplo parametros que necesite la función)</p>
+<h1>PURRR</h1>
+<p><a href="https://purrr.tidyverse.org/">PURRR</a> es una librería en R que contiene funciones y métodos de programación funcional dentro del entorno de tidyverse.</p>
+<div id="map" class="section level2">
+<h2>MAP</h2>
+<p>MAP es una <strong>función</strong> para aplicar una función a cada elemento de una estructura de datos como una lista o vector. El funcionamiento de map consiste en recorrer (“loopear”) la estructura aplicando la función a cada elemento y guardando los resultados. De esta manera podemos reemplazar los loops por una forma más legible y clara de código.</p>
+<p>La función <code>map</code> toma como argumentos:</p>
 <ul>
-<li>map(.x, .f, …)</li>
-<li>map(VECTOR_O_LIST_INPUT, FUNCTION_A_APLICAR, OTROS_OPCIONALES)</li>
+<li><p>.x: un vector o lista input</p></li>
+<li><p>.f: una función para aplicar</p></li>
 </ul>
-<p>Usamos <strong>map2</strong> cuando tenemos que pasar dos input, que se aplican sobre una función:</p>
+<p>map(VECTOR_O_LIST_INPUT, FUNCTION_A_APLICAR, OTROS_OPCIONALES)</p>
+<p>Veamos un ejemplo con un vector numérico</p>
+<!-- rnb-text-end -->
+<!-- rnb-chunk-begin -->
+<!-- rnb-source-begin eyJkYXRhIjoiYGBgclxuIyBBcGxpY2Ftb3MgbGEgZnVuY2nDs24gbG9nMTAgc29icmUgdW4gdmVjdG9yXG5tYXAoLnggPSBjKDEwLDEwMCwxMDAwKSwgLmY9bG9nMTApXG5gYGAifQ== -->
+<pre class="r"><code># Aplicamos la función log10 sobre un vector
+map(.x = c(10,100,1000), .f=log10)</code></pre>
+<!-- rnb-source-end -->
+<!-- rnb-output-begin eyJkYXRhIjoiW1sxXV1cblsxXSAxXG5cbltbMl1dXG5bMV0gMlxuXG5bWzNdXVxuWzFdIDNcbiJ9 -->
+<pre><code>[[1]]
+[1] 1
+
+[[2]]
+[1] 2
+
+[[3]]
+[1] 3</code></pre>
+<!-- rnb-output-end -->
+<!-- rnb-chunk-end -->
+<!-- rnb-text-begin -->
+<div id="map-tipos-específicos" class="section level3">
+<h3>Map: tipos específicos</h3>
+<p>Veamos que el resultado de map es una lista. Si sabemos cuál es el tipo de dato de nuestros resultados podemos usar variaciones de map que explicitan el tipo de dato y devuelven los resultados en un vector. Algunas de ellas son:</p>
+<ul>
+<li><p>map_lgl() devuelve un vector de booleanos</p></li>
+<li><p>map_dbl() devuelve un vector de numéricos</p></li>
+<li><p>map_chr() devuelve un vector de strings</p></li>
+</ul>
+<p>Volvamos a ver nuestro ejemplo usando <code>map_dbl</code></p>
+<!-- rnb-text-end -->
+<!-- rnb-chunk-begin -->
+<!-- rnb-source-begin eyJkYXRhIjoiYGBgclxubWFwX2RibCgueCA9IGMoMTAsMTAwLDEwMDApLCAuZj1sb2cxMClcbmBgYCJ9 -->
+<pre class="r"><code>map_dbl(.x = c(10,100,1000), .f=log10)</code></pre>
+<!-- rnb-source-end -->
+<!-- rnb-output-begin eyJkYXRhIjoiWzFdIDEgMiAzXG4ifQ== -->
+<pre><code>[1] 1 2 3</code></pre>
+<!-- rnb-output-end -->
+<!-- rnb-chunk-end -->
+<!-- rnb-text-begin -->
+</div>
+<div id="map-funciones" class="section level3">
+<h3>Map: funciones</h3>
+<p>Se pueden aplicar funciones de R base o de las librerías como así también funciones definidas por el usuario. Muchas veces no es necesario definir una función de antemano, sino que podemos usar <strong>funciones anónimas</strong> o <strong>funciones lambda</strong></p>
+<div id="funciones-anónimas" class="section level4">
+<h4>Funciones anónimas</h4>
+<p>La función se define en una única linea</p>
+<!-- rnb-text-end -->
+<!-- rnb-chunk-begin -->
+<!-- rnb-source-begin eyJkYXRhIjoiYGBgclxuIyBDYWxjdWxhbW9zIHVuYSBmdW5jacOzbiBjdWFkcsOhdGljYSBwYXJhIGVsIHZlY3RvclxubWFwX2RibCgueCA9IGMoMToxMCksIC5mID0gZnVuY3Rpb24oeCkgeF4yKzEpXG5gYGAifQ== -->
+<pre class="r"><code># Calculamos una función cuadrática para el vector
+map_dbl(.x = c(1:10), .f = function(x) x^2+1)</code></pre>
+<!-- rnb-source-end -->
+<!-- rnb-output-begin eyJkYXRhIjoiIFsxXSAgIDIgICA1ICAxMCAgMTcgIDI2ICAzNyAgNTAgIDY1ICA4MiAxMDFcbiJ9 -->
+<pre><code> [1]   2   5  10  17  26  37  50  65  82 101</code></pre>
+<!-- rnb-output-end -->
+<!-- rnb-chunk-end -->
+<!-- rnb-text-begin -->
+<p>A partir de un vector de strings queremos contar la cantidad de letras “A” en cada elemento. Para eso combinamos las funciones <code>str_to_upper</code> y <code>str_count</code></p>
+<!-- rnb-text-end -->
+<!-- rnb-chunk-begin -->
+<!-- rnb-source-begin eyJkYXRhIjoiYGBgclxubWFwX2RibCgueCA9IGMoXCJwYXBhcyBGUklUQVNcIiwgXCJiYXRhdGFzIEhFUlZJREFTXCIsIFwiYm9uaWF0byBBTCBIT1JOT1wiKSxcbiAgICAgICAgLmYgPSBmdW5jdGlvbih4KSBzdHJfY291bnQoc3RyaW5nID0gc3RyX3RvX3VwcGVyKHgpLCBwYXR0ZXJuID0gXCJBXCIpKVxuYGBgIn0= -->
+<pre class="r"><code>map_dbl(.x = c(&quot;papas FRITAS&quot;, &quot;batatas HERVIDAS&quot;, &quot;boniato AL HORNO&quot;),
+        .f = function(x) str_count(string = str_to_upper(x), pattern = &quot;A&quot;))</code></pre>
+<!-- rnb-source-end -->
+<!-- rnb-output-begin eyJkYXRhIjoiWzFdIDMgNCAyXG4ifQ== -->
+<pre><code>[1] 3 4 2</code></pre>
+<!-- rnb-output-end -->
+<!-- rnb-chunk-end -->
+<!-- rnb-text-begin -->
+</div>
+<div id="funciones-lambda" class="section level4">
+<h4>Funciones lambda</h4>
+<p>Son una forma aún más concisa de declarar funciones, aunque pueden ser más limitadas. Las variables se declaran como .x</p>
+<!-- rnb-text-end -->
+<!-- rnb-chunk-begin -->
+<!-- rnb-source-begin eyJkYXRhIjoiYGBgclxuIyBDYWxjdWxhbW9zIG90cmEgZnVuY2nDs24gY3VhZHLDoXRpY2EgcGFyYSBlbCB2ZWN0b3Jcbm1hcF9kYmwoLnggPSBjKDE6MTApLCAuZiA9ICB+LnheMiAtIC54KVxuYGBgIn0= -->
+<pre class="r"><code># Calculamos otra función cuadrática para el vector
+map_dbl(.x = c(1:10), .f =  ~.x^2 - .x)</code></pre>
+<!-- rnb-source-end -->
+<!-- rnb-output-begin eyJkYXRhIjoiIFsxXSAgMCAgMiAgNiAxMiAyMCAzMCA0MiA1NiA3MiA5MFxuIn0= -->
+<pre><code> [1]  0  2  6 12 20 30 42 56 72 90</code></pre>
+<!-- rnb-output-end -->
+<!-- rnb-chunk-end -->
+<!-- rnb-text-begin -->
+</div>
+</div>
+<div id="map-multiples-argumentos" class="section level3">
+<h3>Map: Multiples argumentos</h3>
+<p>Usamos <code>map2</code> cuando queremos aplicar una función sobre dos listas o vectores:</p>
 <ul>
 <li>map2(.x, .y, .f, …)</li>
 <li>map2(INPUT_UNO, INPUT_DOS, FUNCTION_A_APLICAR, OTROS_OPCIONALES)</li>
 </ul>
-<p>Si tenemos más de dos…</p>
-<ul>
-<li>pmap(.l, .f, …)</li>
-<li>pmap(VECTOR_O_LIST_INPUT, FUNCTION_A_APLICAR, OTROS_OPCIONALES)</li>
-</ul>
-<p>Por ejemplo. Si queremos utilizar la función prueba sobre los datos del dataframe ABC_123</p>
+<p>Veamos un ejemplo para generar observaciones de distribuciones normales a partir de los vectores de mu y sigma (este es el ejemplo del libro <em>R for Data Science</em>)</p>
+<p>La funcion <code>rnorm</code> toma los parámetros n (cantidad de observaciones), mu y sigma</p>
 <!-- rnb-text-end -->
 <!-- rnb-chunk-begin -->
-<!-- rnb-source-begin eyJkYXRhIjoiYGBgclxuQUJDXzEyMyA8LSBkYXRhLmZyYW1lKExldHJhcyA9IExFVFRFUlNbMToyMF0sTnVtID0gMToyMClcbmZ1bmNpb25fcHJ1ZWJhXG5gYGAifQ== -->
-<pre class="r"><code>ABC_123 &lt;- data.frame(Letras = LETTERS[1:20],Num = 1:20)
-funcion_prueba</code></pre>
+<!-- rnb-source-begin eyJkYXRhIjoiYGBgclxuIyBWZWN0b3IgZGUgbXVcbm11ID0gYygwLCAzLCAtNSwgMi4xKVxuIyBWZWN0b3IgZGUgc2lnbWFcbnNpZ21hID0gYygxLCAwLjUsIDUsIDAuMDEpXG5cbiMgR2VuZXJhbW9zIDEwIG9ic2VydmFjaW9uZXMgYSBwYXJ0aXIgZGUgbnVlc3Ryb3MgdmVjdG9yZXNcbm1hcDIoLnggPSBtdSwgLnkgPSBzaWdtYSwgLmY9IHJub3JtLCBuID0gMTApXG5gYGAifQ== -->
+<pre class="r"><code># Vector de mu
+mu = c(0, 3, -5, 2.1)
+# Vector de sigma
+sigma = c(1, 0.5, 5, 0.01)
+
+# Generamos 10 observaciones a partir de nuestros vectores
+map2(.x = mu, .y = sigma, .f= rnorm, n = 10)</code></pre>
 <!-- rnb-source-end -->
+<!-- rnb-output-begin eyJkYXRhIjoiW1sxXV1cbiBbMV0gLTEuODUzODA4MyAgMS41NTI4NTEyIC0wLjY1MTUzNTYgIDEuNjE3NzE1NiAtMS4xMTU3MjIxIC0wLjIzMjQxMjMgIDAuMzc4MDI5OSAgMC4zNjc0NjM2ICAwLjM3NzQ4OTYgLTAuODAwNjIwMFxuXG5bWzJdXVxuIFsxXSAyLjYwMjAzNyAyLjc5Nzc1OSAyLjcxNTM5NCAzLjUwNzMwNCAyLjcxNjU1MiAyLjk3MjY4MCAzLjA1MjY3NSAyLjc0MjM2NSAzLjc4NjY3MiAzLjEyNDAxMlxuXG5bWzNdXVxuIFsxXSAtMTMuODAxNzgwICAtMi4wNTk5MTAgIC02LjA2MzcwNiAgLTUuNzAxNTY3IC0xMC41MjkwMjUgICAyLjM3ODY0MSAgLTcuMTg0NDcxICAtNS41OTUxNjAgICAyLjcxNzQwNyAtMTkuMjAxMTQzXG5cbltbNF1dXG4gWzFdIDIuMTAzOTM2IDIuMTAxMDQ5IDIuMDk4OTMyIDIuMDk3MzIzIDIuMDkzNDc3IDIuMDkxMjQ1IDIuMDgzMTg5IDIuMDk5NDIyIDIuMTA5NDM5IDIuMDk4NjQ3XG4ifQ== -->
+<pre><code>[[1]]
+ [1] -1.8538083  1.5528512 -0.6515356  1.6177156 -1.1157221 -0.2324123  0.3780299  0.3674636  0.3774896 -0.8006200
+
+[[2]]
+ [1] 2.602037 2.797759 2.715394 3.507304 2.716552 2.972680 3.052675 2.742365 3.786672 3.124012
+
+[[3]]
+ [1] -13.801780  -2.059910  -6.063706  -5.701567 -10.529025   2.378641  -7.184471  -5.595160   2.717407 -19.201143
+
+[[4]]
+ [1] 2.103936 2.101049 2.098932 2.097323 2.093477 2.091245 2.083189 2.099422 2.109439 2.098647</code></pre>
+<!-- rnb-output-end -->
 <!-- rnb-chunk-end -->
 <!-- rnb-text-begin -->
-<p>Si el resultado que queremos es que junte cada fila, necesitamos pasarle dos parámetros: utilizamos <code>map2()</code>, Noten que la función se le pasa a <code>map()</code> sin paréntesis ni argumentos.</p>
+<p>Ahora veamos con un ejemplo para crear una lista de compras</p>
 <!-- rnb-text-end -->
 <!-- rnb-chunk-begin -->
-<!-- rnb-source-begin eyJkYXRhIjoiYGBgclxuYGBgclxuQUJDXzEyMyA8LSBkYXRhLmZyYW1lKExldHJhcyA9IExFVFRFUlNbMToyMF0sTnVtID0gMToyMClcbmZ1bmNpb25fcHJ1ZWJhXG5gYGBcbmBgYCJ9 -->
-<pre class="r"><code>```r
-ABC_123 &lt;- data.frame(Letras = LETTERS[1:20],Num = 1:20)
-funcion_prueba</code></pre>
-<pre><code>
-&lt;!-- rnb-source-end --&gt;
+<!-- rnb-source-begin eyJkYXRhIjoiYGBgclxuIyBWZWN0b3Jlc1xua2lsb3MgPSBjKDEwLCAxLCA2LCA4LCAzKVxudmVyZHVyYXMgPSAgYyhcInBhcGFcIiwgXCJiYXRhdGFcIiwgXCJ6YXBhbGxvXCIsIFwiYm9uaWF0b1wiLCBcInphbmFob3JpYVwiKVxuXG5tYXAyX2NocigueCA9IHZlcmR1cmFzLCAueSA9a2lsb3MsIC5mID0gZnVuY3Rpb24oeCx5KSBzdHJfYyhzdHJfdG9fdGl0bGUoeCkseSwgc2VwPVwiOiBcIikpXG5gYGAifQ== -->
+<pre class="r"><code># Vectores
+kilos = c(10, 1, 6, 8, 3)
+verduras =  c(&quot;papa&quot;, &quot;batata&quot;, &quot;zapallo&quot;, &quot;boniato&quot;, &quot;zanahoria&quot;)
 
-&lt;!-- rnb-chunk-end --&gt;
+map2_chr(.x = verduras, .y =kilos, .f = function(x,y) str_c(str_to_title(x),y, sep=&quot;: &quot;))</code></pre>
+<!-- rnb-source-end -->
+<!-- rnb-output-begin eyJkYXRhIjoiWzFdIFwiUGFwYTogMTBcIiAgICAgXCJCYXRhdGE6IDFcIiAgICBcIlphcGFsbG86IDZcIiAgIFwiQm9uaWF0bzogOFwiICAgXCJaYW5haG9yaWE6IDNcIlxuIn0= -->
+<pre><code>[1] &quot;Papa: 10&quot;     &quot;Batata: 1&quot;    &quot;Zapallo: 6&quot;   &quot;Boniato: 8&quot;   &quot;Zanahoria: 3&quot;</code></pre>
+<!-- rnb-output-end -->
+<!-- rnb-chunk-end -->
+<!-- rnb-text-begin -->
+<p>Usamos <code>pmap</code> cuando queremos aplicar una función sobre una lista de argumentos:</p>
+<ul>
+<li>pmap(.l, .f, …)</li>
+<li>pmap(VECTOR_O_LIST_DE_INPUTS, FUNCTION_A_APLICAR, OTROS_OPCIONALES)</li>
+</ul>
+<p>Volvamos al ejemplo para generar observaciones de distribuciones normales a partir de los vectores de mu y sigma, pero ahora incorporamos la cantidad de observaciones como un argumento adicional (este ejemplo también es del libro <em>R for Data Science</em>)</p>
+<!-- rnb-text-end -->
+<!-- rnb-chunk-begin -->
+<!-- rnb-source-begin eyJkYXRhIjoiYGBgclxuIyBWZWN0b3IgZGUgbXVcbm11ID0gYygwLCAzLCAtNSwgMi4xKVxuIyBWZWN0b3IgZGUgc2lnbWFcbnNpZ21hID0gYygxLCAwLjUsIDUsIDAuMDEpXG4jIFZlY3RvciBkZSBjYW50aWRhZCBkZSBvYnNlcnZhY2lvbmVzIFxubiA9IGMoMTo0KVxuIyBMaXN0YSBkZSBhcmd1bWVudG9zXG5hcmd1bWVudG9zIDwtIGxpc3QobiwgbXUsIHNpZ21hKVxuXG4jIEdlbmVyYW1vcyAxMCBvYnNlcnZhY2lvbmVzIGEgcGFydGlyIGRlIG51ZXN0cm9zIHZlY3RvcmVzXG5wbWFwKC5sID0gYXJndW1lbnRvcywgLmYgPSBybm9ybSlcbmBgYCJ9 -->
+<pre class="r"><code># Vector de mu
+mu = c(0, 3, -5, 2.1)
+# Vector de sigma
+sigma = c(1, 0.5, 5, 0.01)
+# Vector de cantidad de observaciones 
+n = c(1:4)
+# Lista de argumentos
+argumentos &lt;- list(n, mu, sigma)
 
+# Generamos 10 observaciones a partir de nuestros vectores
+pmap(.l = argumentos, .f = rnorm)</code></pre>
+<!-- rnb-source-end -->
+<!-- rnb-output-begin eyJkYXRhIjoiW1sxXV1cblsxXSAwLjYxOTMwNzdcblxuW1syXV1cblsxXSAyLjYxNzM5NiAyLjQ1MDA2N1xuXG5bWzNdXVxuWzFdIC01LjgxNDEwOCAtNi41MzAwNTYgLTMuMjQzNzU4XG5cbltbNF1dXG5bMV0gMi4wOTM1NDYgMi4xMTE1NTMgMi4xMDM2MTQgMi4wOTI2NzZcbiJ9 -->
+<pre><code>[[1]]
+[1] 0.6193077
 
-&lt;!-- rnb-text-begin --&gt;
+[[2]]
+[1] 2.617396 2.450067
 
+[[3]]
+[1] -5.814108 -6.530056 -3.243758
 
-La salida de los `map()` es una __lista__, no un vector, por lo que si lo metemos dentro de un dataframe se vería así:
-
-
-&lt;!-- rnb-text-end --&gt;
-
-
-&lt;!-- rnb-chunk-begin --&gt;
-
-
-&lt;!-- rnb-source-begin eyJkYXRhIjoiYGBgclxuQUJDXzEyMyAlPiUgXG4gIG11dGF0ZShyZXN1bHRhZG89IG1hcDIoLnggPSBMZXRyYXMsLnkgPSBOdW0sLmYgPSBmdW5jaW9uX3BydWViYSkpXG5cbmBgYCJ9 --&gt;
-
-```r
-ABC_123 %&gt;% 
-  mutate(resultado= map2(.x = Letras,.y = Num,.f = funcion_prueba))
+[[4]]
+[1] 2.093546 2.111553 2.103614 2.092676</code></pre>
+<!-- rnb-output-end -->
+<!-- rnb-chunk-end -->
+<!-- rnb-text-begin -->
+</div>
+</div>
+<div id="purrr-dataframes-y-modelos" class="section level2">
+<h2>PURRR: Dataframes y modelos</h2>
+<div id="dataframes" class="section level3">
+<h3>Dataframes</h3>
+<p>Las funciones de PURRR se pueden utilizar para realizar operaciones sobre dataframes. La sintaxis que vamos a utilizar es:</p>
+<p><code>map(dataframe, funcion)</code></p>
+<p>De esta manera vamos a estar aplicando la función sobre todas las columnas del dataframe</p>
+<!-- rnb-text-end -->
+<!-- rnb-chunk-begin -->
+<!-- rnb-source-begin eyJkYXRhIjoiYGBgclxuZW5jdWVzdGFfc3VlbGRvc19saW1waWEgPSByZWFkX2NzdihcIn4vRnVlbnRlcy9lbmN1ZXN0YV9zdWVsZG9zX2l0X2xpbXBpYS5jc3ZcIilcbmBgYCJ9 -->
+<pre class="r"><code>encuesta_sueldos_limpia = read_csv(&quot;~/Fuentes/encuesta_sueldos_it_limpia.csv&quot;)</code></pre>
+<!-- rnb-source-end -->
+<!-- rnb-output-begin eyJkYXRhIjoiUGFyc2VkIHdpdGggY29sdW1uIHNwZWNpZmljYXRpb246XG5jb2xzKFxuICBlZGFkID0gXHUwMDFiWzMybWNvbF9kb3VibGUoKVx1MDAxYlszOW0sXG4gIGFub3NfZGVfZXhwZXJpZW5jaWEgPSBcdTAwMWJbMzJtY29sX2RvdWJsZSgpXHUwMDFiWzM5bSxcbiAgYW5vc19lbl9sYV9lbXByZXNhX2FjdHVhbCA9IFx1MDAxYlszMm1jb2xfZG91YmxlKClcdTAwMWJbMzltLFxuICBhbm9zX2VuX2VsX3B1ZXN0b19hY3R1YWwgPSBcdTAwMWJbMzJtY29sX2RvdWJsZSgpXHUwMDFiWzM5bSxcbiAgcGVyZmlsID0gXHUwMDFiWzMxbWNvbF9jaGFyYWN0ZXIoKVx1MDAxYlszOW0sXG4gIHNhbGFyaW9fYnJ1dG8gPSBcdTAwMWJbMzJtY29sX2RvdWJsZSgpXHUwMDFiWzM5bSxcbiAgc2FsYXJpb19uZXRvID0gXHUwMDFiWzMybWNvbF9kb3VibGUoKVx1MDAxYlszOW1cbilcbiJ9 -->
+<pre><code>Parsed with column specification:
+cols(
+  edad = [32mcol_double()[39m,
+  anos_de_experiencia = [32mcol_double()[39m,
+  anos_en_la_empresa_actual = [32mcol_double()[39m,
+  anos_en_el_puesto_actual = [32mcol_double()[39m,
+  perfil = [31mcol_character()[39m,
+  salario_bruto = [32mcol_double()[39m,
+  salario_neto = [32mcol_double()[39m
+)</code></pre>
+<!-- rnb-output-end -->
+<!-- rnb-chunk-end -->
+<!-- rnb-text-begin -->
+<p>Comencemos analizando la cantidad de valores distintos para cada columna. Para ello usamos la función <code>n_distinct</code></p>
+<!-- rnb-text-end -->
+<!-- rnb-chunk-begin -->
+<!-- rnb-source-begin eyJkYXRhIjoiYGBgclxubWFwKGVuY3Vlc3RhX3N1ZWxkb3NfbGltcGlhLCBuX2Rpc3RpbmN0KSAlPiVcbiAgc3RyKClcblxuYGBgIn0= -->
+<pre class="r"><code>map(encuesta_sueldos_limpia, n_distinct) %&gt;%
+  str()
+</code></pre>
+<!-- rnb-source-end -->
+<!-- rnb-output-begin eyJkYXRhIjoiTGlzdCBvZiA3XG4gJCBlZGFkICAgICAgICAgICAgICAgICAgICAgOiBpbnQgMzFcbiAkIGFub3NfZGVfZXhwZXJpZW5jaWEgICAgICA6IGludCAyNVxuICQgYW5vc19lbl9sYV9lbXByZXNhX2FjdHVhbDogaW50IDE3XG4gJCBhbm9zX2VuX2VsX3B1ZXN0b19hY3R1YWwgOiBpbnQgMTNcbiAkIHBlcmZpbCAgICAgICAgICAgICAgICAgICA6IGludCAyXG4gJCBzYWxhcmlvX2JydXRvICAgICAgICAgICAgOiBpbnQgMTE3XG4gJCBzYWxhcmlvX25ldG8gICAgICAgICAgICAgOiBpbnQgMTE2XG4ifQ== -->
+<pre><code>List of 7
+ $ edad                     : int 31
+ $ anos_de_experiencia      : int 25
+ $ anos_en_la_empresa_actual: int 17
+ $ anos_en_el_puesto_actual : int 13
+ $ perfil                   : int 2
+ $ salario_bruto            : int 117
+ $ salario_neto             : int 116</code></pre>
+<!-- rnb-output-end -->
+<!-- rnb-chunk-end -->
+<!-- rnb-text-begin -->
+<p>Ahora calculamos el promedio sobre las columnas numéricas</p>
+<!-- rnb-text-end -->
+<!-- rnb-chunk-begin -->
+<!-- rnb-source-begin eyJkYXRhIjoiYGBgclxuZW5jdWVzdGFfc3VlbGRvc19saW1waWEgJT4lIFxuICBzZWxlY3RfaWYoaXMubnVtZXJpYykgJT4lIFxuICBtYXAobWVhbikgJT4lIFxuICBzdHIoKVxuYGBgIn0= -->
+<pre class="r"><code>encuesta_sueldos_limpia %&gt;% 
+  select_if(is.numeric) %&gt;% 
+  map(mean) %&gt;% 
+  str()</code></pre>
+<!-- rnb-source-end -->
+<!-- rnb-output-begin eyJkYXRhIjoiTGlzdCBvZiA2XG4gJCBlZGFkICAgICAgICAgICAgICAgICAgICAgOiBudW0gMzAuNlxuICQgYW5vc19kZV9leHBlcmllbmNpYSAgICAgIDogbnVtIDUuOTlcbiAkIGFub3NfZW5fbGFfZW1wcmVzYV9hY3R1YWw6IG51bSAyLjdcbiAkIGFub3NfZW5fZWxfcHVlc3RvX2FjdHVhbCA6IG51bSAyLjE1XG4gJCBzYWxhcmlvX2JydXRvICAgICAgICAgICAgOiBudW0gMTIyMjYzXG4gJCBzYWxhcmlvX25ldG8gICAgICAgICAgICAgOiBudW0gNjE5NzNcbiJ9 -->
+<pre><code>List of 6
+ $ edad                     : num 30.6
+ $ anos_de_experiencia      : num 5.99
+ $ anos_en_la_empresa_actual: num 2.7
+ $ anos_en_el_puesto_actual : num 2.15
+ $ salario_bruto            : num 122263
+ $ salario_neto             : num 61973</code></pre>
+<!-- rnb-output-end -->
+<!-- rnb-chunk-end -->
+<!-- rnb-text-begin -->
+<p>Calculamos la mediana sobre las columnas numéricas, sabiendo que el resultado de la función es un número podemos usar la función <code>map_dbl</code></p>
+<!-- rnb-text-end -->
+<!-- rnb-chunk-begin -->
+<!-- rnb-source-begin eyJkYXRhIjoiYGBgclxuZW5jdWVzdGFfc3VlbGRvc19saW1waWEgJT4lIFxuICBzZWxlY3RfaWYoaXMubnVtZXJpYykgJT4lIFxuICBtYXBfZGJsKG1lZGlhbilcblxuYGBgIn0= -->
+<pre class="r"><code>encuesta_sueldos_limpia %&gt;% 
+  select_if(is.numeric) %&gt;% 
+  map_dbl(median)
+</code></pre>
+<!-- rnb-source-end -->
+<!-- rnb-output-begin eyJkYXRhIjoiICAgICAgICAgICAgICAgICAgICAgZWRhZCAgICAgICBhbm9zX2RlX2V4cGVyaWVuY2lhIGFub3NfZW5fbGFfZW1wcmVzYV9hY3R1YWwgIGFub3NfZW5fZWxfcHVlc3RvX2FjdHVhbCBcbiAgICAgICAgICAgICAgICAgICAgICAgMzAgICAgICAgICAgICAgICAgICAgICAgICAgNCAgICAgICAgICAgICAgICAgICAgICAgICAxICAgICAgICAgICAgICAgICAgICAgICAgIDEgXG4gICAgICAgICAgICBzYWxhcmlvX2JydXRvICAgICAgICAgICAgICBzYWxhcmlvX25ldG8gXG4gICAgICAgICAgICAgICAgICAgIDc1MDAwICAgICAgICAgICAgICAgICAgICAgNjAwMDAgXG4ifQ== -->
+<pre><code>                     edad       anos_de_experiencia anos_en_la_empresa_actual  anos_en_el_puesto_actual 
+                       30                         4                         1                         1 
+            salario_bruto              salario_neto 
+                    75000                     60000 </code></pre>
+<!-- rnb-output-end -->
+<!-- rnb-chunk-end -->
+<!-- rnb-text-begin -->
+</div>
+<div id="modelos" class="section level3">
+<h3>Modelos</h3>
+<!-- rnb-text-end -->
+<!-- rnb-chunk-begin -->
+<!-- rnb-source-begin eyJkYXRhIjoiYGBgclxubW9kZWxvc19wb3JfcGVyZmlsID0gZW5jdWVzdGFfc3VlbGRvc19saW1waWEgJT4lIFxuICAgICAgICAgICAgICAgICAgICAgICAgc3BsaXQoLiRwZXJmaWwpICU+JSBcbiAgICAgICAgICAgICAgICAgICAgICAgIG1hcCh+bG0oc2FsYXJpb19uZXRvIH4gZWRhZCwgZGF0YSA9IC4pKVxuXG5gYGAifQ== -->
+<pre class="r"><code>modelos_por_perfil = encuesta_sueldos_limpia %&gt;% 
+                        split(.$perfil) %&gt;% 
+                        map(~lm(salario_neto ~ edad, data = .))
 </code></pre>
 <!-- rnb-source-end -->
 <!-- rnb-chunk-end -->
 <!-- rnb-text-begin -->
-<p>Al ponerlo dentro del dataframe desarma la lista y guarda cada elemento por separado. La magia de eso es que podemos <strong>guardar cualquier cosa en el dataframe</strong> no sólo valores, sino también listas, funciones, dataframes, etc.</p>
-<p>Si queremos recuperar los valores originales en este caso podemos usar <code>unlist()</code></p>
+<p>El resultado de esto es una lista con los modelos</p>
 <!-- rnb-text-end -->
 <!-- rnb-chunk-begin -->
-<!-- rnb-source-begin eyJkYXRhIjoiYGBgclxuIyBSZWN1cGVyYW1vcyBsb3MgdHJlcyBwcmltZXJvcyBlbGVtZW50b3MgZGUgbGEgbGlzdGEgcmVzdWx0YWRvc1xucmVzdWx0YWRvWzE6M10gJT4lIHVubGlzdCgpXG5cbiMgUmVjdXBlcmFtb3MgZWwgZWxlbWVudG8gZGUgbGEgbGlzdGEgcGFyYSBjYWRhIHBhciBsZXRyYS1udW1lcm8gKGNhZGEgZmlsYSlcbkFCQ18xMjMgJT4lIFxuICBtdXRhdGUocmVzdWx0YWRvPSB1bmxpc3QobWFwMigueCA9IExldHJhcywueSA9IE51bSwuZiA9IGZ1bmNpb25fcHJ1ZWJhKSkpXG5gYGAifQ== -->
-<pre class="r"><code># Recuperamos los tres primeros elementos de la lista resultados
-resultado[1:3] %&gt;% unlist()
-
-# Recuperamos el elemento de la lista para cada par letra-numero (cada fila)
-ABC_123 %&gt;% 
-  mutate(resultado= unlist(map2(.x = Letras,.y = Num,.f = funcion_prueba)))</code></pre>
+<!-- rnb-source-begin eyJkYXRhIjoiYGBgclxubW9kZWxvc19wb3JfcGVyZmlsICU+JSBtYXAoYnJvb206OnRpZHkpXG5cbmBgYCJ9 -->
+<pre class="r"><code>modelos_por_perfil %&gt;% map(broom::tidy)
+</code></pre>
 <!-- rnb-source-end -->
-<!-- rnb-chunk-end -->
-<!-- rnb-text-begin -->
-<p>Si lo que queríamos era que la función nos haga todas las combinaciones de letras y número, entonces lo que necesitamos es pasarle el segúndo parametro como algo <em>fijo</em>, poniendolo después de la función.</p>
-<p>Notemos que estamos utilizando <code>map()</code> que toma un único input, en lugar de <code>map2()</code></p>
-<!-- rnb-text-end -->
-<!-- rnb-chunk-begin -->
-<!-- rnb-source-begin eyJkYXRhIjoiYGBgclxuYGBgclxuIyBSZWN1cGVyYW1vcyBsb3MgdHJlcyBwcmltZXJvcyBlbGVtZW50b3MgZGUgbGEgbGlzdGEgcmVzdWx0YWRvc1xucmVzdWx0YWRvWzE6M10gJT4lIHVubGlzdCgpXG5cbiMgUmVjdXBlcmFtb3MgZWwgZWxlbWVudG8gZGUgbGEgbGlzdGEgcGFyYSBjYWRhIHBhciBsZXRyYS1udW1lcm8gKGNhZGEgZmlsYSlcbkFCQ18xMjMgJT4lIFxuICBtdXRhdGUocmVzdWx0YWRvPSB1bmxpc3QobWFwMigueCA9IExldHJhcywueSA9IE51bSwuZiA9IGZ1bmNpb25fcHJ1ZWJhKSkpXG5gYGBcbmBgYCJ9 -->
-<pre class="r"><code>```r
-# Recuperamos los tres primeros elementos de la lista resultados
-resultado[1:3] %&gt;% unlist()
-
-# Recuperamos el elemento de la lista para cada par letra-numero (cada fila)
-ABC_123 %&gt;% 
-  mutate(resultado= unlist(map2(.x = Letras,.y = Num,.f = funcion_prueba)))</code></pre>
+<!-- rnb-output-begin eyJkYXRhIjoiJGBCSSBBbmFseXN0IC8gRGF0YSBBbmFseXN0YFxuIn0= -->
+<pre><code>$`BI Analyst / Data Analyst`</code></pre>
+<!-- rnb-output-end -->
+<!-- rnb-frame-begin eyJtZXRhZGF0YSI6eyJjbGFzc2VzIjpbInRibF9kZiIsInRibCIsImRhdGEuZnJhbWUiXSwibmNvbCI6NSwibnJvdyI6Mn0sInJkZiI6Ikg0c0lBQUFBQUFBQUF3dHlpVERtaXVCaVlHQmdabUJtQTJKV0lKT0JOVFRFVGRlQ2dZR0ZDY2hoWkdCaDRBVFJGVUJGd2lCWklCWUFZaWFvQkxlR1oxNUphbEZ5YWtHSkpsU0lKVFVsTVFWSTg0R1VPWnhjSUhKVitYbTF3N1JrNHovTHZSN0R4UTlNTzdzc2ZkOU5oNExuY2o2bWo1eGc0dlkvdGl0NWVDMS83eUJxS0M3N09uODZYSHovMDdiZXhaTEZkblBtdGoxWGFKRkhjeDlyWG1KdWFqSFViYXd3aHdBZGxndGxjNlFXbDJUbUpwYWtRdm1jeFNVcGVxbEZSZmxGQ0lIRWtreWdvbVNvQUh1QlhsbGlUbWtxbWsyY1JmbmxlakRiZUVGT2F3QVMvLy8vLzRmdXBPU2N4R0tZazJDQ1hDbUpKWWw2YVVWQS9VQWV1aGIyL0lLU3pQdzhvQ1ltNUxDR1IwSVJtb0JBYVI3SUpTbTZ5Um1sZWRtNnBzWWdHOER5RU1BTFpUTWhzVmtoZGpMOVJ3c3N0dFM4OU13OFdQQ3c1aVFtcGVaQU9YeEFMNE45ckZkUWxKbFhBdk1LVUxSWXJ5Uy9KQkdtamlzNVB3Y21Bdlljd3o4QWFDVEpVMk1DQUFBPSJ9 -->
+<div data-pagedtable="false">
+<script data-pagedtable-source type="application/json">
+{"columns":[{"label":["term"],"name":[1],"type":["chr"],"align":["left"]},{"label":["estimate"],"name":[2],"type":["dbl"],"align":["right"]},{"label":["std.error"],"name":[3],"type":["dbl"],"align":["right"]},{"label":["statistic"],"name":[4],"type":["dbl"],"align":["right"]},{"label":["p.value"],"name":[5],"type":["dbl"],"align":["right"]}],"data":[{"1":"(Intercept)","2":"13120.163","3":"8493.6066","4":"1.54471","5":"1.245960e-01"},{"1":"edad","2":"1432.801","3":"270.4449","4":"5.29794","5":"4.264018e-07"}],"options":{"columns":{"min":{},"max":[10],"total":[5]},"rows":{"min":[10],"max":[10],"total":[2]},"pages":{}}}
+  </script>
+</div>
+<!-- rnb-frame-end -->
+<!-- rnb-output-begin eyJkYXRhIjoiXG4kYERhdGEgU2NpZW50aXN0IC8gRGF0YSBFbmdpbmVlcmBcbiJ9 -->
 <pre><code>
-&lt;!-- rnb-source-end --&gt;
-
-&lt;!-- rnb-chunk-end --&gt;
-
-
-&lt;!-- rnb-text-begin --&gt;
-
-
-En este caso, el map itera sobre cada elemento de `letras`, y para cada elemento _i_ hace 
-`funcion_prueba(i,ABC$Num)` y guarda el resultado en la lista
-
-Si lo queremos meter en el dataframe:
-
-
-&lt;!-- rnb-text-end --&gt;
-
-
-&lt;!-- rnb-chunk-begin --&gt;
-
-
-&lt;!-- rnb-source-begin eyJkYXRhIjoiYGBgclxuIyBBc2lnbmFyIHJlc3VsdGFkbyBhbCBkYXRhZnJhbWVcbkFCQ18xMjMgJT4lIFxuICBtdXRhdGUocmVzdWx0YWRvPSBtYXAoTGV0cmFzLGZ1bmNpb25fcHJ1ZWJhLE51bSkpXG5gYGAifQ== --&gt;
-
-```r
-# Asignar resultado al dataframe
-ABC_123 %&gt;% 
-  mutate(resultado= map(Letras,funcion_prueba,Num))</code></pre>
-<!-- rnb-source-end -->
+$`Data Scientist / Data Engineer`</code></pre>
+<!-- rnb-output-end -->
+<!-- rnb-frame-begin eyJtZXRhZGF0YSI6eyJjbGFzc2VzIjpbInRibF9kZiIsInRibCIsImRhdGEuZnJhbWUiXSwibmNvbCI6NSwibnJvdyI6Mn0sInJkZiI6Ikg0c0lBQUFBQUFBQUF3dHlpVERtaXVCaVlHQmdabUJtQTJKV0lKT0JOVFRFVGRlQ2dZR0ZDY2hoWkdCaDRBVFJGVUJGd2lCWklCWUFZaWFvQkxlR1oxNUphbEZ5YWtHSkpsU0lKVFVsTVFWSTg0R1VPZHcrZU4zWjFtbXh3NVFmMmZZWFh4NkhpeDl0c2lnOXJqRGRvY3hjOGRQallHKzRPTXZTOS9HckdoYzc4Sm04bEpGNm1nNFR0MjkzMDluclBTL1Aza2lHWVVQNTdXQTA5N0htSmVhbUZrUGR4Z3B6Q05CaHVWQTJSMnB4U1dadVlra3FsTTlaWEpLaWwxcFVsRitFRUVnc3lRUXFTb1lLc0Jmb2xTWG1sS2FpMmNSWmxGK3VCN09ORitTMEJpRHgvLy8vZitoT1NzNUpMSVk1Q1NiSWxaSllrcWlYVmdUVUQrU2hhMkhQTHlqSnpNOERhbUpDRG10NEpCU2hDUWlVNW9GY2txS2JuRkdhbDYxcmFneXlBU3dQQWJ4UU5oTVNteFZpSjlOL3RNQmlTODFMejh5REJROXJUbUpTYWc2VXd3ZjBNdGpIZWdWRm1Ya2xNSzhBUll2MVN2SkxFbUhxdUpMemMyQWlZTTh4L0FNQS9nRk9EbU1DQUFBPSJ9 -->
+<div data-pagedtable="false">
+<script data-pagedtable-source type="application/json">
+{"columns":[{"label":["term"],"name":[1],"type":["chr"],"align":["left"]},{"label":["estimate"],"name":[2],"type":["dbl"],"align":["right"]},{"label":["std.error"],"name":[3],"type":["dbl"],"align":["right"]},{"label":["statistic"],"name":[4],"type":["dbl"],"align":["right"]},{"label":["p.value"],"name":[5],"type":["dbl"],"align":["right"]}],"data":[{"1":"(Intercept)","2":"28423.363","3":"11012.4411","4":"2.581023","5":"0.0113643165"},{"1":"edad","2":"1342.105","3":"355.4458","4":"3.775835","5":"0.0002763273"}],"options":{"columns":{"min":{},"max":[10],"total":[5]},"rows":{"min":[10],"max":[10],"total":[2]},"pages":{}}}
+  </script>
+</div>
+<!-- rnb-frame-end -->
+<!-- rnb-output-begin eyJkYXRhIjoiTkFcbiJ9 -->
+<pre><code>NA</code></pre>
+<!-- rnb-output-end -->
 <!-- rnb-chunk-end -->
 <!-- rnb-text-begin -->
-<p>Ahora cada fila tiene una lista de 20 elementos guardado en la columna <strong>resultado</strong></p>
-<div id="funciones-implícitasanonimas" class="section level2">
-<h2>Funciones implícitas/anonimas</h2>
-<p>No es necesario que definamos la función de antemano. Podemos usar <em>funciones implícitas</em></p>
 <!-- rnb-text-end -->
 <!-- rnb-chunk-begin -->
-<!-- rnb-source-begin eyJkYXRhIjoiYGBgclxuIyBDYWxjdWxhbW9zIGVsIGN1YWRyYWRvIGRlIGNhZGEgZWxlbWVudG9cbm1hcF9kYmwoLnggPSBjKDE6MTApLCAuZiA9IGZ1bmN0aW9uKHgpIHheMikgXG4jIENhbGN1bGFtb3MgZWwgcHJvZHVjdG8gcGFyYSBsb3MgZWxlbWVudG9zIHggZSB5XG5tYXAyX2RibCgueCA9IGMoMToxMCksLnkgPSBjKDExOjIwKSwuZiA9ICBmdW5jdGlvbih4LHkpIHgqeSlcbmBgYCJ9 -->
-<pre class="r"><code># Calculamos el cuadrado de cada elemento
-map_dbl(.x = c(1:10), .f = function(x) x^2) 
-# Calculamos el producto para los elementos x e y
-map2_dbl(.x = c(1:10),.y = c(11:20),.f =  function(x,y) x*y)</code></pre>
+<!-- rnb-source-begin eyJkYXRhIjoiYGBgclxubW9kZWxvc19wb3JfcGVyZmlsICU+JSBtYXAoc3VtbWFyeSkgJT4lIG1hcF9kYmwoXCJyLnNxdWFyZWRcIilcbmBgYCJ9 -->
+<pre class="r"><code>modelos_por_perfil %&gt;% map(summary) %&gt;% map_dbl(&quot;r.squared&quot;)</code></pre>
 <!-- rnb-source-end -->
+<!-- rnb-output-begin eyJkYXRhIjoiICAgICBCSSBBbmFseXN0IC8gRGF0YSBBbmFseXN0IERhdGEgU2NpZW50aXN0IC8gRGF0YSBFbmdpbmVlciBcbiAgICAgICAgICAgICAgICAgICAgIDAuMTYyMTc5OCAgICAgICAgICAgICAgICAgICAgICAwLjEyOTMwNjQgXG4ifQ== -->
+<pre><code>     BI Analyst / Data Analyst Data Scientist / Data Engineer 
+                     0.1621798                      0.1293064 </code></pre>
+<!-- rnb-output-end -->
 <!-- rnb-chunk-end -->
 <!-- rnb-text-begin -->
 </div>
-<div id="funciones-lambda" class="section level2">
-<h2>Funciones lambda</h2>
-<p>Incluso más conciso que las funciones implíictas son las <strong>funciones lambda</strong> donde definimos las variables como <em>.x</em> <em>.y</em>, etc. La flexibilidad de estas expresiones es limitada, pero puede ser útil en algunos casos.</p>
-<!-- rnb-text-end -->
-<!-- rnb-chunk-begin -->
-<!-- rnb-source-begin eyJkYXRhIjoiYGBgclxuIyBDYWxjdWxhbW9zIGVsIGN1YWRyYWRvIGRlIGNhZGEgZWxlbWVudG9cbm1hcF9kYmwoLnggPSBjKDE6MTApLC5mID0gfi54XjIpXG4jIENhbGN1bGFtb3MgZWwgcHJvZHVjdG8gcGFyYSBsb3MgZWxlbWVudG9zIHggZSB5XG5tYXAyX2RibCgueCA9IGMoMToxMCksLnkgPSBjKDExOjIwKSwuZiA9IH4ueCoueSlcbmBgYCJ9 -->
-<pre class="r"><code># Calculamos el cuadrado de cada elemento
-map_dbl(.x = c(1:10),.f = ~.x^2)
-# Calculamos el producto para los elementos x e y
-map2_dbl(.x = c(1:10),.y = c(11:20),.f = ~.x*.y)</code></pre>
-<!-- rnb-source-end -->
-<!-- rnb-chunk-end -->
-<!-- rnb-text-begin -->
-<p>Todas las funciones devuelven un vector de la misma longitud que .x. Dependiendo la función que especifiquemos nos devolverá un vector diferente, por ejemplo: map() devuelve una lista, map_lgl() un vector lógico, map_int() un vector entero, map_dbl() un vector doble y map_chr() un vector de caracteres.</p>
 </div>
 <div id="ejemplo-iterando-en-la-eph" class="section level2">
 <h2>Ejemplo: Iterando en la EPH</h2>
@@ -3089,7 +3270,7 @@ map2_dbl(.x = c(1:10),.y = c(11:20),.f = ~.x*.y)</code></pre>
 <!-- rnb-chunk-begin -->
 <!-- rnb-source-begin eyJkYXRhIjoiYGBgclxuIyBCdXNjYW1vcyBlbiBlbCBwYXRoIGFxdWVsbG9zIGFxdWVsbG9zIGFyY2hpdm9zIHF1ZSBtYXRjaGVhbiBhIGxhIGV4cHJlc2lvbiByZWd1bGFyXG5iYXNlc19pbmRpdmlkdWFsZXNfcGF0aCA8LSBkaXJfbHMocGF0aCA9ICcuLi9GdWVudGVzLycsIHJlZ2V4cD0gJ2luZGl2aWR1YWwnKVxuYmFzZXNfaW5kaXZpZHVhbGVzX3BhdGhcbmBgYCJ9 -->
 <pre class="r"><code># Buscamos en el path aquellos aquellos archivos que matchean a la expresion regular
-bases_individuales_path &lt;- dir_ls(path = &#39;../Fuentes/&#39;, regexp= &#39;individual&#39;)
+bases_individuales_path &lt;- dir_ls(path = '../Fuentes/', regexp= 'individual')
 bases_individuales_path</code></pre>
 <!-- rnb-source-end -->
 <!-- rnb-chunk-end -->
@@ -3097,26 +3278,23 @@ bases_individuales_path</code></pre>
 <p>Luego, como en la función que usamos para leer las bases definimos muchos parametros, nos podemos armar una función <em>wrapper</em> que sólo necesite un parámetro, y que simplifique la escritura del map.</p>
 <!-- rnb-text-end -->
 <!-- rnb-chunk-begin -->
-<!-- rnb-source-begin eyJkYXRhIjoiYGBgclxuIyBMZWVyIGxhIGJhc2UgZGUgRVBIIHRvbWFuZG8gY29tbyBhcmd1bWVudG8gZWwgZmlsZV9wYXRoXG5sZWVyX2Jhc2VfZXBoIDwtIGZ1bmN0aW9uKHBhdGgpIHtcbiAgIyBMZWN0dXJhIGRlIGFyY2hpdm9cbiAgcmVhZC50YWJsZShwYXRoLHNlcD1cIjtcIiwgZGVjPVwiLFwiLCBoZWFkZXIgPSBUUlVFLCBmaWxsID0gVFJVRSkgJT4lXG4gICAgIyBTZWxlY2Npb24gZGUgdmFyaWFibGVzIHJlbGV2YW50ZXNcbiAgICBzZWxlY3QoQU5PNCxUUklNRVNUUkUsUkVHSU9OLFAyMSxDSDA0LCBDSDA2KVxufVxuXG4jIExlZXIgYSB1biBkYXRhZnJhbWUgbGFzIHRhYmxhcyBlc3BlY2lmaWNhZGFzIGVuIGVsIHZlY3RvciBkZSBiYXNlcyBpbmRpdmlkdWFsZXNcbmJhc2VzX2RmIDwtIHRpYmJsZShiYXNlc19pbmRpdmlkdWFsZXNfcGF0aCkgJT4lXG4gIG11dGF0ZShiYXNlID0gbWFwKC54ID0gYmFzZXNfaW5kaXZpZHVhbGVzX3BhdGgsIC5mID0gbGVlcl9iYXNlX2VwaCkpXG5cbmBgYCJ9 -->
-<pre class="r"><code># Leer la base de EPH tomando como argumento el file_path
-leer_base_eph &lt;- function(path) {
-  # Lectura de archivo
-  read.table(path,sep=&quot;;&quot;, dec=&quot;,&quot;, header = TRUE, fill = TRUE) %&gt;%
-    # Seleccion de variables relevantes
-    select(ANO4,TRIMESTRE,REGION,P21,CH04, CH06)
-}
-
-# Leer a un dataframe las tablas especificadas en el vector de bases individuales
-bases_df &lt;- tibble(bases_individuales_path) %&gt;%
-  mutate(base = map(.x = bases_individuales_path, .f = leer_base_eph))
-</code></pre>
+<!-- rnb-source-begin eyJkYXRhIjoiYGBgclxuYGBgclxuYGBgclxuYmFzZXNfZGZcbmBgYFxuYGBgXG5gYGAifQ== -->
+<p><code>r</code>r</p>
+<pre class="r"><code>bases_df</code></pre>
+<pre><code></code></pre>
 <!-- rnb-source-end -->
 <!-- rnb-chunk-end -->
 <!-- rnb-text-begin -->
 <!-- rnb-text-end -->
 <!-- rnb-chunk-begin -->
-<!-- rnb-source-begin eyJkYXRhIjoiYGBgclxuYmFzZXNfZGZcbmBgYCJ9 -->
-<pre class="r"><code>bases_df</code></pre>
+<!-- rnb-source-begin eyJkYXRhIjoiYGBgclxuYGBgclxuIyBDYWxjdWxhbW9zIHVuYSByZWdyZXNpb24gbGluZWFsIHNvYnJlIGVsIGRhdGFzZXQgcXVlIHRpZW5lIHRvZGFzIGxhcyBvYnNlcnZhY2lvbmVzIGRlIEVQSFxubG1maXQgPC0gbG0oUDIxfmZhY3RvcihDSDA0KStDSDA2LGRhdGEgPSBiYXNlc19kZilcblxuIyBSZXN1bWVuIGRlbCBtb2RlbG9cbnN1bW1hcnkobG1maXQpXG5gYGBcbmBgYCJ9 -->
+<p><code>r</code>r # Calculamos una regresion lineal sobre el dataset que tiene todas las observaciones de EPH lmfit &lt;- lm(P21~factor(CH04)+CH06,data = bases_df)</p>
+</div>
+</div>
+<div id="resumen-del-modelo" class="section level1">
+<h1>Resumen del modelo</h1>
+<p>summary(lmfit)</p>
+<pre><code></code></pre>
 <!-- rnb-source-end -->
 <!-- rnb-chunk-end -->
 <!-- rnb-text-begin -->
@@ -3124,38 +3302,25 @@ bases_df &lt;- tibble(bases_individuales_path) %&gt;%
 <p>Si queremos abrir (“desanidar”) estas dataframes anidados usamos el comando <code>unnest()</code></p>
 <!-- rnb-text-end -->
 <!-- rnb-chunk-begin -->
-<!-- rnb-source-begin eyJkYXRhIjoiYGBgclxuYGBgclxuYmFzZXNfZGZcbmBgYFxuYGBgIn0= -->
-<pre class="r"><code>```r
-bases_df</code></pre>
-<pre><code>
-&lt;!-- rnb-source-end --&gt;
-
-&lt;!-- rnb-chunk-end --&gt;
-
-
-&lt;!-- rnb-text-begin --&gt;
-
-
-&gt; ¿Qué pasa si los DF que tenemos nesteados no tienen la misma cantidad de columnas?
-
-Esto mismo lo podemos usar para fragmentar el dataset por alguna variable, con la funcion `group_by()`
-
-
-
-&lt;!-- rnb-text-end --&gt;
-
-
-&lt;!-- rnb-chunk-begin --&gt;
-
-
-&lt;!-- rnb-source-begin eyJkYXRhIjoiYGBgclxuYmFzZXNfZGYgJT4lIFxuICAjIEFncnVwYXIgcG9yIHJlZ2lvblxuICBncm91cF9ieShSRUdJT04pICU+JSBcbiAgIyBBbmlkYXJcbiAgbmVzdCgpXG5gYGAifQ== --&gt;
-
-```r
-bases_df %&gt;% 
-  # Agrupar por region
-  group_by(REGION) %&gt;% 
-  # Anidar
-  nest()</code></pre>
+<!-- rnb-source-begin eyJkYXRhIjoiYGBgclxuYGBgclxuYnJvb206OnRpZHkobG1maXQpXG5gYGBcbmBgYCJ9 -->
+<p><code>r</code>r broom::tidy(lmfit)</p>
+<pre><code></code></pre>
+<!-- rnb-source-end -->
+<!-- rnb-chunk-end -->
+<!-- rnb-text-begin -->
+<blockquote>
+<p>¿Qué pasa si los DF que tenemos nesteados no tienen la misma cantidad de columnas?</p>
+</blockquote>
+<p>Esto mismo lo podemos usar para fragmentar el dataset por alguna variable, con la funcion <code>group_by()</code></p>
+<!-- rnb-text-end -->
+<!-- rnb-chunk-begin -->
+<!-- rnb-source-begin eyJkYXRhIjoiYGBgclxuYGBgclxuXG5yZXN1bHRhZG9zIDwtIHRpYmJsZSgpXG5cbmZvciAocmVnaW9uIGluIHVuaXF1ZShiYXNlc19kZiRSRUdJT04pKSB7XG4gICMgQ3JlYW1vcyB1biBkYXRhc2V0IHBvciByZWdpb25cbiAgZGF0YSA8LSBiYXNlc19kZiAlPiUgXG4gICAgZmlsdGVyKFJFR0lPTj09cmVnaW9uKVxuICAjIENhbGN1bGFyIGVsIG1vZGVsbyBsaW5lYWxcbiAgbG1maXQgPC0gbG0oUDIxfmZhY3RvcihDSDA0KStDSDA2LGRhdGEgPSBkYXRhKVxuICAjIEd1YXJkYXIgbG9zIHJlc3VsdGFkb3MgZGUgbG9zIGNvZWZpY2llbnRlcyBcbiAgbG10aWR5IDwtIGJyb29tOjp0aWR5KGxtZml0KVxuICAjIEFzaWduYW1vcyBsYSB2YXJpYWJsZSByZWdpb25cbiAgbG10aWR5JHJlZ2lvbiA8LSByZWdpb25cbiAgIyBVbmltb3MgbG9zIGRhdGFmcmFtZXNcbiAgcmVzdWx0YWRvcyA8LSBiaW5kX3Jvd3MocmVzdWx0YWRvcyxsbXRpZHkpXG5cbn1cblxucmVzdWx0YWRvc1xuYGBgXG5gYGAifQ== -->
+<p><code>r</code>r</p>
+<p>resultados &lt;- tibble()</p>
+<p>for (region in unique(bases_df<span class="math inline">\(REGION)) {  # Creamos un dataset por region  data &lt;- bases_df %&gt;%  filter(REGION==region)  # Calcular el modelo lineal  lmfit &lt;- lm(P21~factor(CH04)+CH06,data = data)  # Guardar los resultados de los coeficientes  lmtidy &lt;- broom::tidy(lmfit)  # Asignamos la variable region  lmtidy\)</span>region &lt;- region # Unimos los dataframes resultados &lt;- bind_rows(resultados,lmtidy)</p>
+<p>}</p>
+<p>resultados</p>
+<pre><code></code></pre>
 <!-- rnb-source-end -->
 <!-- rnb-chunk-end -->
 <!-- rnb-text-begin -->
@@ -3164,7 +3329,6 @@ bases_df %&gt;%
 <p>¿ De qué sirve todo esto?</p>
 </blockquote>
 <p>No todo en la vida es un Dataframe. Hay estucturas de datos que no se pueden normalizar a filas y columnas. En esos casos recurríamos tradicionalmente a los loops. Con MAP podemos tener los elementos agrupados en un sólo objeto y aún conservar sus formas diferentes.</p>
-</div>
 <div id="ejemplo.-regresión-lineal" class="section level2">
 <h2>Ejemplo. Regresión lineal</h2>
 <p>Si bien no nos vamos a meter en el detalle del modelo lineal en este encuentro, es útil usarlo como ejemplo de lo que podemos hacer con MAP.</p>
@@ -3174,12 +3338,9 @@ P21 = \beta_0 + \beta_1*CH04 + \beta_2*CH06
 <p>Es un modelo que explica el ingreso (P21) en funcion del sexo (CH04) y edad (CH06)</p>
 <!-- rnb-text-end -->
 <!-- rnb-chunk-begin -->
-<!-- rnb-source-begin eyJkYXRhIjoiYGBgclxuIyBDYWxjdWxhbW9zIHVuYSByZWdyZXNpb24gbGluZWFsIHNvYnJlIGVsIGRhdGFzZXQgcXVlIHRpZW5lIHRvZGFzIGxhcyBvYnNlcnZhY2lvbmVzIGRlIEVQSFxubG1maXQgPC0gbG0oUDIxfmZhY3RvcihDSDA0KStDSDA2LGRhdGEgPSBiYXNlc19kZilcblxuIyBSZXN1bWVuIGRlbCBtb2RlbG9cbnN1bW1hcnkobG1maXQpXG5gYGAifQ== -->
-<pre class="r"><code># Calculamos una regresion lineal sobre el dataset que tiene todas las observaciones de EPH
-lmfit &lt;- lm(P21~factor(CH04)+CH06,data = bases_df)
-
-# Resumen del modelo
-summary(lmfit)</code></pre>
+<!-- rnb-source-begin eyJkYXRhIjoiYGBgclxuYGBgclxuZnVuPC1mdW5jdGlvbihwb3JjaW9uLGdydXBvKSB7ICBicm9vbTo6dGlkeShsbShQMjF+ZmFjdG9yKENIMDQpK0NIMDYsZGF0YSA9IHBvcmNpb24pKX1cbmBgYFxuYGBgIn0= -->
+<p><code>r</code>r fun&lt;-function(porcion,grupo) { broom::tidy(lm(P21~factor(CH04)+CH06,data = porcion))}</p>
+<pre><code></code></pre>
 <!-- rnb-source-end -->
 <!-- rnb-chunk-end -->
 <!-- rnb-text-begin -->
@@ -3187,8 +3348,15 @@ summary(lmfit)</code></pre>
 <p>De forma Tidy, la librería <code>broom</code> nos da los resultados sobre los coeficientes en un DF.</p>
 <!-- rnb-text-end -->
 <!-- rnb-chunk-begin -->
-<!-- rnb-source-begin eyJkYXRhIjoiYGBgclxuYnJvb206OnRpZHkobG1maXQpXG5gYGAifQ== -->
-<pre class="r"><code>broom::tidy(lmfit)</code></pre>
+<!-- rnb-source-begin eyJkYXRhIjoiYGBgclxuYGBgclxuYmFzZXNfZGZfbG0gPC0gYmFzZXNfZGYgJT4lIFxuICAjIEFncnVwYW1vcyBwb3IgcmVnaW9uXG4gIGdyb3VwX2J5KFJFR0lPTikgJT4lXG4gICMgQW5pZGFtb3NcbiAgbmVzdCgpICU+JSBcbiAgIyBDcmVhbW9zIHVuYSBjb2x1bW5hIHF1ZSB0ZW5nYSBlbCBkYXRhZnJhbWUgY29tbyByZXN1bHRhZG8gZGUgbGEgZnVuY2lvblxuICBtdXRhdGUobG0gPSBtYXAoZGF0YSxmdW4pKVxuXG5iYXNlc19kZl9sbVxuXG4jIERlc2FuaWRhbW9zIHBvciBsYSB2YXJpYWJsZSBsbVxuYmFzZXNfZGZfbG0gJT4lIFxuICB1bm5lc3QobG0pXG5gYGBcbmBgYCJ9 -->
+<p><code>r</code>r bases_df_lm &lt;- bases_df %&gt;% # Agrupamos por region group_by(REGION) %&gt;% # Anidamos nest() %&gt;% # Creamos una columna que tenga el dataframe como resultado de la funcion mutate(lm = map(data,fun))</p>
+<p>bases_df_lm</p>
+</div>
+</div>
+<div id="desanidamos-por-la-variable-lm" class="section level1">
+<h1>Desanidamos por la variable lm</h1>
+<p>bases_df_lm %&gt;% unnest(lm)</p>
+<pre><code></code></pre>
 <!-- rnb-source-end -->
 <!-- rnb-chunk-end -->
 <!-- rnb-text-begin -->
@@ -3197,75 +3365,29 @@ summary(lmfit)</code></pre>
 <h3>Loopeando</h3>
 <!-- rnb-text-end -->
 <!-- rnb-chunk-begin -->
-<!-- rnb-source-begin eyJkYXRhIjoiYGBgclxuXG5yZXN1bHRhZG9zIDwtIHRpYmJsZSgpXG5cbmZvciAocmVnaW9uIGluIHVuaXF1ZShiYXNlc19kZiRSRUdJT04pKSB7XG4gICMgQ3JlYW1vcyB1biBkYXRhc2V0IHBvciByZWdpb25cbiAgZGF0YSA8LSBiYXNlc19kZiAlPiUgXG4gICAgZmlsdGVyKFJFR0lPTj09cmVnaW9uKVxuICAjIENhbGN1bGFyIGVsIG1vZGVsbyBsaW5lYWxcbiAgbG1maXQgPC0gbG0oUDIxfmZhY3RvcihDSDA0KStDSDA2LGRhdGEgPSBkYXRhKVxuICAjIEd1YXJkYXIgbG9zIHJlc3VsdGFkb3MgZGUgbG9zIGNvZWZpY2llbnRlcyBcbiAgbG10aWR5IDwtIGJyb29tOjp0aWR5KGxtZml0KVxuICAjIEFzaWduYW1vcyBsYSB2YXJpYWJsZSByZWdpb25cbiAgbG10aWR5JHJlZ2lvbiA8LSByZWdpb25cbiAgIyBVbmltb3MgbG9zIGRhdGFmcmFtZXNcbiAgcmVzdWx0YWRvcyA8LSBiaW5kX3Jvd3MocmVzdWx0YWRvcyxsbXRpZHkpXG5cbn1cblxucmVzdWx0YWRvc1xuYGBgIn0= -->
-<pre class="r"><code>
-resultados &lt;- tibble()
-
-for (region in unique(bases_df$REGION)) {
-  # Creamos un dataset por region
-  data &lt;- bases_df %&gt;% 
-    filter(REGION==region)
-  # Calcular el modelo lineal
-  lmfit &lt;- lm(P21~factor(CH04)+CH06,data = data)
-  # Guardar los resultados de los coeficientes 
-  lmtidy &lt;- broom::tidy(lmfit)
-  # Asignamos la variable region
-  lmtidy$region &lt;- region
-  # Unimos los dataframes
-  resultados &lt;- bind_rows(resultados,lmtidy)
-
-}
-
-resultados</code></pre>
+<!-- rnb-source-begin eyJkYXRhIjoiYGBgclxuYGBgclxuYmFzZXNfZGYgJT4lIFxuICBncm91cF9ieShSRUdJT04pICU+JSBcbiAgZ3JvdXBfbW9kaWZ5KGZ1bilcbmBgYFxuYGBgIn0= -->
+<p><code>r</code>r bases_df %&gt;% group_by(REGION) %&gt;% group_modify(fun)</p>
+<pre><code></code></pre>
 <!-- rnb-source-end -->
 <!-- rnb-chunk-end -->
 <!-- rnb-text-begin -->
-</div>
 </div>
 <div id="usando-map" class="section level2">
 <h2>Usando MAP</h2>
 <p>Primero me armo una funcion que me simplifica el codigo. La funcion nos devuelve la informacion de los coeficientes del modelo lineal calculado sobre el dataframe <strong>porcion</strong></p>
 <!-- rnb-text-end -->
 <!-- rnb-chunk-begin -->
-<!-- rnb-source-begin eyJkYXRhIjoiYGBgclxuZnVuPC1mdW5jdGlvbihwb3JjaW9uLGdydXBvKSB7ICBicm9vbTo6dGlkeShsbShQMjF+ZmFjdG9yKENIMDQpK0NIMDYsZGF0YSA9IHBvcmNpb24pKX1cbmBgYCJ9 -->
-<pre class="r"><code>fun&lt;-function(porcion,grupo) {  broom::tidy(lm(P21~factor(CH04)+CH06,data = porcion))}</code></pre>
+<!-- rnb-source-begin eyJkYXRhIjoiYGBgclxuYGBgclxuIyBMYSBmdW5jaW9uIGNhbGN1bGEgZWwgbW9kZWxvIGxpbmVhbCBzb2JyZSBjYWRhIHBvcmNpb24gZGUgZGF0b3NcbmZ1bjwtZnVuY3Rpb24ocG9yY2lvbixncnVwbykgeyAgbG0oUDIxfmZhY3RvcihDSDA0KStDSDA2LGRhdGEgPSBwb3JjaW9uKX1cblxuYmFzZXNfZGYgJT4lXG4gICMgQWdydXBhciBwb3IgcmVnaW9uXG4gIGdyb3VwX2J5KFJFR0lPTikgJT4lXG4gICMgQW5pZGFyXG4gIG5lc3QoKSAlPiVcbiAgIyBDYWxjdWxhciBlbCBtb2RlbG8gbGluZWFsXG4gIG11dGF0ZShsbSA9IG1hcChkYXRhLGZ1bikpXG5gYGBcbmBgYCJ9 -->
+<p><code>r</code>r # La funcion calcula el modelo lineal sobre cada porcion de datos fun&lt;-function(porcion,grupo) { lm(P21~factor(CH04)+CH06,data = porcion)}</p>
+<p>bases_df %&gt;% # Agrupar por region group_by(REGION) %&gt;% # Anidar nest() %&gt;% # Calcular el modelo lineal mutate(lm = map(data,fun))</p>
+<pre><code></code></pre>
 <!-- rnb-source-end -->
 <!-- rnb-chunk-end -->
 <!-- rnb-text-begin -->
 <!-- rnb-text-end -->
 <!-- rnb-chunk-begin -->
-<!-- rnb-source-begin eyJkYXRhIjoiYGBgclxuYmFzZXNfZGZfbG0gPC0gYmFzZXNfZGYgJT4lIFxuICAjIEFncnVwYW1vcyBwb3IgcmVnaW9uXG4gIGdyb3VwX2J5KFJFR0lPTikgJT4lXG4gICMgQW5pZGFtb3NcbiAgbmVzdCgpICU+JSBcbiAgIyBDcmVhbW9zIHVuYSBjb2x1bW5hIHF1ZSB0ZW5nYSBlbCBkYXRhZnJhbWUgY29tbyByZXN1bHRhZG8gZGUgbGEgZnVuY2lvblxuICBtdXRhdGUobG0gPSBtYXAoZGF0YSxmdW4pKVxuXG5iYXNlc19kZl9sbVxuXG4jIERlc2FuaWRhbW9zIHBvciBsYSB2YXJpYWJsZSBsbVxuYmFzZXNfZGZfbG0gJT4lIFxuICB1bm5lc3QobG0pXG5gYGAifQ== -->
-<pre class="r"><code>bases_df_lm &lt;- bases_df %&gt;% 
-  # Agrupamos por region
-  group_by(REGION) %&gt;%
-  # Anidamos
-  nest() %&gt;% 
-  # Creamos una columna que tenga el dataframe como resultado de la funcion
-  mutate(lm = map(data,fun))
-
-bases_df_lm
-
-# Desanidamos por la variable lm
-bases_df_lm %&gt;% 
-  unnest(lm)</code></pre>
-<!-- rnb-source-end -->
-<!-- rnb-chunk-end -->
-<!-- rnb-text-begin -->
-<p>O incluso más facil, utilizando <code>group_modify</code> (que es un atajo que solo acepta DF)</p>
-<!-- rnb-text-end -->
-<!-- rnb-chunk-begin -->
-<!-- rnb-source-begin eyJkYXRhIjoiYGBgclxuYmFzZXNfZGYgJT4lIFxuICBncm91cF9ieShSRUdJT04pICU+JSBcbiAgZ3JvdXBfbW9kaWZ5KGZ1bilcbmBgYCJ9 -->
-<pre class="r"><code>bases_df %&gt;% 
-  group_by(REGION) %&gt;% 
-  group_modify(fun)</code></pre>
-<!-- rnb-source-end -->
-<!-- rnb-chunk-end -->
-<!-- rnb-text-begin -->
-<p>Pero MAP sirve para operar con cualquier objeto de R.</p>
-<p>Por ejemplo podemos guardar el <strong>objeto</strong> <code>S3:lm</code> que es la regresion lineal entrenada. Ese objeto no es ni un vector, ni una lista, ni un DF. No es una estructura de datos, sino que es algo distinto, con <em>propiedades</em> como <code>predict()</code> para predecir, el <code>summary()</code> que vimos, etc.</p>
-<!-- rnb-text-end -->
-<!-- rnb-chunk-begin -->
-<!-- rnb-source-begin eyJkYXRhIjoiYGBgclxuIyBMYSBmdW5jaW9uIGNhbGN1bGEgZWwgbW9kZWxvIGxpbmVhbCBzb2JyZSBjYWRhIHBvcmNpb24gZGUgZGF0b3NcbmZ1bjwtZnVuY3Rpb24ocG9yY2lvbixncnVwbykgeyAgbG0oUDIxfmZhY3RvcihDSDA0KStDSDA2LGRhdGEgPSBwb3JjaW9uKX1cblxuYmFzZXNfZGYgJT4lXG4gICMgQWdydXBhciBwb3IgcmVnaW9uXG4gIGdyb3VwX2J5KFJFR0lPTikgJT4lXG4gICMgQW5pZGFyXG4gIG5lc3QoKSAlPiVcbiAgIyBDYWxjdWxhciBlbCBtb2RlbG8gbGluZWFsXG4gIG11dGF0ZShsbSA9IG1hcChkYXRhLGZ1bikpXG5gYGAifQ== -->
+<!-- rnb-source-begin eyJkYXRhIjoiYGBgclxuYGBgclxuYGBgclxuIyBMYSBmdW5jaW9uIGNhbGN1bGEgZWwgbW9kZWxvIGxpbmVhbCBzb2JyZSBjYWRhIHBvcmNpb24gZGUgZGF0b3NcbmZ1bjwtZnVuY3Rpb24ocG9yY2lvbixncnVwbykgeyAgbG0oUDIxfmZhY3RvcihDSDA0KStDSDA2LGRhdGEgPSBwb3JjaW9uKX1cblxuYmFzZXNfZGYgJT4lXG4gICMgQWdydXBhciBwb3IgcmVnaW9uXG4gIGdyb3VwX2J5KFJFR0lPTikgJT4lXG4gICMgQW5pZGFyXG4gIG5lc3QoKSAlPiVcbiAgIyBDYWxjdWxhciBlbCBtb2RlbG8gbGluZWFsXG4gIG11dGF0ZShsbSA9IG1hcChkYXRhLGZ1bikpXG5gYGBcbmBgYFxuYGBgIn0= -->
+<p><code>r</code>r</p>
 <pre class="r"><code># La funcion calcula el modelo lineal sobre cada porcion de datos
 fun&lt;-function(porcion,grupo) {  lm(P21~factor(CH04)+CH06,data = porcion)}
 
@@ -3276,47 +3398,48 @@ bases_df %&gt;%
   nest() %&gt;%
   # Calcular el modelo lineal
   mutate(lm = map(data,fun))</code></pre>
+<pre><code></code></pre>
 <!-- rnb-source-end -->
 <!-- rnb-chunk-end -->
 <!-- rnb-text-begin -->
+<p>O incluso más facil, utilizando <code>group_modify</code> (que es un atajo que solo acepta DF)</p>
+<!-- rnb-text-end -->
+<!-- rnb-chunk-begin -->
+<!-- rnb-source-begin eyJkYXRhIjoiYGBgclxuYGBgclxuIyBmdW5jaW9uIHBhcmEgaW1wcmltaXJcbmltcHJpbWlyX3NhbGlkYSA8LSBmdW5jdGlvbih4LHkpe1xuICBwcmludChmdW5jaW9uX3BydWViYSh4LHkpKVxufVxuXG4jIE1hcFxubWFwMihBQkNfMTIzJExldHJhcyxBQkNfMTIzJE51bSxpbXByaW1pcl9zYWxpZGEpXG5gYGBcbmBgYCJ9 -->
+<p><code>r</code>r # funcion para imprimir imprimir_salida &lt;- function(x,y){ print(funcion_prueba(x,y)) }</p>
 </div>
+</div>
+<div id="map-1" class="section level1">
+<h1>Map</h1>
+<p>map2(ABC_123<span class="math inline">\(Letras,ABC_123\)</span>Num,imprimir_salida)</p>
+<pre><code></code></pre>
+<!-- rnb-source-end -->
+<!-- rnb-chunk-end -->
+<!-- rnb-text-begin -->
+<p>Pero MAP sirve para operar con cualquier objeto de R.</p>
+<p>Por ejemplo podemos guardar el <strong>objeto</strong> <code>S3:lm</code> que es la regresion lineal entrenada. Ese objeto no es ni un vector, ni una lista, ni un DF. No es una estructura de datos, sino que es algo distinto, con <em>propiedades</em> como <code>predict()</code> para predecir, el <code>summary()</code> que vimos, etc.</p>
+<!-- rnb-text-end -->
+<!-- rnb-chunk-begin -->
+<!-- rnb-source-begin eyJkYXRhIjoiYGBgclxuYGBgclxuIyBXYWxrXG53YWxrMihBQkNfMTIzJExldHJhcyxBQkNfMTIzJE51bSxpbXByaW1pcl9zYWxpZGEpXG5cbmBgYFxuYGBgIn0= -->
+<p><code>r</code>r # Walk walk2(ABC_123<span class="math inline">\(Letras,ABC_123\)</span>Num,imprimir_salida)</p>
+<pre><code></code></pre>
+<!-- rnb-source-end -->
+<!-- rnb-chunk-end -->
+<!-- rnb-text-begin -->
 <div id="walk" class="section level2">
 <h2>Walk</h2>
 <p>Las funciones <code>Walk</code> Tienen la misma forma que los <code>map</code>, pero se usan cuando lo que queremos iterar no genera una salida, sino que nos interesan los efectos secundarios que generan.</p>
 <!-- rnb-text-end -->
 <!-- rnb-chunk-begin -->
-<!-- rnb-source-begin eyJkYXRhIjoiYGBgclxuYGBgclxuIyBMYSBmdW5jaW9uIGNhbGN1bGEgZWwgbW9kZWxvIGxpbmVhbCBzb2JyZSBjYWRhIHBvcmNpb24gZGUgZGF0b3NcbmZ1bjwtZnVuY3Rpb24ocG9yY2lvbixncnVwbykgeyAgbG0oUDIxfmZhY3RvcihDSDA0KStDSDA2LGRhdGEgPSBwb3JjaW9uKX1cblxuYmFzZXNfZGYgJT4lXG4gICMgQWdydXBhciBwb3IgcmVnaW9uXG4gIGdyb3VwX2J5KFJFR0lPTikgJT4lXG4gICMgQW5pZGFyXG4gIG5lc3QoKSAlPiVcbiAgIyBDYWxjdWxhciBlbCBtb2RlbG8gbGluZWFsXG4gIG11dGF0ZShsbSA9IG1hcChkYXRhLGZ1bikpXG5gYGBcbmBgYCJ9 -->
-<pre class="r"><code>```r
-# La funcion calcula el modelo lineal sobre cada porcion de datos
-fun&lt;-function(porcion,grupo) {  lm(P21~factor(CH04)+CH06,data = porcion)}
-
-bases_df %&gt;%
-  # Agrupar por region
-  group_by(REGION) %&gt;%
-  # Anidar
-  nest() %&gt;%
-  # Calcular el modelo lineal
-  mutate(lm = map(data,fun))</code></pre>
-<pre><code>
-&lt;!-- rnb-source-end --&gt;
-
-&lt;!-- rnb-chunk-end --&gt;
-
-
-&lt;!-- rnb-text-begin --&gt;
-
-
-
-&lt;!-- rnb-text-end --&gt;
-
-
-&lt;!-- rnb-chunk-begin --&gt;
-
-
-&lt;!-- rnb-source-begin eyJkYXRhIjoiYGBgclxud2FsazIoLnggPSBBQkNfMTIzJExldHJhcywueSA9IEFCQ18xMjMkTnVtLC5mID0gZnVuY2lvbl9wcnVlYmEpXG5gYGAifQ== --&gt;
-
-```r
-walk2(.x = ABC_123$Letras,.y = ABC_123$Num,.f = funcion_prueba)</code></pre>
+<!-- rnb-source-begin eyJkYXRhIjoiYGBgclxubWFwMigueCA9IEFCQ18xMjMkTGV0cmFzLC55ID0gQUJDXzEyMyROdW0sLmYgPSBmdW5jaW9uX3BydWViYSlbMTozXVxuYGBgIn0= -->
+<pre class="r"><code>map2(.x = ABC_123$Letras,.y = ABC_123$Num,.f = funcion_prueba)[1:3]</code></pre>
+<!-- rnb-source-end -->
+<!-- rnb-chunk-end -->
+<!-- rnb-text-begin -->
+<!-- rnb-text-end -->
+<!-- rnb-chunk-begin -->
+<!-- rnb-source-begin eyJkYXRhIjoiYGBgclxud2FsazIoLnggPSBBQkNfMTIzJExldHJhcywueSA9IEFCQ18xMjMkTnVtLC5mID0gZnVuY2lvbl9wcnVlYmEpXG5gYGAifQ== -->
+<pre class="r"><code>walk2(.x = ABC_123$Letras,.y = ABC_123$Num,.f = funcion_prueba)</code></pre>
 <!-- rnb-source-end -->
 <!-- rnb-chunk-end -->
 <!-- rnb-text-begin -->
@@ -3352,21 +3475,15 @@ walk2(ABC_123$Letras,ABC_123$Num,imprimir_salida)
 </blockquote>
 <p>A lo largo del curso vimos diferentes técnicas para manipulación de datos. En particular, la librería dplyr nos permitía fácilmente modificar y crear nuevas variables, agrupando. ¿Cuando usamos <code>dplyr</code> y cuando usamos <code>purrr</code>?</p>
 <ul>
-<li><p>Si trabajamos sobre un DF simple, sin variables anidadas (lo que conocíamos hasta hoy) podemos usar <code>dplyr</code></p></li>
+<li>Si trabajamos sobre un DF simple, sin variables anidadas (lo que conocíamos hasta hoy) podemos usar <code>dplyr</code></li>
 <li><p>Si queremos trabajar con DF anidados, con cosas que no son DF, o si el resultado de la operación que vamos a realizar a nivel archivo es algo distinto a un valor único, nos conviene usar <code>map</code> y <code>purrr</code></p></li>
 <li><p>Las funciones <code>walk</code> son útiles por ejemplo para escribir archivos en disco de forma iterativa. Algo que no genera una salida</p></li>
 </ul>
 <!-- rnb-text-end -->
 </div>
 </div>
-<div class="footnotes">
-<hr />
-<ol>
-<li id="fn1"><p>basado en <a href="https://jennybc.github.io/purrr-tutorial/ls03_map-function-syntax.html" class="uri">https://jennybc.github.io/purrr-tutorial/ls03_map-function-syntax.html</a><a href="#fnref1" class="footnote-back">↩</a></p></li>
-</ol>
-</div>
 
-<div id="rmd-source-code">LS0tDQp0aXRsZTogIlBVUlJSIg0KYXV0aG9yOiAiSnVhbiBCYXJyaW9sYSB5IFNvZsOtYSBQZXJpbmkiDQpkYXRlOiAiMTkgZGUgU2VwdGllbWJyZSBkZSAyMDIwIg0Kb3V0cHV0Og0KICBodG1sX25vdGVib29rOg0KICAgIHRoZW1lOiBzcGFjZWxhYg0KICAgIHRvYzogeWVzDQogICAgdG9jX2Zsb2F0OiB5ZXMNCiAgICBkZl9wcmludDogcGFnZWQNCi0tLQ0KDQpMaWJyZXJpYXMgcXVlIHNlIHV0aWxpemFuIGVuIGVzdGEgY2xhc2U6DQoNCmBgYHtyIG1lc3NhZ2U9RkFMU0UsIHdhcm5pbmc9RkFMU0V9DQpsaWJyYXJ5KHRpZHl2ZXJzZSkNCmxpYnJhcnkob3Blbnhsc3gpDQpsaWJyYXJ5KGdndGhlbWVzKQ0KbGlicmFyeShmcykNCmBgYA0KDQojIFBVUlJSXltiYXNhZG8gZW4gaHR0cHM6Ly9qZW5ueWJjLmdpdGh1Yi5pby9wdXJyci10dXRvcmlhbC9sczAzX21hcC1mdW5jdGlvbi1zeW50YXguaHRtbF0NCg0KTUFQIGVzIGxhIGZvcm1hIF90aWR5XyBkZSBoYWNlciBsb29wcy4gQWRlbcOhcyBkZSBzZXIgbcOhcyBwcm9saWpvIGVsIGPDs2RpZ28sIGVzIG11Y2hvIG3DoXMgZWZpY2llbnRlLg0KDQpMYSBmdW5jacOzbiBfX21hcF9fIHRvbWEgdW4gaW5wdXQsIHVuYSBmdW5jacOzbiBwYXJhIGFwbGljYXIsIHkgYWxndW5hIG90cmEgY29zYSAocG9yIGVqZW1wbG8gcGFyYW1ldHJvcyBxdWUgbmVjZXNpdGUgbGEgZnVuY2nDs24pDQoNCi0gbWFwKC54LCAuZiwgLi4uKQ0KLSBtYXAoVkVDVE9SX09fTElTVF9JTlBVVCwgRlVOQ1RJT05fQV9BUExJQ0FSLCBPVFJPU19PUENJT05BTEVTKQ0KDQoNClVzYW1vcyBfX21hcDJfXyBjdWFuZG8gdGVuZW1vcyBxdWUgcGFzYXIgZG9zIGlucHV0LCBxdWUgc2UgYXBsaWNhbiBzb2JyZSB1bmEgZnVuY2nDs246DQoNCi0gbWFwMigueCwgLnksIC5mLCAuLi4pDQotIG1hcDIoSU5QVVRfVU5PLCBJTlBVVF9ET1MsIEZVTkNUSU9OX0FfQVBMSUNBUiwgT1RST1NfT1BDSU9OQUxFUykNCg0KU2kgdGVuZW1vcyBtw6FzIGRlIGRvcy4uLg0KDQotIHBtYXAoLmwsIC5mLCAuLi4pDQotIHBtYXAoVkVDVE9SX09fTElTVF9JTlBVVCwgRlVOQ1RJT05fQV9BUExJQ0FSLCBPVFJPU19PUENJT05BTEVTKQ0KDQoNClBvciBlamVtcGxvLiBTaSBxdWVyZW1vcyB1dGlsaXphciBsYSBmdW5jacOzbiBwcnVlYmEgc29icmUgbG9zIGRhdG9zIGRlbCBkYXRhZnJhbWUgQUJDXzEyMw0KDQoNCmBgYHtyfQ0KQUJDXzEyMyA8LSBkYXRhLmZyYW1lKExldHJhcyA9IExFVFRFUlNbMToyMF0sTnVtID0gMToyMCkNCmZ1bmNpb25fcHJ1ZWJhDQpgYGANCg0KU2kgZWwgcmVzdWx0YWRvIHF1ZSBxdWVyZW1vcyBlcyBxdWUganVudGUgY2FkYSBmaWxhLCBuZWNlc2l0YW1vcyBwYXNhcmxlIGRvcyBwYXLDoW1ldHJvczogdXRpbGl6YW1vcyBgbWFwMigpYCwgTm90ZW4gcXVlIGxhIGZ1bmNpw7NuIHNlIGxlIHBhc2EgYSBgbWFwKClgIHNpbiBwYXLDqW50ZXNpcyBuaSBhcmd1bWVudG9zLg0KDQoNCmBgYHtyfQ0KcmVzdWx0YWRvIDwtIG1hcDIoLnggPSBBQkNfMTIzJExldHJhcywgLnkgPSBBQkNfMTIzJE51bSwuZiA9IGZ1bmNpb25fcHJ1ZWJhKQ0KcmVzdWx0YWRvWzE6M10NCg0KYGBgDQoNCkxhIHNhbGlkYSBkZSBsb3MgYG1hcCgpYCBlcyB1bmEgX19saXN0YV9fLCBubyB1biB2ZWN0b3IsIHBvciBsbyBxdWUgc2kgbG8gbWV0ZW1vcyBkZW50cm8gZGUgdW4gZGF0YWZyYW1lIHNlIHZlcsOtYSBhc8OtOg0KDQpgYGB7cn0NCkFCQ18xMjMgJT4lIA0KICBtdXRhdGUocmVzdWx0YWRvPSBtYXAyKC54ID0gTGV0cmFzLC55ID0gTnVtLC5mID0gZnVuY2lvbl9wcnVlYmEpKQ0KDQpgYGANCg0KQWwgcG9uZXJsbyBkZW50cm8gZGVsIGRhdGFmcmFtZSBkZXNhcm1hIGxhIGxpc3RhIHkgZ3VhcmRhIGNhZGEgZWxlbWVudG8gcG9yIHNlcGFyYWRvLg0KTGEgbWFnaWEgZGUgZXNvIGVzIHF1ZSBwb2RlbW9zIF9fZ3VhcmRhciBjdWFscXVpZXIgY29zYSBlbiBlbCBkYXRhZnJhbWVfXyBubyBzw7NsbyB2YWxvcmVzLCBzaW5vIHRhbWJpw6luIGxpc3RhcywgZnVuY2lvbmVzLCBkYXRhZnJhbWVzLCBldGMuDQoNClNpIHF1ZXJlbW9zIHJlY3VwZXJhciBsb3MgdmFsb3JlcyBvcmlnaW5hbGVzIGVuIGVzdGUgY2FzbyBwb2RlbW9zIHVzYXIgYHVubGlzdCgpYA0KDQpgYGB7cn0NCiMgUmVjdXBlcmFtb3MgbG9zIHRyZXMgcHJpbWVyb3MgZWxlbWVudG9zIGRlIGxhIGxpc3RhIHJlc3VsdGFkb3MNCnJlc3VsdGFkb1sxOjNdICU+JSB1bmxpc3QoKQ0KDQojIFJlY3VwZXJhbW9zIGVsIGVsZW1lbnRvIGRlIGxhIGxpc3RhIHBhcmEgY2FkYSBwYXIgbGV0cmEtbnVtZXJvIChjYWRhIGZpbGEpDQpBQkNfMTIzICU+JSANCiAgbXV0YXRlKHJlc3VsdGFkbz0gdW5saXN0KG1hcDIoLnggPSBMZXRyYXMsLnkgPSBOdW0sLmYgPSBmdW5jaW9uX3BydWViYSkpKQ0KYGBgDQoNClNpIGxvIHF1ZSBxdWVyw61hbW9zIGVyYSBxdWUgbGEgZnVuY2nDs24gbm9zIGhhZ2EgdG9kYXMgbGFzIGNvbWJpbmFjaW9uZXMgZGUgbGV0cmFzIHkgbsO6bWVybywgZW50b25jZXMgbG8gcXVlIG5lY2VzaXRhbW9zIGVzIHBhc2FybGUgZWwgc2Vnw7puZG8gcGFyYW1ldHJvIGNvbW8gYWxnbyBfZmlqb18sIHBvbmllbmRvbG8gZGVzcHXDqXMgZGUgbGEgZnVuY2nDs24uIA0KDQpOb3RlbW9zIHF1ZSBlc3RhbW9zIHV0aWxpemFuZG8gYG1hcCgpYCBxdWUgdG9tYSB1biDDum5pY28gaW5wdXQsIGVuIGx1Z2FyIGRlIGBtYXAyKClgDQoNCmBgYHtyfQ0KI0NvbWJpbmFjaW9uIGRlIHRvZGFzIGxhcyBsZXRyYXMgY29uIHRvZG9zIGxvcyBudW1lcm9zDQptYXAoLnggPSBBQkNfMTIzJExldHJhcywuZiA9IGZ1bmNpb25fcHJ1ZWJhLEFCQ18xMjMkTnVtKVsxOjJdDQpgYGANCg0KRW4gZXN0ZSBjYXNvLCBlbCBtYXAgaXRlcmEgc29icmUgY2FkYSBlbGVtZW50byBkZSBgbGV0cmFzYCwgeSBwYXJhIGNhZGEgZWxlbWVudG8gX2lfIGhhY2UgDQpgZnVuY2lvbl9wcnVlYmEoaSxBQkMkTnVtKWAgeSBndWFyZGEgZWwgcmVzdWx0YWRvIGVuIGxhIGxpc3RhDQoNClNpIGxvIHF1ZXJlbW9zIG1ldGVyIGVuIGVsIGRhdGFmcmFtZToNCg0KYGBge3J9DQojIEFzaWduYXIgcmVzdWx0YWRvIGFsIGRhdGFmcmFtZQ0KQUJDXzEyMyAlPiUgDQogIG11dGF0ZShyZXN1bHRhZG89IG1hcChMZXRyYXMsZnVuY2lvbl9wcnVlYmEsTnVtKSkNCmBgYA0KDQpBaG9yYSBjYWRhIGZpbGEgdGllbmUgdW5hIGxpc3RhIGRlIDIwIGVsZW1lbnRvcyBndWFyZGFkbyBlbiBsYSBjb2x1bW5hICoqcmVzdWx0YWRvKioNCg0KIyMgIEZ1bmNpb25lcyBpbXBsw61jaXRhcy9hbm9uaW1hcw0KDQpObyBlcyBuZWNlc2FyaW8gcXVlIGRlZmluYW1vcyBsYSBmdW5jacOzbiBkZSBhbnRlbWFuby4gUG9kZW1vcyB1c2FyIF9mdW5jaW9uZXMgaW1wbMOtY2l0YXNfDQoNCmBgYHtyfQ0KIyBDYWxjdWxhbW9zIGVsIGN1YWRyYWRvIGRlIGNhZGEgZWxlbWVudG8NCm1hcF9kYmwoLnggPSBjKDE6MTApLCAuZiA9IGZ1bmN0aW9uKHgpIHheMikgDQojIENhbGN1bGFtb3MgZWwgcHJvZHVjdG8gcGFyYSBsb3MgZWxlbWVudG9zIHggZSB5DQptYXAyX2RibCgueCA9IGMoMToxMCksLnkgPSBjKDExOjIwKSwuZiA9ICBmdW5jdGlvbih4LHkpIHgqeSkNCmBgYA0KDQojIyBGdW5jaW9uZXMgbGFtYmRhDQoNCkluY2x1c28gbcOhcyBjb25jaXNvIHF1ZSBsYXMgZnVuY2lvbmVzIGltcGzDrWljdGFzIHNvbiBsYXMgX19mdW5jaW9uZXMgbGFtYmRhX18gZG9uZGUgZGVmaW5pbW9zIGxhcyB2YXJpYWJsZXMgY29tbyBfLnhfIF8ueV8sIGV0Yy4gTGEgZmxleGliaWxpZGFkIGRlIGVzdGFzIGV4cHJlc2lvbmVzIGVzIGxpbWl0YWRhLCBwZXJvIHB1ZWRlIHNlciDDunRpbCBlbiBhbGd1bm9zIGNhc29zLiANCg0KYGBge3J9DQojIENhbGN1bGFtb3MgZWwgY3VhZHJhZG8gZGUgY2FkYSBlbGVtZW50bw0KbWFwX2RibCgueCA9IGMoMToxMCksLmYgPSB+LnheMikNCiMgQ2FsY3VsYW1vcyBlbCBwcm9kdWN0byBwYXJhIGxvcyBlbGVtZW50b3MgeCBlIHkNCm1hcDJfZGJsKC54ID0gYygxOjEwKSwueSA9IGMoMTE6MjApLC5mID0gfi54Ki55KQ0KYGBgDQoNClRvZGFzIGxhcyBmdW5jaW9uZXMgZGV2dWVsdmVuIHVuIHZlY3RvciBkZSBsYSBtaXNtYSBsb25naXR1ZCBxdWUgLnguIERlcGVuZGllbmRvIGxhIGZ1bmNpw7NuIHF1ZSBlc3BlY2lmaXF1ZW1vcyBub3MgZGV2b2x2ZXLDoSB1biB2ZWN0b3IgZGlmZXJlbnRlLCBwb3IgZWplbXBsbzogbWFwKCkgZGV2dWVsdmUgdW5hIGxpc3RhLCBtYXBfbGdsKCkgdW4gdmVjdG9yIGzDs2dpY28sIG1hcF9pbnQoKSB1biB2ZWN0b3IgZW50ZXJvLCBtYXBfZGJsKCkgdW4gdmVjdG9yIGRvYmxlIHkgbWFwX2NocigpIHVuIHZlY3RvciBkZSBjYXJhY3RlcmVzLg0KDQojIyBFamVtcGxvOiBJdGVyYW5kbyBlbiBsYSBFUEgNCg0KTG8gcHJpbWVybyBxdWUgbmVjZXNpdGFtb3MgZXMgZGVmaW5pciB1biB2ZWN0b3IgbyBsaXN0YSBzb2JyZSBlbCBxdWUgaXRlcmFyLiANCg0KUG9yIGVqZW1wbG8sIHBvZGVtb3MgYXJtYXIgdW4gdmVjdG9yIGNvbiBsb3MgcGF0aCBhIGxhcyBiYXNlcyBpbmRpdmlkdWFsZXMsIGNvbiBlbCBjb21hbmRvIGBmczo6ZGlyX2xzYC4gU2UgbGUgZXNwZWNpZmljYSBlbCBfX3BhdGhfXyBkb25kZSBidXNjYXIgbG9zIGFyY2hpdm9zIHkgZW4gZXN0ZSBjYXNvIHVuYSBleHByZXNpb24gcmVndWxhciBfX3JlZ2V4cF9fIHBhcmEgcXVlIGRldnVlbHZhIGFxdWVsbG9zIGFyY2hpdm9zIHF1ZSBjb2luY2lkZW4gY29uIGxhIG1pc21hLg0KDQpgYGB7cn0NCiMgQnVzY2Ftb3MgZW4gZWwgcGF0aCBhcXVlbGxvcyBhcXVlbGxvcyBhcmNoaXZvcyBxdWUgbWF0Y2hlYW4gYSBsYSBleHByZXNpb24gcmVndWxhcg0KYmFzZXNfaW5kaXZpZHVhbGVzX3BhdGggPC0gZGlyX2xzKHBhdGggPSAnLi4vRnVlbnRlcy8nLCByZWdleHA9ICdpbmRpdmlkdWFsJykNCmJhc2VzX2luZGl2aWR1YWxlc19wYXRoDQpgYGANCg0KTHVlZ28sIGNvbW8gZW4gbGEgZnVuY2nDs24gcXVlIHVzYW1vcyBwYXJhIGxlZXIgbGFzIGJhc2VzIGRlZmluaW1vcyBtdWNob3MgcGFyYW1ldHJvcywgbm9zIHBvZGVtb3MgYXJtYXIgdW5hIGZ1bmNpw7NuIF93cmFwcGVyXyBxdWUgc8OzbG8gbmVjZXNpdGUgdW4gcGFyw6FtZXRybywgeSBxdWUgc2ltcGxpZmlxdWUgbGEgZXNjcml0dXJhIGRlbCBtYXAuDQoNCmBgYHtyIG1lc3NhZ2U9RkFMU0UsIHdhcm5pbmc9RkFMU0V9DQojIExlZXIgbGEgYmFzZSBkZSBFUEggdG9tYW5kbyBjb21vIGFyZ3VtZW50byBlbCBmaWxlX3BhdGgNCmxlZXJfYmFzZV9lcGggPC0gZnVuY3Rpb24ocGF0aCkgew0KICAjIExlY3R1cmEgZGUgYXJjaGl2bw0KICByZWFkLnRhYmxlKHBhdGgsc2VwPSI7IiwgZGVjPSIsIiwgaGVhZGVyID0gVFJVRSwgZmlsbCA9IFRSVUUpICU+JQ0KICAgICMgU2VsZWNjaW9uIGRlIHZhcmlhYmxlcyByZWxldmFudGVzDQogICAgc2VsZWN0KEFOTzQsVFJJTUVTVFJFLFJFR0lPTixQMjEsQ0gwNCwgQ0gwNikNCn0NCg0KIyBMZWVyIGEgdW4gZGF0YWZyYW1lIGxhcyB0YWJsYXMgZXNwZWNpZmljYWRhcyBlbiBlbCB2ZWN0b3IgZGUgYmFzZXMgaW5kaXZpZHVhbGVzDQpiYXNlc19kZiA8LSB0aWJibGUoYmFzZXNfaW5kaXZpZHVhbGVzX3BhdGgpICU+JQ0KICBtdXRhdGUoYmFzZSA9IG1hcCgueCA9IGJhc2VzX2luZGl2aWR1YWxlc19wYXRoLCAuZiA9IGxlZXJfYmFzZV9lcGgpKQ0KDQpgYGANCg0KYGBge3J9DQpiYXNlc19kZg0KYGBgDQoNCkVsIHJlc3VsdGFkbyBlcyB1biBkYXRhZnJhbWUgZG9uZGUgbGEgY29sdW1uYSBfX2Jhc2VfXyB0aWVuZSBlbiBjYWRhIGZpbGEgb3RybyBkYXRhZnJhbWUgIGNvbiBsYSBiYXNlIGRlIGxhIEVQSCBkZSBlc2UgcGVyw61vZG8uIEVzdG8gZXMgbG8gcXVlIGxsYW1hbW9zIHVuIF9uZXN0ZWQgREZfIG8gZGF0YWZyYW1lIGFuaWRhZG8uDQoNClNpIHF1ZXJlbW9zIGFicmlyICgiZGVzYW5pZGFyIikgZXN0YXMgZGF0YWZyYW1lcyBhbmlkYWRvcyB1c2Ftb3MgZWwgY29tYW5kbyBgdW5uZXN0KClgDQoNCmBgYHtyIG1lc3NhZ2U9RkFMU0UsIHdhcm5pbmc9RkFMU0V9DQojIERlc2FuaWRhbW9zIGVsIGRhdGFmcmFtZQ0KYmFzZXNfZGYgPC0gYmFzZXNfZGYgJT4lIHVubmVzdCgpDQpiYXNlc19kZg0KYGBgDQoNCj4gwr9RdcOpIHBhc2Egc2kgbG9zIERGIHF1ZSB0ZW5lbW9zIG5lc3RlYWRvcyBubyB0aWVuZW4gbGEgbWlzbWEgY2FudGlkYWQgZGUgY29sdW1uYXM/DQoNCkVzdG8gbWlzbW8gbG8gcG9kZW1vcyB1c2FyIHBhcmEgZnJhZ21lbnRhciBlbCBkYXRhc2V0IHBvciBhbGd1bmEgdmFyaWFibGUsIGNvbiBsYSBmdW5jaW9uIGBncm91cF9ieSgpYA0KDQoNCmBgYHtyfQ0KYmFzZXNfZGYgJT4lIA0KICAjIEFncnVwYXIgcG9yIHJlZ2lvbg0KICBncm91cF9ieShSRUdJT04pICU+JSANCiAgIyBBbmlkYXINCiAgbmVzdCgpDQpgYGANCg0KQXPDrSwgcGFyYSBjYWRhIHJlZ2nDs24gdGVuZW1vcyB1biBERi4NCg0KPiDCvyBEZSBxdcOpIHNpcnZlIHRvZG8gZXN0bz8NCg0KTm8gdG9kbyBlbiBsYSB2aWRhIGVzIHVuIERhdGFmcmFtZS4gSGF5IGVzdHVjdHVyYXMgZGUgZGF0b3MgcXVlIG5vIHNlIHB1ZWRlbiBub3JtYWxpemFyIGEgZmlsYXMgeSBjb2x1bW5hcy4gRW4gZXNvcyBjYXNvcyByZWN1cnLDrWFtb3MgdHJhZGljaW9uYWxtZW50ZSBhIGxvcyBsb29wcy4gQ29uIE1BUCBwb2RlbW9zIHRlbmVyIGxvcyBlbGVtZW50b3MgYWdydXBhZG9zIGVuIHVuIHPDs2xvIG9iamV0byB5IGHDum4gY29uc2VydmFyIHN1cyBmb3JtYXMgZGlmZXJlbnRlcy4NCg0KIyMgRWplbXBsby4gUmVncmVzacOzbiBsaW5lYWwNCg0KU2kgYmllbiBubyBub3MgdmFtb3MgYSBtZXRlciBlbiBlbCBkZXRhbGxlIGRlbCBtb2RlbG8gbGluZWFsIGVuIGVzdGUgZW5jdWVudHJvLCBlcyDDunRpbCB1c2FybG8gY29tbyBlamVtcGxvIGRlIGxvIHF1ZSBwb2RlbW9zIGhhY2VyIGNvbiBNQVAuDQoNClBsYW50ZWFtb3MgZWwgbW9kZWxvIA0KJCQNClAyMSA9IFxiZXRhXzAgKyBcYmV0YV8xKkNIMDQgKyBcYmV0YV8yKkNIMDYNCiQkDQoNCkVzIHVuIG1vZGVsbyBxdWUgZXhwbGljYSBlbCBpbmdyZXNvIChQMjEpIGVuIGZ1bmNpb24gZGVsIHNleG8gKENIMDQpIHkgZWRhZCAoQ0gwNikNCg0KYGBge3J9DQojIENhbGN1bGFtb3MgdW5hIHJlZ3Jlc2lvbiBsaW5lYWwgc29icmUgZWwgZGF0YXNldCBxdWUgdGllbmUgdG9kYXMgbGFzIG9ic2VydmFjaW9uZXMgZGUgRVBIDQpsbWZpdCA8LSBsbShQMjF+ZmFjdG9yKENIMDQpK0NIMDYsZGF0YSA9IGJhc2VzX2RmKQ0KDQojIFJlc3VtZW4gZGVsIG1vZGVsbw0Kc3VtbWFyeShsbWZpdCkNCmBgYA0KDQooYWwgZmluYWwgZGUgbGEgY2xhc2UgcG9kZW1vcyBjaGFybGFyIHNvYnJlIGxvcyByZXN1bHRhZG9zKQ0KDQpEZSBmb3JtYSBUaWR5LCBsYSBsaWJyZXLDrWEgYGJyb29tYCBub3MgZGEgbG9zIHJlc3VsdGFkb3Mgc29icmUgbG9zIGNvZWZpY2llbnRlcyBlbiB1biBERi4NCg0KYGBge3J9DQpicm9vbTo6dGlkeShsbWZpdCkNCmBgYA0KIA0KIFNpIGxvIHF1ZXJlbW9zIGhhY2VyIHBvciByZWdpb24NCiANCiMjIyBMb29wZWFuZG8NCg0KYGBge3J9DQoNCnJlc3VsdGFkb3MgPC0gdGliYmxlKCkNCg0KZm9yIChyZWdpb24gaW4gdW5pcXVlKGJhc2VzX2RmJFJFR0lPTikpIHsNCiAgIyBDcmVhbW9zIHVuIGRhdGFzZXQgcG9yIHJlZ2lvbg0KICBkYXRhIDwtIGJhc2VzX2RmICU+JSANCiAgICBmaWx0ZXIoUkVHSU9OPT1yZWdpb24pDQogICMgQ2FsY3VsYXIgZWwgbW9kZWxvIGxpbmVhbA0KICBsbWZpdCA8LSBsbShQMjF+ZmFjdG9yKENIMDQpK0NIMDYsZGF0YSA9IGRhdGEpDQogICMgR3VhcmRhciBsb3MgcmVzdWx0YWRvcyBkZSBsb3MgY29lZmljaWVudGVzIA0KICBsbXRpZHkgPC0gYnJvb206OnRpZHkobG1maXQpDQogICMgQXNpZ25hbW9zIGxhIHZhcmlhYmxlIHJlZ2lvbg0KICBsbXRpZHkkcmVnaW9uIDwtIHJlZ2lvbg0KICAjIFVuaW1vcyBsb3MgZGF0YWZyYW1lcw0KICByZXN1bHRhZG9zIDwtIGJpbmRfcm93cyhyZXN1bHRhZG9zLGxtdGlkeSkNCg0KfQ0KDQpyZXN1bHRhZG9zDQpgYGANCg0KIyMgVXNhbmRvIE1BUA0KDQpQcmltZXJvIG1lIGFybW8gdW5hIGZ1bmNpb24gcXVlIG1lIHNpbXBsaWZpY2EgZWwgY29kaWdvLiBMYSBmdW5jaW9uIG5vcyBkZXZ1ZWx2ZSBsYSBpbmZvcm1hY2lvbiBkZSBsb3MgY29lZmljaWVudGVzIGRlbCBtb2RlbG8gbGluZWFsIGNhbGN1bGFkbyBzb2JyZSBlbCBkYXRhZnJhbWUgX19wb3JjaW9uX18NCg0KYGBge3J9DQpmdW48LWZ1bmN0aW9uKHBvcmNpb24sZ3J1cG8pIHsgIGJyb29tOjp0aWR5KGxtKFAyMX5mYWN0b3IoQ0gwNCkrQ0gwNixkYXRhID0gcG9yY2lvbikpfQ0KYGBgDQoNCmBgYHtyfQ0KYmFzZXNfZGZfbG0gPC0gYmFzZXNfZGYgJT4lIA0KICAjIEFncnVwYW1vcyBwb3IgcmVnaW9uDQogIGdyb3VwX2J5KFJFR0lPTikgJT4lDQogICMgQW5pZGFtb3MNCiAgbmVzdCgpICU+JSANCiAgIyBDcmVhbW9zIHVuYSBjb2x1bW5hIHF1ZSB0ZW5nYSBlbCBkYXRhZnJhbWUgY29tbyByZXN1bHRhZG8gZGUgbGEgZnVuY2lvbg0KICBtdXRhdGUobG0gPSBtYXAoZGF0YSxmdW4pKQ0KDQpiYXNlc19kZl9sbQ0KDQojIERlc2FuaWRhbW9zIHBvciBsYSB2YXJpYWJsZSBsbQ0KYmFzZXNfZGZfbG0gJT4lIA0KICB1bm5lc3QobG0pDQpgYGANCg0KTyBpbmNsdXNvIG3DoXMgZmFjaWwsIHV0aWxpemFuZG8gYGdyb3VwX21vZGlmeWAgKHF1ZSBlcyB1biBhdGFqbyBxdWUgc29sbyBhY2VwdGEgREYpDQoNCmBgYHtyfQ0KYmFzZXNfZGYgJT4lIA0KICBncm91cF9ieShSRUdJT04pICU+JSANCiAgZ3JvdXBfbW9kaWZ5KGZ1bikNCmBgYA0KDQpQZXJvIE1BUCBzaXJ2ZSBwYXJhIG9wZXJhciBjb24gY3VhbHF1aWVyIG9iamV0byBkZSBSLg0KDQpQb3IgZWplbXBsbyBwb2RlbW9zIGd1YXJkYXIgZWwgX19vYmpldG9fXyBgUzM6bG1gIHF1ZSBlcyBsYSByZWdyZXNpb24gbGluZWFsIGVudHJlbmFkYS4gRXNlIG9iamV0byBubyBlcyBuaSB1biB2ZWN0b3IsIG5pIHVuYSBsaXN0YSwgbmkgdW4gREYuIE5vIGVzIHVuYSBlc3RydWN0dXJhIGRlIGRhdG9zLCBzaW5vIHF1ZSBlcyBhbGdvIGRpc3RpbnRvLCBjb24gX3Byb3BpZWRhZGVzXyBjb21vIGBwcmVkaWN0KClgIHBhcmEgcHJlZGVjaXIsIGVsIGBzdW1tYXJ5KClgIHF1ZSB2aW1vcywgZXRjLg0KDQpgYGB7cn0NCiMgTGEgZnVuY2lvbiBjYWxjdWxhIGVsIG1vZGVsbyBsaW5lYWwgc29icmUgY2FkYSBwb3JjaW9uIGRlIGRhdG9zDQpmdW48LWZ1bmN0aW9uKHBvcmNpb24sZ3J1cG8pIHsgIGxtKFAyMX5mYWN0b3IoQ0gwNCkrQ0gwNixkYXRhID0gcG9yY2lvbil9DQoNCmJhc2VzX2RmICU+JQ0KICAjIEFncnVwYXIgcG9yIHJlZ2lvbg0KICBncm91cF9ieShSRUdJT04pICU+JQ0KICAjIEFuaWRhcg0KICBuZXN0KCkgJT4lDQogICMgQ2FsY3VsYXIgZWwgbW9kZWxvIGxpbmVhbA0KICBtdXRhdGUobG0gPSBtYXAoZGF0YSxmdW4pKQ0KYGBgDQoNCg0KIyMgV2Fsaw0KDQpMYXMgZnVuY2lvbmVzIGBXYWxrYCBUaWVuZW4gbGEgbWlzbWEgZm9ybWEgcXVlIGxvcyBgbWFwYCwgcGVybyBzZSB1c2FuIGN1YW5kbyBsbyBxdWUgcXVlcmVtb3MgaXRlcmFyIG5vIGdlbmVyYSB1bmEgc2FsaWRhLCBzaW5vIHF1ZSBub3MgaW50ZXJlc2FuIGxvcyBlZmVjdG9zIHNlY3VuZGFyaW9zIHF1ZSBnZW5lcmFuLg0KDQpgYGB7cn0NCm1hcDIoLnggPSBBQkNfMTIzJExldHJhcywueSA9IEFCQ18xMjMkTnVtLC5mID0gZnVuY2lvbl9wcnVlYmEpWzE6M10NCmBgYA0KDQpgYGB7cn0NCndhbGsyKC54ID0gQUJDXzEyMyRMZXRyYXMsLnkgPSBBQkNfMTIzJE51bSwuZiA9IGZ1bmNpb25fcHJ1ZWJhKQ0KYGBgDQoNCk5vdGVtb3MgcXVlIGB3YWxrMmAgbm8gZGV2b2x2acOzIHVuIHJlc3VsdGFkbw0KDQpgYGB7cn0NCiMgZnVuY2lvbiBwYXJhIGltcHJpbWlyDQppbXByaW1pcl9zYWxpZGEgPC0gZnVuY3Rpb24oeCx5KXsNCiAgcHJpbnQoZnVuY2lvbl9wcnVlYmEoeCx5KSkNCn0NCg0KIyBNYXANCm1hcDIoQUJDXzEyMyRMZXRyYXMsQUJDXzEyMyROdW0saW1wcmltaXJfc2FsaWRhKQ0KYGBgDQoNCmBgYHtyfQ0KIyBXYWxrDQp3YWxrMihBQkNfMTIzJExldHJhcyxBQkNfMTIzJE51bSxpbXByaW1pcl9zYWxpZGEpDQoNCmBgYA0KDQpFc28gcXVlIHZlbW9zIGVzIGVsIGVmZWN0byBzZWN1bmRhcmlvIGRlbnRybyBkZSBsYSBmdW5jacOzbiAoaW1wcmltaXIpDQoNCiMjIERpc2N1c2nDs24uDQoNCj4gwr9DdcOhbmRvIHVzYXIgZXN0YXMgaGVycmFtaWVudGFzPw0KDQpBIGxvIGxhcmdvIGRlbCBjdXJzbyB2aW1vcyBkaWZlcmVudGVzIHTDqWNuaWNhcyBwYXJhIG1hbmlwdWxhY2nDs24gZGUgZGF0b3MuIEVuIHBhcnRpY3VsYXIsIGxhIGxpYnJlcsOtYSBkcGx5ciBub3MgcGVybWl0w61hIGbDoWNpbG1lbnRlIG1vZGlmaWNhciB5IGNyZWFyIG51ZXZhcyB2YXJpYWJsZXMsIGFncnVwYW5kby4gwr9DdWFuZG8gdXNhbW9zIGBkcGx5cmAgeSBjdWFuZG8gdXNhbW9zIGBwdXJycmA/DQoNCi0gU2kgdHJhYmFqYW1vcyBzb2JyZSB1biBERiBzaW1wbGUsIHNpbiB2YXJpYWJsZXMgYW5pZGFkYXMgKGxvIHF1ZSBjb25vY8OtYW1vcyBoYXN0YSBob3kpIHBvZGVtb3MgdXNhciBgZHBseXJgDQotIFNpIHF1ZXJlbW9zIHRyYWJhamFyIGNvbiBERiBhbmlkYWRvcywgY29uIGNvc2FzIHF1ZSBubyBzb24gREYsIG8gc2kgZWwgcmVzdWx0YWRvIGRlIGxhIG9wZXJhY2nDs24gcXVlIHZhbW9zIGEgcmVhbGl6YXIgYSBuaXZlbCBhcmNoaXZvIGVzIGFsZ28gZGlzdGludG8gYSB1biB2YWxvciDDum5pY28sIG5vcyBjb252aWVuZSB1c2FyIGBtYXBgIHkgYHB1cnJyYA0KDQotIExhcyBmdW5jaW9uZXMgYHdhbGtgIHNvbiDDunRpbGVzIHBvciBlamVtcGxvIHBhcmEgZXNjcmliaXIgYXJjaGl2b3MgZW4gZGlzY28gZGUgZm9ybWEgaXRlcmF0aXZhLiBBbGdvIHF1ZSBubyBnZW5lcmEgdW5hIHNhbGlkYQ0KDQo=</div>
+<div id="rmd-source-code">LS0tCnRpdGxlOiAiVGlkeXZlcnNlOiBQVVJSUiIKYXV0aG9yOiAiSnVhbiBCYXJyaW9sYSB5IFNvZsOtYSBQZXJpbmkiCmRhdGU6ICIxNyBkZSBPY3R1YnJlIGRlIDIwMjAiCm91dHB1dDoKICBodG1sX25vdGVib29rOgogICAgdGhlbWU6IHNwYWNlbGFiCiAgICB0b2M6IHllcwogICAgdG9jX2Zsb2F0OiB5ZXMKICAgIGRmX3ByaW50OiBwYWdlZAotLS0KCkxpYnJlcmlhcyBxdWUgc2UgdXRpbGl6YW4gZW4gZXN0YSBjbGFzZToKCmBgYHtyIG1lc3NhZ2U9RkFMU0UsIHdhcm5pbmc9RkFMU0V9CmxpYnJhcnkodGlkeXZlcnNlKQpsaWJyYXJ5KG9wZW54bHN4KQpsaWJyYXJ5KGdndGhlbWVzKQpsaWJyYXJ5KGZzKQpgYGAKCkJhc2FkbyBlbiBsb3MgW3R1dG9yaWFsZXMgZGUgUFVSUlJdKGh0dHBzOi8vamVubnliYy5naXRodWIuaW8vcHVycnItdHV0b3JpYWwvaW5kZXguaHRtbCkgZGUgSmVubnkgQnJ5YW4geSBlbCBjYXDDrXR1bG8gW0l0ZXJhdGlvbl0oaHR0cHM6Ly9yNGRzLmhhZC5jby5uei9pdGVyYXRpb24uaHRtbCkgZGVsIGxpYnJvIFIgZm9yIERhdGEgU2NpZW5jZSBkZSBHYXJyZXR0IEdyb2xlbXVuZCB5IEhhZGxleSBXaWNraGFtCgojIFBVUlJSCgpbUFVSUlJdKGh0dHBzOi8vcHVycnIudGlkeXZlcnNlLm9yZy8pIGVzIHVuYSBsaWJyZXLDrWEgZW4gUiBxdWUgY29udGllbmUgZnVuY2lvbmVzIHkgbcOpdG9kb3MgZGUgcHJvZ3JhbWFjacOzbiBmdW5jaW9uYWwgZGVudHJvIGRlbCBlbnRvcm5vIGRlIHRpZHl2ZXJzZS4KCiMjIE1BUAoKTUFQIGVzIHVuYSAqKmZ1bmNpw7NuKiogcGFyYSBhcGxpY2FyIHVuYSBmdW5jacOzbiBhIGNhZGEgZWxlbWVudG8gZGUgdW5hIGVzdHJ1Y3R1cmEgZGUgZGF0b3MgY29tbyB1bmEgbGlzdGEgbyB2ZWN0b3IuIEVsIGZ1bmNpb25hbWllbnRvIGRlIG1hcCBjb25zaXN0ZSBlbiByZWNvcnJlciAoImxvb3BlYXIiKSBsYSBlc3RydWN0dXJhIGFwbGljYW5kbyBsYSBmdW5jacOzbiBhIGNhZGEgZWxlbWVudG8geSBndWFyZGFuZG8gbG9zIHJlc3VsdGFkb3MuIERlIGVzdGEgbWFuZXJhIHBvZGVtb3MgcmVlbXBsYXphciBsb3MgbG9vcHMgcG9yIHVuYSBmb3JtYSBtw6FzIGxlZ2libGUgeSBjbGFyYSBkZSBjw7NkaWdvLgoKTGEgZnVuY2nDs24gYG1hcGAgdG9tYSBjb21vIGFyZ3VtZW50b3M6CiAKICogLng6IHVuIHZlY3RvciBvIGxpc3RhIGlucHV0CiAKICogLmY6IHVuYSBmdW5jacOzbiBwYXJhIGFwbGljYXIKIAptYXAoVkVDVE9SX09fTElTVF9JTlBVVCwgRlVOQ1RJT05fQV9BUExJQ0FSLCBPVFJPU19PUENJT05BTEVTKQoKVmVhbW9zIHVuIGVqZW1wbG8gY29uIHVuIHZlY3RvciBudW3DqXJpY28KCmBgYHtyfQojIEFwbGljYW1vcyBsYSBmdW5jacOzbiBsb2cxMCBzb2JyZSB1biB2ZWN0b3IKbWFwKC54ID0gYygxMCwxMDAsMTAwMCksIC5mPWxvZzEwKQpgYGAKCiMjIyBNYXA6IHRpcG9zIGVzcGVjw61maWNvcwoKVmVhbW9zIHF1ZSBlbCByZXN1bHRhZG8gZGUgbWFwIGVzIHVuYSBsaXN0YS4gU2kgc2FiZW1vcyBjdcOhbCBlcyBlbCB0aXBvIGRlIGRhdG8gZGUgbnVlc3Ryb3MgcmVzdWx0YWRvcyBwb2RlbW9zIHVzYXIgdmFyaWFjaW9uZXMgZGUgbWFwIHF1ZSBleHBsaWNpdGFuIGVsIHRpcG8gZGUgZGF0byB5IGRldnVlbHZlbiBsb3MgcmVzdWx0YWRvcyBlbiB1biB2ZWN0b3IuIEFsZ3VuYXMgZGUgZWxsYXMgc29uOgoKICAqIG1hcF9sZ2woKSBkZXZ1ZWx2ZSB1biB2ZWN0b3IgZGUgYm9vbGVhbm9zCiAKICAqIG1hcF9kYmwoKSBkZXZ1ZWx2ZSB1biB2ZWN0b3IgZGUgbnVtw6lyaWNvcwoKICAqIG1hcF9jaHIoKSBkZXZ1ZWx2ZSB1biB2ZWN0b3IgZGUgc3RyaW5ncyAKClZvbHZhbW9zIGEgdmVyIG51ZXN0cm8gZWplbXBsbyB1c2FuZG8gYG1hcF9kYmxgCgpgYGB7cn0KbWFwX2RibCgueCA9IGMoMTAsMTAwLDEwMDApLCAuZj1sb2cxMCkKYGBgCgojIyMgTWFwOiBmdW5jaW9uZXMKClNlIHB1ZWRlbiBhcGxpY2FyIGZ1bmNpb25lcyBkZSBSIGJhc2UgbyBkZSBsYXMgbGlicmVyw61hcyBjb21vIGFzw60gdGFtYmnDqW4gZnVuY2lvbmVzIGRlZmluaWRhcyBwb3IgZWwgdXN1YXJpby4gIE11Y2hhcyB2ZWNlcyBubyBlcyBuZWNlc2FyaW8gZGVmaW5pciB1bmEgZnVuY2nDs24gZGUgYW50ZW1hbm8sIHNpbm8gcXVlIHBvZGVtb3MgdXNhciAqKmZ1bmNpb25lcyBhbsOzbmltYXMqKiBvICoqZnVuY2lvbmVzIGxhbWJkYSoqCgojIyMjIEZ1bmNpb25lcyBhbsOzbmltYXMKCkxhIGZ1bmNpw7NuIHNlIGRlZmluZSBlbiB1bmEgw7puaWNhIGxpbmVhCgpgYGB7cn0KIyBDYWxjdWxhbW9zIHVuYSBmdW5jacOzbiBjdWFkcsOhdGljYSBwYXJhIGVsIHZlY3RvcgptYXBfZGJsKC54ID0gYygxOjEwKSwgLmYgPSBmdW5jdGlvbih4KSB4XjIrMSkKYGBgCgpBIHBhcnRpciBkZSB1biB2ZWN0b3IgZGUgc3RyaW5ncyBxdWVyZW1vcyBjb250YXIgbGEgY2FudGlkYWQgZGUgbGV0cmFzICJBIiBlbiBjYWRhIGVsZW1lbnRvLiBQYXJhIGVzbyBjb21iaW5hbW9zIGxhcyBmdW5jaW9uZXMgYHN0cl90b191cHBlcmAgeSBgc3RyX2NvdW50YAoKYGBge3J9Cm1hcF9kYmwoLnggPSBjKCJwYXBhcyBGUklUQVMiLCAiYmF0YXRhcyBIRVJWSURBUyIsICJib25pYXRvIEFMIEhPUk5PIiksCiAgICAgICAgLmYgPSBmdW5jdGlvbih4KSBzdHJfY291bnQoc3RyaW5nID0gc3RyX3RvX3VwcGVyKHgpLCBwYXR0ZXJuID0gIkEiKSkKYGBgCgojIyMjIEZ1bmNpb25lcyBsYW1iZGEKClNvbiB1bmEgZm9ybWEgYcO6biBtw6FzIGNvbmNpc2EgZGUgZGVjbGFyYXIgZnVuY2lvbmVzLCBhdW5xdWUgcHVlZGVuIHNlciBtw6FzIGxpbWl0YWRhcy4gTGFzIHZhcmlhYmxlcyBzZSBkZWNsYXJhbiBjb21vIC54CgpgYGB7cn0KIyBDYWxjdWxhbW9zIG90cmEgZnVuY2nDs24gY3VhZHLDoXRpY2EgcGFyYSBlbCB2ZWN0b3IKbWFwX2RibCgueCA9IGMoMToxMCksIC5mID0gIH4ueF4yIC0gLngpCmBgYAoKIyMjIE1hcDogTXVsdGlwbGVzIGFyZ3VtZW50b3MKIApVc2Ftb3MgYG1hcDJgIGN1YW5kbyBxdWVyZW1vcyBhcGxpY2FyIHVuYSBmdW5jacOzbiBzb2JyZSBkb3MgbGlzdGFzIG8gdmVjdG9yZXM6CgotIG1hcDIoLngsIC55LCAuZiwgLi4uKQotIG1hcDIoSU5QVVRfVU5PLCBJTlBVVF9ET1MsIEZVTkNUSU9OX0FfQVBMSUNBUiwgT1RST1NfT1BDSU9OQUxFUykKClZlYW1vcyB1biBlamVtcGxvIHBhcmEgZ2VuZXJhciBvYnNlcnZhY2lvbmVzIGRlIGRpc3RyaWJ1Y2lvbmVzIG5vcm1hbGVzIGEgcGFydGlyIGRlIGxvcyB2ZWN0b3JlcyBkZSBtdSB5IHNpZ21hIChlc3RlIGVzIGVsIGVqZW1wbG8gZGVsIGxpYnJvICpSIGZvciBEYXRhIFNjaWVuY2UqKQoKTGEgZnVuY2lvbiBgcm5vcm1gIHRvbWEgbG9zIHBhcsOhbWV0cm9zIG4gKGNhbnRpZGFkIGRlIG9ic2VydmFjaW9uZXMpLCBtdSB5IHNpZ21hCgpgYGB7cn0KIyBWZWN0b3IgZGUgbXUKbXUgPSBjKDAsIDMsIC01LCAyLjEpCiMgVmVjdG9yIGRlIHNpZ21hCnNpZ21hID0gYygxLCAwLjUsIDUsIDAuMDEpCgojIEdlbmVyYW1vcyAxMCBvYnNlcnZhY2lvbmVzIGEgcGFydGlyIGRlIG51ZXN0cm9zIHZlY3RvcmVzCm1hcDIoLnggPSBtdSwgLnkgPSBzaWdtYSwgLmY9IHJub3JtLCBuID0gMTApCmBgYAoKQWhvcmEgdmVhbW9zIGNvbiB1biBlamVtcGxvIHBhcmEgY3JlYXIgdW5hIGxpc3RhIGRlIGNvbXByYXMKCmBgYHtyfQojIFZlY3RvcmVzCmtpbG9zID0gYygxMCwgMSwgNiwgOCwgMykKdmVyZHVyYXMgPSAgYygicGFwYSIsICJiYXRhdGEiLCAiemFwYWxsbyIsICJib25pYXRvIiwgInphbmFob3JpYSIpCgptYXAyX2NocigueCA9IHZlcmR1cmFzLCAueSA9a2lsb3MsIC5mID0gZnVuY3Rpb24oeCx5KSBzdHJfYyhzdHJfdG9fdGl0bGUoeCkseSwgc2VwPSI6ICIpKQpgYGAKICAKVXNhbW9zIGBwbWFwYCBjdWFuZG8gcXVlcmVtb3MgYXBsaWNhciB1bmEgZnVuY2nDs24gc29icmUgdW5hIGxpc3RhIGRlIGFyZ3VtZW50b3M6CgotIHBtYXAoLmwsIC5mLCAuLi4pCi0gcG1hcChWRUNUT1JfT19MSVNUX0RFX0lOUFVUUywgRlVOQ1RJT05fQV9BUExJQ0FSLCBPVFJPU19PUENJT05BTEVTKQoKVm9sdmFtb3MgYWwgZWplbXBsbyBwYXJhIGdlbmVyYXIgb2JzZXJ2YWNpb25lcyBkZSBkaXN0cmlidWNpb25lcyBub3JtYWxlcyBhIHBhcnRpciBkZSBsb3MgdmVjdG9yZXMgZGUgbXUgeSBzaWdtYSwgcGVybyBhaG9yYSBpbmNvcnBvcmFtb3MgbGEgY2FudGlkYWQgZGUgb2JzZXJ2YWNpb25lcyBjb21vIHVuIGFyZ3VtZW50byBhZGljaW9uYWwgKGVzdGUgZWplbXBsbyB0YW1iacOpbiBlcyBkZWwgbGlicm8gKlIgZm9yIERhdGEgU2NpZW5jZSopCgpgYGB7cn0KIyBWZWN0b3IgZGUgbXUKbXUgPSBjKDAsIDMsIC01LCAyLjEpCiMgVmVjdG9yIGRlIHNpZ21hCnNpZ21hID0gYygxLCAwLjUsIDUsIDAuMDEpCiMgVmVjdG9yIGRlIGNhbnRpZGFkIGRlIG9ic2VydmFjaW9uZXMgCm4gPSBjKDE6NCkKIyBMaXN0YSBkZSBhcmd1bWVudG9zCmFyZ3VtZW50b3MgPC0gbGlzdChuLCBtdSwgc2lnbWEpCgojIEdlbmVyYW1vcyBsYXMgb2JzZXJ2YWNpb25lcyBhIHBhcnRpciBkZSBudWVzdHJhIGxpc3RhIGRlIHBhcsOhbWV0cm9zCnBtYXAoLmwgPSBhcmd1bWVudG9zLCAuZiA9IHJub3JtKQpgYGAKCiMjIFBVUlJSOiBEYXRhZnJhbWVzIHkgbW9kZWxvcwoKIyMjIERhdGFmcmFtZXMKCkxhcyBmdW5jaW9uZXMgZGUgUFVSUlIgc2UgcHVlZGVuIHV0aWxpemFyIHBhcmEgcmVhbGl6YXIgb3BlcmFjaW9uZXMgc29icmUgZGF0YWZyYW1lcy4gTGEgc2ludGF4aXMgcXVlIHZhbW9zIGEgdXRpbGl6YXIgZXM6CgpgbWFwKGRhdGFmcmFtZSwgZnVuY2lvbilgCgpEZSBlc3RhIG1hbmVyYSB2YW1vcyBhIGVzdGFyIGFwbGljYW5kbyBsYSBmdW5jacOzbiBzb2JyZSB0b2RhcyBsYXMgY29sdW1uYXMgZGVsIGRhdGFmcmFtZQoKYGBge3J9CmVuY3Vlc3RhX3N1ZWxkb3NfbGltcGlhID0gcmVhZF9jc3YoIn4vRnVlbnRlcy9lbmN1ZXN0YV9zdWVsZG9zX2l0X2xpbXBpYS5jc3YiKQpgYGAKCkNvbWVuY2Vtb3MgYW5hbGl6YW5kbyBsYSBjYW50aWRhZCBkZSB2YWxvcmVzIGRpc3RpbnRvcyBwYXJhIGNhZGEgY29sdW1uYS4gUGFyYSBlbGxvIHVzYW1vcyBsYSBmdW5jacOzbiBgbl9kaXN0aW5jdGAKCmBgYHtyfQptYXAoZW5jdWVzdGFfc3VlbGRvc19saW1waWEsIG5fZGlzdGluY3QpICU+JQogIHN0cigpICMgQWdyZWdhbW9zIHN0ciBwYXJhIHF1ZSBsYSBzYWxpZGEgbHV6Y2EgbWVqb3IKYGBgCgpBaG9yYSBjYWxjdWxhbW9zIGVsIHByb21lZGlvIHNvYnJlIGxhcyBjb2x1bW5hcyBudW3DqXJpY2FzCgpgYGB7cn0KZW5jdWVzdGFfc3VlbGRvc19saW1waWEgJT4lIAogIHNlbGVjdF9pZihpcy5udW1lcmljKSAlPiUgCiAgbWFwKG1lYW4pICU+JSAKICBzdHIoKQpgYGAKCkNhbGN1bGFtb3MgbGEgbWVkaWFuYSBzb2JyZSBsYXMgY29sdW1uYXMgbnVtw6lyaWNhcywgc2FiaWVuZG8gcXVlIGVsIHJlc3VsdGFkbyBkZSBsYSBmdW5jacOzbiBlcyB1biBuw7ptZXJvIHBvZGVtb3MgdXNhciBsYSBmdW5jacOzbiBgbWFwX2RibGAKCmBgYHtyfQplbmN1ZXN0YV9zdWVsZG9zX2xpbXBpYSAlPiUgCiAgc2VsZWN0X2lmKGlzLm51bWVyaWMpICU+JSAKICBtYXBfZGJsKG1lZGlhbikKYGBgCgojIyMgTW9kZWxvcwoKCgpgYGB7cn0KbW9kZWxvc19wb3JfcGVyZmlsID0gZW5jdWVzdGFfc3VlbGRvc19saW1waWEgJT4lIAogICAgICAgICAgICAgICAgICAgICAgICBzcGxpdCguJHBlcmZpbCkgJT4lIAogICAgICAgICAgICAgICAgICAgICAgICBtYXAofmxtKHNhbGFyaW9fbmV0byB+IGVkYWQsIGRhdGEgPSAuKSkKCmBgYAoKRWwgcmVzdWx0YWRvIGRlIGVzdG8gZXMgdW5hIGxpc3RhIGNvbiBsb3MgbW9kZWxvcwoKCmBgYHtyfQptb2RlbG9zX3Bvcl9wZXJmaWwgJT4lIG1hcChicm9vbTo6dGlkeSkKYGBgCgpgYGB7cn0KbW9kZWxvc19wb3JfcGVyZmlsICU+JSBtYXAoc3VtbWFyeSkgJT4lIG1hcF9kYmwoInIuc3F1YXJlZCIpCmBgYAoKIyMgRWplbXBsbzogSXRlcmFuZG8gZW4gbGEgRVBICgpMbyBwcmltZXJvIHF1ZSBuZWNlc2l0YW1vcyBlcyBkZWZpbmlyIHVuIHZlY3RvciBvIGxpc3RhIHNvYnJlIGVsIHF1ZSBpdGVyYXIuIAoKUG9yIGVqZW1wbG8sIHBvZGVtb3MgYXJtYXIgdW4gdmVjdG9yIGNvbiBsb3MgcGF0aCBhIGxhcyBiYXNlcyBpbmRpdmlkdWFsZXMsIGNvbiBlbCBjb21hbmRvIGBmczo6ZGlyX2xzYC4gU2UgbGUgZXNwZWNpZmljYSBlbCBfX3BhdGhfXyBkb25kZSBidXNjYXIgbG9zIGFyY2hpdm9zIHkgZW4gZXN0ZSBjYXNvIHVuYSBleHByZXNpb24gcmVndWxhciBfX3JlZ2V4cF9fIHBhcmEgcXVlIGRldnVlbHZhIGFxdWVsbG9zIGFyY2hpdm9zIHF1ZSBjb2luY2lkZW4gY29uIGxhIG1pc21hLgoKYGBge3J9CiMgQnVzY2Ftb3MgZW4gZWwgcGF0aCBhcXVlbGxvcyBhcXVlbGxvcyBhcmNoaXZvcyBxdWUgbWF0Y2hlYW4gYSBsYSBleHByZXNpb24gcmVndWxhcgpiYXNlc19pbmRpdmlkdWFsZXNfcGF0aCA8LSBkaXJfbHMocGF0aCA9ICcuLi9GdWVudGVzLycsIHJlZ2V4cD0gJ2luZGl2aWR1YWwnKQpiYXNlc19pbmRpdmlkdWFsZXNfcGF0aApgYGAKCkx1ZWdvLCBjb21vIGVuIGxhIGZ1bmNpw7NuIHF1ZSB1c2Ftb3MgcGFyYSBsZWVyIGxhcyBiYXNlcyBkZWZpbmltb3MgbXVjaG9zIHBhcmFtZXRyb3MsIG5vcyBwb2RlbW9zIGFybWFyIHVuYSBmdW5jacOzbiBfd3JhcHBlcl8gcXVlIHPDs2xvIG5lY2VzaXRlIHVuIHBhcsOhbWV0cm8sIHkgcXVlIHNpbXBsaWZpcXVlIGxhIGVzY3JpdHVyYSBkZWwgbWFwLgoKYGBge3IgbWVzc2FnZT1GQUxTRSwgd2FybmluZz1GQUxTRX0KIyBMZWVyIGxhIGJhc2UgZGUgRVBIIHRvbWFuZG8gY29tbyBhcmd1bWVudG8gZWwgZmlsZV9wYXRoCmxlZXJfYmFzZV9lcGggPC0gZnVuY3Rpb24ocGF0aCkgewogICMgTGVjdHVyYSBkZSBhcmNoaXZvCiAgcmVhZC50YWJsZShwYXRoLHNlcD0iOyIsIGRlYz0iLCIsIGhlYWRlciA9IFRSVUUsIGZpbGwgPSBUUlVFKSAlPiUKICAgICMgU2VsZWNjaW9uIGRlIHZhcmlhYmxlcyByZWxldmFudGVzCiAgICBzZWxlY3QoQU5PNCxUUklNRVNUUkUsUkVHSU9OLFAyMSxDSDA0LCBDSDA2KQp9CgojIExlZXIgYSB1biBkYXRhZnJhbWUgbGFzIHRhYmxhcyBlc3BlY2lmaWNhZGFzIGVuIGVsIHZlY3RvciBkZSBiYXNlcyBpbmRpdmlkdWFsZXMKYmFzZXNfZGYgPC0gdGliYmxlKGJhc2VzX2luZGl2aWR1YWxlc19wYXRoKSAlPiUKICBtdXRhdGUoYmFzZSA9IG1hcCgueCA9IGJhc2VzX2luZGl2aWR1YWxlc19wYXRoLCAuZiA9IGxlZXJfYmFzZV9lcGgpKQoKYGBgCgpgYGB7cn0KYmFzZXNfZGYKYGBgCgpFbCByZXN1bHRhZG8gZXMgdW4gZGF0YWZyYW1lIGRvbmRlIGxhIGNvbHVtbmEgX19iYXNlX18gdGllbmUgZW4gY2FkYSBmaWxhIG90cm8gZGF0YWZyYW1lICBjb24gbGEgYmFzZSBkZSBsYSBFUEggZGUgZXNlIHBlcsOtb2RvLiBFc3RvIGVzIGxvIHF1ZSBsbGFtYW1vcyB1biBfbmVzdGVkIERGXyBvIGRhdGFmcmFtZSBhbmlkYWRvLgoKU2kgcXVlcmVtb3MgYWJyaXIgKCJkZXNhbmlkYXIiKSBlc3RhcyBkYXRhZnJhbWVzIGFuaWRhZG9zIHVzYW1vcyBlbCBjb21hbmRvIGB1bm5lc3QoKWAKCmBgYHtyIG1lc3NhZ2U9RkFMU0UsIHdhcm5pbmc9RkFMU0V9CiMgRGVzYW5pZGFtb3MgZWwgZGF0YWZyYW1lCmJhc2VzX2RmIDwtIGJhc2VzX2RmICU+JSB1bm5lc3QoKQpiYXNlc19kZgpgYGAKCj4gwr9RdcOpIHBhc2Egc2kgbG9zIERGIHF1ZSB0ZW5lbW9zIG5lc3RlYWRvcyBubyB0aWVuZW4gbGEgbWlzbWEgY2FudGlkYWQgZGUgY29sdW1uYXM/CgpFc3RvIG1pc21vIGxvIHBvZGVtb3MgdXNhciBwYXJhIGZyYWdtZW50YXIgZWwgZGF0YXNldCBwb3IgYWxndW5hIHZhcmlhYmxlLCBjb24gbGEgZnVuY2lvbiBgZ3JvdXBfYnkoKWAKCgpgYGB7cn0KYmFzZXNfZGYgJT4lIAogICMgQWdydXBhciBwb3IgcmVnaW9uCiAgZ3JvdXBfYnkoUkVHSU9OKSAlPiUgCiAgIyBBbmlkYXIKICBuZXN0KCkKYGBgCgpBc8OtLCBwYXJhIGNhZGEgcmVnacOzbiB0ZW5lbW9zIHVuIERGLgoKPiDCvyBEZSBxdcOpIHNpcnZlIHRvZG8gZXN0bz8KCk5vIHRvZG8gZW4gbGEgdmlkYSBlcyB1biBEYXRhZnJhbWUuIEhheSBlc3R1Y3R1cmFzIGRlIGRhdG9zIHF1ZSBubyBzZSBwdWVkZW4gbm9ybWFsaXphciBhIGZpbGFzIHkgY29sdW1uYXMuIEVuIGVzb3MgY2Fzb3MgcmVjdXJyw61hbW9zIHRyYWRpY2lvbmFsbWVudGUgYSBsb3MgbG9vcHMuIENvbiBNQVAgcG9kZW1vcyB0ZW5lciBsb3MgZWxlbWVudG9zIGFncnVwYWRvcyBlbiB1biBzw7NsbyBvYmpldG8geSBhw7puIGNvbnNlcnZhciBzdXMgZm9ybWFzIGRpZmVyZW50ZXMuCgojIyBFamVtcGxvLiBSZWdyZXNpw7NuIGxpbmVhbAoKU2kgYmllbiBubyBub3MgdmFtb3MgYSBtZXRlciBlbiBlbCBkZXRhbGxlIGRlbCBtb2RlbG8gbGluZWFsIGVuIGVzdGUgZW5jdWVudHJvLCBlcyDDunRpbCB1c2FybG8gY29tbyBlamVtcGxvIGRlIGxvIHF1ZSBwb2RlbW9zIGhhY2VyIGNvbiBNQVAuCgpQbGFudGVhbW9zIGVsIG1vZGVsbyAKJCQKUDIxID0gXGJldGFfMCArIFxiZXRhXzEqQ0gwNCArIFxiZXRhXzIqQ0gwNgokJAoKRXMgdW4gbW9kZWxvIHF1ZSBleHBsaWNhIGVsIGluZ3Jlc28gKFAyMSkgZW4gZnVuY2lvbiBkZWwgc2V4byAoQ0gwNCkgeSBlZGFkIChDSDA2KQoKYGBge3J9CiMgQ2FsY3VsYW1vcyB1bmEgcmVncmVzaW9uIGxpbmVhbCBzb2JyZSBlbCBkYXRhc2V0IHF1ZSB0aWVuZSB0b2RhcyBsYXMgb2JzZXJ2YWNpb25lcyBkZSBFUEgKbG1maXQgPC0gbG0oUDIxfmZhY3RvcihDSDA0KStDSDA2LGRhdGEgPSBiYXNlc19kZikKCiMgUmVzdW1lbiBkZWwgbW9kZWxvCnN1bW1hcnkobG1maXQpCmBgYAoKKGFsIGZpbmFsIGRlIGxhIGNsYXNlIHBvZGVtb3MgY2hhcmxhciBzb2JyZSBsb3MgcmVzdWx0YWRvcykKCkRlIGZvcm1hIFRpZHksIGxhIGxpYnJlcsOtYSBgYnJvb21gIG5vcyBkYSBsb3MgcmVzdWx0YWRvcyBzb2JyZSBsb3MgY29lZmljaWVudGVzIGVuIHVuIERGLgoKYGBge3J9CmJyb29tOjp0aWR5KGxtZml0KQpgYGAKIAogU2kgbG8gcXVlcmVtb3MgaGFjZXIgcG9yIHJlZ2lvbgogCiMjIyBMb29wZWFuZG8KCmBgYHtyfQoKcmVzdWx0YWRvcyA8LSB0aWJibGUoKQoKZm9yIChyZWdpb24gaW4gdW5pcXVlKGJhc2VzX2RmJFJFR0lPTikpIHsKICAjIENyZWFtb3MgdW4gZGF0YXNldCBwb3IgcmVnaW9uCiAgZGF0YSA8LSBiYXNlc19kZiAlPiUgCiAgICBmaWx0ZXIoUkVHSU9OPT1yZWdpb24pCiAgIyBDYWxjdWxhciBlbCBtb2RlbG8gbGluZWFsCiAgbG1maXQgPC0gbG0oUDIxfmZhY3RvcihDSDA0KStDSDA2LGRhdGEgPSBkYXRhKQogICMgR3VhcmRhciBsb3MgcmVzdWx0YWRvcyBkZSBsb3MgY29lZmljaWVudGVzIAogIGxtdGlkeSA8LSBicm9vbTo6dGlkeShsbWZpdCkKICAjIEFzaWduYW1vcyBsYSB2YXJpYWJsZSByZWdpb24KICBsbXRpZHkkcmVnaW9uIDwtIHJlZ2lvbgogICMgVW5pbW9zIGxvcyBkYXRhZnJhbWVzCiAgcmVzdWx0YWRvcyA8LSBiaW5kX3Jvd3MocmVzdWx0YWRvcyxsbXRpZHkpCgp9CgpyZXN1bHRhZG9zCmBgYAoKIyMgVXNhbmRvIE1BUAoKUHJpbWVybyBtZSBhcm1vIHVuYSBmdW5jaW9uIHF1ZSBtZSBzaW1wbGlmaWNhIGVsIGNvZGlnby4gTGEgZnVuY2lvbiBub3MgZGV2dWVsdmUgbGEgaW5mb3JtYWNpb24gZGUgbG9zIGNvZWZpY2llbnRlcyBkZWwgbW9kZWxvIGxpbmVhbCBjYWxjdWxhZG8gc29icmUgZWwgZGF0YWZyYW1lIF9fcG9yY2lvbl9fCgpgYGB7cn0KZnVuPC1mdW5jdGlvbihwb3JjaW9uLGdydXBvKSB7ICBicm9vbTo6dGlkeShsbShQMjF+ZmFjdG9yKENIMDQpK0NIMDYsZGF0YSA9IHBvcmNpb24pKX0KYGBgCgpgYGB7cn0KYmFzZXNfZGZfbG0gPC0gYmFzZXNfZGYgJT4lIAogICMgQWdydXBhbW9zIHBvciByZWdpb24KICBncm91cF9ieShSRUdJT04pICU+JQogICMgQW5pZGFtb3MKICBuZXN0KCkgJT4lIAogICMgQ3JlYW1vcyB1bmEgY29sdW1uYSBxdWUgdGVuZ2EgZWwgZGF0YWZyYW1lIGNvbW8gcmVzdWx0YWRvIGRlIGxhIGZ1bmNpb24KICBtdXRhdGUobG0gPSBtYXAoZGF0YSxmdW4pKQoKYmFzZXNfZGZfbG0KCiMgRGVzYW5pZGFtb3MgcG9yIGxhIHZhcmlhYmxlIGxtCmJhc2VzX2RmX2xtICU+JSAKICB1bm5lc3QobG0pCmBgYAoKTyBpbmNsdXNvIG3DoXMgZmFjaWwsIHV0aWxpemFuZG8gYGdyb3VwX21vZGlmeWAgKHF1ZSBlcyB1biBhdGFqbyBxdWUgc29sbyBhY2VwdGEgREYpCgpgYGB7cn0KYmFzZXNfZGYgJT4lIAogIGdyb3VwX2J5KFJFR0lPTikgJT4lIAogIGdyb3VwX21vZGlmeShmdW4pCmBgYAoKUGVybyBNQVAgc2lydmUgcGFyYSBvcGVyYXIgY29uIGN1YWxxdWllciBvYmpldG8gZGUgUi4KClBvciBlamVtcGxvIHBvZGVtb3MgZ3VhcmRhciBlbCBfX29iamV0b19fIGBTMzpsbWAgcXVlIGVzIGxhIHJlZ3Jlc2lvbiBsaW5lYWwgZW50cmVuYWRhLiBFc2Ugb2JqZXRvIG5vIGVzIG5pIHVuIHZlY3RvciwgbmkgdW5hIGxpc3RhLCBuaSB1biBERi4gTm8gZXMgdW5hIGVzdHJ1Y3R1cmEgZGUgZGF0b3MsIHNpbm8gcXVlIGVzIGFsZ28gZGlzdGludG8sIGNvbiBfcHJvcGllZGFkZXNfIGNvbW8gYHByZWRpY3QoKWAgcGFyYSBwcmVkZWNpciwgZWwgYHN1bW1hcnkoKWAgcXVlIHZpbW9zLCBldGMuCgpgYGB7cn0KIyBMYSBmdW5jaW9uIGNhbGN1bGEgZWwgbW9kZWxvIGxpbmVhbCBzb2JyZSBjYWRhIHBvcmNpb24gZGUgZGF0b3MKZnVuPC1mdW5jdGlvbihwb3JjaW9uLGdydXBvKSB7ICBsbShQMjF+ZmFjdG9yKENIMDQpK0NIMDYsZGF0YSA9IHBvcmNpb24pfQoKYmFzZXNfZGYgJT4lCiAgIyBBZ3J1cGFyIHBvciByZWdpb24KICBncm91cF9ieShSRUdJT04pICU+JQogICMgQW5pZGFyCiAgbmVzdCgpICU+JQogICMgQ2FsY3VsYXIgZWwgbW9kZWxvIGxpbmVhbAogIG11dGF0ZShsbSA9IG1hcChkYXRhLGZ1bikpCmBgYAoKCiMjIFdhbGsKCkxhcyBmdW5jaW9uZXMgYFdhbGtgIFRpZW5lbiBsYSBtaXNtYSBmb3JtYSBxdWUgbG9zIGBtYXBgLCBwZXJvIHNlIHVzYW4gY3VhbmRvIGxvIHF1ZSBxdWVyZW1vcyBpdGVyYXIgbm8gZ2VuZXJhIHVuYSBzYWxpZGEsIHNpbm8gcXVlIG5vcyBpbnRlcmVzYW4gbG9zIGVmZWN0b3Mgc2VjdW5kYXJpb3MgcXVlIGdlbmVyYW4uCgpgYGB7cn0KbWFwMigueCA9IEFCQ18xMjMkTGV0cmFzLC55ID0gQUJDXzEyMyROdW0sLmYgPSBmdW5jaW9uX3BydWViYSlbMTozXQpgYGAKCmBgYHtyfQp3YWxrMigueCA9IEFCQ18xMjMkTGV0cmFzLC55ID0gQUJDXzEyMyROdW0sLmYgPSBmdW5jaW9uX3BydWViYSkKYGBgCgpOb3RlbW9zIHF1ZSBgd2FsazJgIG5vIGRldm9sdmnDsyB1biByZXN1bHRhZG8KCmBgYHtyfQojIGZ1bmNpb24gcGFyYSBpbXByaW1pcgppbXByaW1pcl9zYWxpZGEgPC0gZnVuY3Rpb24oeCx5KXsKICBwcmludChmdW5jaW9uX3BydWViYSh4LHkpKQp9CgojIE1hcAptYXAyKEFCQ18xMjMkTGV0cmFzLEFCQ18xMjMkTnVtLGltcHJpbWlyX3NhbGlkYSkKYGBgCgpgYGB7cn0KIyBXYWxrCndhbGsyKEFCQ18xMjMkTGV0cmFzLEFCQ18xMjMkTnVtLGltcHJpbWlyX3NhbGlkYSkKCmBgYAoKRXNvIHF1ZSB2ZW1vcyBlcyBlbCBlZmVjdG8gc2VjdW5kYXJpbyBkZW50cm8gZGUgbGEgZnVuY2nDs24gKGltcHJpbWlyKQoKIyMgRGlzY3VzacOzbi4KCj4gwr9DdcOhbmRvIHVzYXIgZXN0YXMgaGVycmFtaWVudGFzPwoKQSBsbyBsYXJnbyBkZWwgY3Vyc28gdmltb3MgZGlmZXJlbnRlcyB0w6ljbmljYXMgcGFyYSBtYW5pcHVsYWNpw7NuIGRlIGRhdG9zLiBFbiBwYXJ0aWN1bGFyLCBsYSBsaWJyZXLDrWEgZHBseXIgbm9zIHBlcm1pdMOtYSBmw6FjaWxtZW50ZSBtb2RpZmljYXIgeSBjcmVhciBudWV2YXMgdmFyaWFibGVzLCBhZ3J1cGFuZG8uIMK/Q3VhbmRvIHVzYW1vcyBgZHBseXJgIHkgY3VhbmRvIHVzYW1vcyBgcHVycnJgPwoKLSBTaSB0cmFiYWphbW9zIHNvYnJlIHVuIERGIHNpbXBsZSwgc2luIHZhcmlhYmxlcyBhbmlkYWRhcyAobG8gcXVlIGNvbm9jw61hbW9zIGhhc3RhIGhveSkgcG9kZW1vcyB1c2FyIGBkcGx5cmAKLSBTaSBxdWVyZW1vcyB0cmFiYWphciBjb24gREYgYW5pZGFkb3MsIGNvbiBjb3NhcyBxdWUgbm8gc29uIERGLCBvIHNpIGVsIHJlc3VsdGFkbyBkZSBsYSBvcGVyYWNpw7NuIHF1ZSB2YW1vcyBhIHJlYWxpemFyIGEgbml2ZWwgYXJjaGl2byBlcyBhbGdvIGRpc3RpbnRvIGEgdW4gdmFsb3Igw7puaWNvLCBub3MgY29udmllbmUgdXNhciBgbWFwYCB5IGBwdXJycmAKCi0gTGFzIGZ1bmNpb25lcyBgd2Fsa2Agc29uIMO6dGlsZXMgcG9yIGVqZW1wbG8gcGFyYSBlc2NyaWJpciBhcmNoaXZvcyBlbiBkaXNjbyBkZSBmb3JtYSBpdGVyYXRpdmEuIEFsZ28gcXVlIG5vIGdlbmVyYSB1bmEgc2FsaWRhCgo=</div>
 
 
 </div>
