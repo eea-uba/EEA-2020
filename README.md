@@ -6,10 +6,6 @@ Juan Manuel Barriola
 
 Sofía Perini
 
-### [Trabajos Prácticos](trabajos_practicos)
-Hasta tanto se resuelva la situación del campus disponibilizamos las consignas y datos del TP 1
-
-
 ### Clase 1: 05-09
 
 Fundamentos de programación en R: entorno, objectos, estructuras de datos, loops, control flow y funciones
@@ -58,7 +54,7 @@ Análisis exploratorios, limpieza de datos, análisis de outliers e interpretaci
 
 ### Clase 4: 26-09
 
-Inferencia sobre los parámetros, test de significatividad global, R-cuadrado y diagnóstico de modelo lineal simple
+Inferencia sobre los parámetros, test de significatividad global y R-cuadrado
 
 - [Regresión Lineal Simple: Evaluación y diagnóstico](clase 4/Clase-4---Regresion-Lineal-Simple-Eval.html)
 
@@ -68,35 +64,38 @@ Modelo lineal desde el enfoque de Machine Learning: random search y grid search 
 
 ### Clase 5: 03-10
 
-- [Regresión Lineal Múltiple: Parte I]()
+Diagnóstico de modelo lineal simple
+
+- [Regresión Lineal Simple: Evaluación y diagnóstico](clase 4/Clase-4---Regresion-Lineal-Simple-Eval.html)
+
+Introducción a programación funcional con Tidyverse `PURRR`
+
+- [Tidyverse:PURRR](clase 5/PURRR.nb.html)
 
 ### Clase 6: 10-10
 
-- [Regresión Lineal Múltiple: Parte II]()
+- [Regresión Lineal Múltiple: Parte I](clase 6/Clase 5 - Regresion Lineal Multiple.nb.html)
 
 ### Clase 7: 17-10
 
-- [Tidyverse:PURRR]()
-- [Bootstrap](clase 5/ejercicio_bootstrap.nb.html)
-- [Múltiples modelos](clase 6/muchos_modelos.html)
-
+- [Regresión Lineal Múltiple: Parte II]()
 
 ### Clase 8: 24-10
 
-- [Tidy models](clase 8/tidymodels.nb.html)
+- [Tidy models]()
 
 ### Clase 9: 07-11
 
-- [Regresion Logistica](clase 8/logit.nb.html)
+- [Regresion Logistica](clase 9/logit.nb.html)
 
 ### Clase 10: 14-11
 
-- [Regularizacion: Ridge, Lasso y Elastic Net](clase 9/regularizacion.nb.html)
+- [Regularizacion: Ridge, Lasso y Elastic Net](clase 10/regularizacion.nb.html)
 
 
 ### Clase 11: 28-11
 
-- [Prophet: implementacion de GAM para series de tiempo](clase 10/prophet_shopping.nb.html)
+- [Prophet: implementacion de GAM para series de tiempo](clase 11/prophet_shopping.nb.html)
 
 
 ### Clase 12: 5-12
