@@ -134,11 +134,10 @@ PTS:Points
 
 ```{r}
 # Los datos de salario son para la temporada 2017-2018
-salarios <- read.csv("NBA_season1718_salary.csv", stringsAsFactors = F) %>% rename(salary=season17_18)
-# Filtramos las estadisticas para quedarnos con la temporada 2017
-estadisticas <- read.csv("Seasons_Stats.csv", stringsAsFactors = F) %>% filter(Year>= 2017) %>% select(-c(blanl, blank2))
-head(salarios)
-colnames(estadisticas)
+nba = read_csv(" nba_player_stats_salary_2019_2020.csv") %>% 
+  rename(salary = mean_salary_2019_2020) %>% 
+  mutate(Pos = str_remove(string = Pos, pattern = "\\-.*"))
+glimpse(nba)
 ```
 
 Vemos que `salarios` contiene el nombre, equipo y salario en dolares de los jugadores. 
@@ -148,11 +147,9 @@ Vemos que `salarios` contiene el nombre, equipo y salario en dolares de los juga
 Hacemos el join por jugador y equipo. Un jugador puede ser cambiado/vendido durante la temporada. De esta manera mantenemos a los jugadores con las estadisticas correspondientes al equipo con quien acordaron el salario.
 
 ```{r}
-# Join
-nba <- inner_join(salarios, estadisticas, by=c('Player', 'Tm')) %>%
-  select(-c(X.x, X.y, Year)) %>% 
-  drop_na() # Eliminamos los NA
+nba = nba %>% drop_na()
 ```
+
 
 # Analisis Exploratorio
 
@@ -161,7 +158,7 @@ nba <- inner_join(salarios, estadisticas, by=c('Player', 'Tm')) %>%
 ```{r}
 ggplot(nba, aes(Pos, salary, fill=Pos)) +
   geom_boxplot() +
-  geom_text(aes(label=ifelse(salary>28700000,as.character(Player),'')),hjust=-0.1,vjust=0) +
+  geom_text(aes(label=ifelse(salary>30500000,as.character(Player),'')),hjust=-0.1,vjust=0) +
   theme_bw() +
   labs(title= "Boxplots: salarios y posicion de juego", x="Posicion", y="Salario")
 ```
@@ -293,7 +290,7 @@ Realizamos una partición entre dataset de entrenamiento y testeo usando la func
 ```{r}
 train_test <- nba %>% resample_partition(c(train=0.7,test=0.3))
 
-nba <- train_test$train %>% as_tibble()
+train <- train_test$train %>% as_tibble()
 test <- train_test$test %>% as_tibble()
 ```
 
@@ -308,9 +305,9 @@ En este caso vamos a trabajar con $\alpha=1$.
 
 ```{r}
 # Vector con los salarios
-nba_salary = nba$salary
+nba_salary = train$salary
 # Matriz con los regresores
-nba_mtx = model.matrix(salary~., data = nba)
+nba_mtx = model.matrix(salary~., data = train)
 
 # Modelo Lasso
 lasso.mod=glmnet(x=nba_mtx, # Matriz de regresores
