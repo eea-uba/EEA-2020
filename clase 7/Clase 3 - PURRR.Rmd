@@ -50,7 +50,7 @@ Veamos que el resultado de map es una lista. Si sabemos cuál es el tipo de dato
 
   * map_lgl() devuelve un vector de booleanos
  
-  * map_dbl() devuelve un vector de numéricos
+  * map_dbl() devuelve un vector numérico
 
   * map_chr() devuelve un vector de strings 
 
@@ -62,21 +62,28 @@ map_dbl(.x = c(10,100,1000), .f=log10)
 
 ### Map: funciones
 
-Se pueden aplicar funciones de R base o de las librerías como así también funciones definidas por el usuario.  Muchas veces no es necesario definir una función de antemano, sino que podemos usar **funciones anónimas** o **funciones lambda**
+Se pueden aplicar funciones de R base o de las librerías como así también funciones definidas por el usuario. Muchas veces no es necesario definir una función de antemano, sino que podemos usar **funciones anónimas** o **funciones lambda**.
 
 #### Funciones anónimas
 
-La función se define en una única linea
+La función se define en una única linea. 
+
+**Ejemplo numérico**
+
+Por ejemplo, calculamos una función cuadrática para un vector numérico que va del 1 al 10.
 
 ```{r}
 # Calculamos una función cuadrática para el vector
 map_dbl(.x = c(1:10), .f = function(x) x^2+1)
 ```
 
-A partir de un vector de strings queremos contar la cantidad de letras "A" en cada elemento. Para eso combinamos las funciones `str_to_upper` y `str_count`
+**Ejemplo con strings**
+
+A partir de un vector de strings queremos contar la cantidad de letras "A" en cada elemento. Para eso combinamos las funciones `str_to_upper` y `str_count`.
 
 ```{r}
 map_dbl(.x = c("papas FRITAS", "batatas HERVIDAS", "boniato AL HORNO"),
+        # conviertimos todas a mayúsculas y contamos la cantidad de "A"
         .f = function(x) str_count(string = str_to_upper(x), pattern = "A"))
 ```
 
@@ -89,43 +96,47 @@ Son una forma aún más concisa de declarar funciones, aunque pueden ser más li
 map_dbl(.x = c(1:10), .f =  ~.x^2 - .x)
 ```
 
-### Map: Multiples argumentos
+### Map: Múltiples argumentos
  
 Usamos `map2` cuando queremos aplicar una función sobre dos listas o vectores:
 
 - map2(.x, .y, .f, ...)
 - map2(INPUT_UNO, INPUT_DOS, FUNCTION_A_APLICAR, OTROS_OPCIONALES)
 
-Veamos un ejemplo para generar observaciones de distribuciones normales a partir de los vectores de mu y sigma (este es el ejemplo del libro *R for Data Science*)
+**Ejemplo numérico**
 
-La funcion `rnorm` toma los parámetros n (cantidad de observaciones), mu y sigma
+Veamos un ejemplo para generar observaciones de distribuciones normales a partir de los vectores de mu y sigma (este es el ejemplo del libro *R for Data Science*).
+
+La funcion `rnorm` sirve para generar muestras aleatorias de distribución normal con media igual a mu y desviación estándar igual a sigma, donde n indica la cantidad de observaciones a generar. 
 
 ```{r}
-# Vector de mu
+# Vector de mu = medias
 mu = c(0, 3, -5, 2.1)
-# Vector de sigma
+# Vector de sigma = desvíos estándar
 sigma = c(1, 0.5, 5, 0.01)
-
 # Generamos 10 observaciones a partir de nuestros vectores
 map2(.x = mu, .y = sigma, .f= rnorm, n = 10)
 ```
 
-Ahora veamos con un ejemplo para crear una lista de compras
+**Ejemplo con strings**
+
+Ahora veamos con un ejemplo para crear una lista de compras.
 
 ```{r}
 # Vectores
 kilos = c(10, 1, 6, 8, 3)
 verduras =  c("papa", "batata", "zapallo", "boniato", "zanahoria")
-
+# concatenamos las palabras (con nombres en mayúscula) y valores
 map2_chr(.x = verduras, .y =kilos, .f = function(x,y) str_c(str_to_title(x),y, sep=": "))
 ```
+  
   
 Usamos `pmap` cuando queremos aplicar una función sobre una lista de argumentos:
 
 - pmap(.l, .f, ...)
 - pmap(VECTOR_O_LIST_DE_INPUTS, FUNCTION_A_APLICAR, OTROS_OPCIONALES)
 
-Volvamos al ejemplo para generar observaciones de distribuciones normales a partir de los vectores de mu y sigma, pero ahora incorporamos la cantidad de observaciones como un argumento adicional (este ejemplo también es del libro *R for Data Science*)
+Volvamos al ejemplo para generar observaciones de distribuciones normales a partir de los vectores de mu y sigma, pero ahora incorporamos la cantidad de observaciones como un argumento adicional (este ejemplo también es del libro *R for Data Science*).
 
 ```{r}
 # Vector de mu
@@ -136,7 +147,6 @@ sigma = c(1, 0.5, 5, 0.01)
 n = c(1:4)
 # Lista de argumentos
 argumentos <- list(n, mu, sigma)
-
 # Generamos las observaciones a partir de nuestra lista de parámetros
 pmap(.l = argumentos, .f = rnorm)
 ```
@@ -147,22 +157,32 @@ pmap(.l = argumentos, .f = rnorm)
 
 Las funciones de PURRR se pueden utilizar para realizar operaciones sobre dataframes. La sintaxis que vamos a utilizar es:
 
-`map(dataframe, funcion)`
+`map(dataframe, función)`
 
-De esta manera vamos a estar aplicando la función sobre todas las columnas del dataframe
+De esta manera vamos a estar aplicando la función sobre todas las columnas del dataframe. Veamos un ejemplo usando nuestra encuesta de sueldos del sector IT limpia. 
 
 ```{r}
-encuesta_sueldos_limpia = read_csv("~/Fuentes/encuesta_sueldos_it_limpia.csv")
+# cargamos el dataset
+encuesta_sueldos_limpia = read_csv("../Fuentes/encuesta_ds_final.csv")
+encuesta_sueldos_limpia <- encuesta_sueldos_limpia %>%
+  # creamos variable perfil BI/DA vs DS/DI
+  mutate(perfil = case_when(trabajo_de == "BI Analyst / Data Analyst" ~ "BI/DA", TRUE ~ "DS/DE"))
 ```
 
-Comencemos analizando la cantidad de valores distintos para cada columna. Para ello usamos la función `n_distinct`
+Comencemos analizando la cantidad de valores distintos para cada columna. Para ello usamos la función `n_distinct`.
+
+```{r}
+map(encuesta_sueldos_limpia, n_distinct)
+```
+
+Usando la función `str()` se puede consultar de forma compacta la estructura interna de un objeto R. Es especialmente adecuado para mostrar de forma compacta el contenido (abreviado) de listas. 
 
 ```{r}
 map(encuesta_sueldos_limpia, n_distinct) %>%
   str() # Agregamos str para que la salida luzca mejor
 ```
 
-Ahora calculamos el promedio sobre las columnas numéricas
+Ahora calculamos el promedio sobre las columnas numéricas.
 
 ```{r}
 encuesta_sueldos_limpia %>% 
@@ -171,115 +191,115 @@ encuesta_sueldos_limpia %>%
   str()
 ```
 
-Calculamos la mediana sobre las columnas numéricas, sabiendo que el resultado de la función es un número podemos usar la función `map_dbl`
+Calculamos la mediana sobre las columnas numéricas. Sabiendo que el resultado de la función es un número podemos usar directamente la función `map_dbl`.
 
 ```{r}
+# usando map_dbl 
 encuesta_sueldos_limpia %>% 
   select_if(is.numeric) %>% 
   map_dbl(median)
 ```
 
+Recordemos que esta función devuelve un vector numérico no una lista como en el caso anterior, por eso no usamos la función `str()` para ver el resultado en forma compacta.
+
 ### Modelos
 
-
+Podemos usar la función map para calcular distintos modelos modelos. Por ejemplo, calculemos un modelo distinto según el perfil (DA y DS).
 
 ```{r}
 modelos_por_perfil = encuesta_sueldos_limpia %>% 
+                        # separamos el dataset según perfil
                         split(.$perfil) %>% 
+                        # creamos un modelo para cada perfil  
                         map(~lm(salario_neto ~ edad, data = .))
-
 ```
 
-El resultado de esto es una lista con los modelos
-
+El resultado de esto es una lista con los dos modelos. Analicemos los elementos de cada uno utilizando la función tidy() de la librería broom. 
 
 ```{r}
-modelos_por_perfil %>% map(broom::tidy)
+modelos_por_perfil %>% 
+  map(broom::tidy)
 ```
+Evaluemos ahora la capacidad explicativa de los modelos. Para ello, comparamos el $R^2$ de cada uno (en este caso como son modelos simples podemos utilizar esta métrica). 
 
 ```{r}
-modelos_por_perfil %>% map(summary) %>% map_dbl("r.squared")
+modelos_por_perfil %>% 
+  map(broom::glance) %>% 
+  map_dbl("r.squared")
 ```
+
+Mientras el modelo de edad para los perfiles BI/DA logra explicar el 15.6% de la variabilidad del fenómeno, el modelo de edad para los DS/DE logra captar un porcentaje menor de la variabilidad (12,9%). 
 
 ## Ejemplo: Iterando en la EPH
 
 Lo primero que necesitamos es definir un vector o lista sobre el que iterar. 
 
-Por ejemplo, podemos armar un vector con los path a las bases individuales, con el comando `fs::dir_ls`. Se le especifica el __path__ donde buscar los archivos y en este caso una expresion regular __regexp__ para que devuelva aquellos archivos que coinciden con la misma.
+Por ejemplo, podemos armar un vector con los path a las bases individuales, con el comando `fs::dir_ls`. Se le especifica el __path__ donde buscar los archivos y en este caso una expresion regular __regexp__ para que devuelva aquellos archivos que coinciden con la misma. 
 
 ```{r}
 # Buscamos en el path aquellos aquellos archivos que matchean a la expresion regular
-bases_individuales_path <- dir_ls(path = '../Fuentes/', regexp= 'individual')
+bases_individuales_path <- dir_ls(path = '../Fuentes/', regexp = 'usu_individual_T')
 bases_individuales_path
 ```
 
-Luego, como en la función que usamos para leer las bases definimos muchos parametros, nos podemos armar una función _wrapper_ que sólo necesite un parámetro, y que simplifique la escritura del map.
+Luego, como en la función que usamos para leer las bases definimos muchos parámetros, nos podemos armar una función _wrapper_ que sólo necesite un parámetro y simplifique la escritura del map.
 
 ```{r message=FALSE, warning=FALSE}
 # Leer la base de EPH tomando como argumento el file_path
 leer_base_eph <- function(path) {
-  # Lectura de archivo
-  read.table(path,sep=";", dec=",", header = TRUE, fill = TRUE) %>%
-    # Seleccion de variables relevantes
-    select(ANO4,TRIMESTRE,REGION,P21,CH04, CH06)
+  # Lectura de archivos
+  read.table(path, sep = ";", dec = ",", header = TRUE, fill = TRUE) %>%
+  # Seleccionamos variables de interés
+  select(ANO4, TRIMESTRE, REGION, P21, CH04, CH06)
 }
-
-# Leer a un dataframe las tablas especificadas en el vector de bases individuales
-bases_df <- tibble(bases_individuales_path) %>%
-  mutate(base = map(.x = bases_individuales_path, .f = leer_base_eph))
-
 ```
 
-```{r}
+Creamos una tabla que incluya los paths de cada base en una columna y los dataframes anidados correspondientes a cada base en otra. 
+
+```{r message=FALSE, warning=FALSE}
+# creamos la tabla de bases
+bases_df <- tibble(bases_individuales_path) %>%
+  mutate(base = map(.x = bases_individuales_path, .f = leer_base_eph))
 bases_df
 ```
 
-El resultado es un dataframe donde la columna __base__ tiene en cada fila otro dataframe  con la base de la EPH de ese período. Esto es lo que llamamos un _nested DF_ o dataframe anidado.
+El resultado es un dataframe donde la columna __base__ tiene en cada fila el dataframe con la base de la EPH de ese período. Esto es lo que llamamos un _nested DF_ o dataframe anidado.
 
-Si queremos abrir ("desanidar") estas dataframes anidados usamos el comando `unnest()`
+Si queremos abrir ("desanidar") estos dataframes anidados usamos el comando `unnest()`.
 
 ```{r message=FALSE, warning=FALSE}
 # Desanidamos el dataframe
 bases_df <- bases_df %>% unnest()
 bases_df
 ```
-
-> ¿Qué pasa si los DF que tenemos nesteados no tienen la misma cantidad de columnas?
+¿Qué pasa si los dataframes que tenemos anidados no tienen la misma cantidad de columnas?
 
 Esto mismo lo podemos usar para fragmentar el dataset por alguna variable, con la funcion `group_by()`
 
-
 ```{r}
 bases_df %>% 
-  # Agrupar por region
-  group_by(REGION) %>% 
+  # Agrupar por género
+  group_by(CH04) %>% 
   # Anidar
   nest()
 ```
-
-Así, para cada región tenemos un DF.
-
 > ¿ De qué sirve todo esto?
 
 No todo en la vida es un Dataframe. Hay estucturas de datos que no se pueden normalizar a filas y columnas. En esos casos recurríamos tradicionalmente a los loops. Con MAP podemos tener los elementos agrupados en un sólo objeto y aún conservar sus formas diferentes.
 
-## Ejemplo. Regresión lineal
+## Ejemplo. Regresión lineal simple
 
-Si bien no nos vamos a meter en el detalle del modelo lineal en este encuentro, es útil usarlo como ejemplo de lo que podemos hacer con MAP.
+Planteamos un modelo para explicar el ingreso (P21 en nuestra base) en función de la edad (CH06 en la base). 
 
-Planteamos el modelo 
 $$
-P21 = \beta_0 + \beta_1*CH04 + \beta_2*CH06
+Ingreso = \beta_0 + \beta_1*Edad
 $$
-
-Es un modelo que explica el ingreso (P21) en funcion del sexo (CH04) y edad (CH06)
+Calculamos una regresion lineal sobre el dataset que contiene todas las bases de EPH. 
 
 ```{r}
-# Calculamos una regresion lineal sobre el dataset que tiene todas las observaciones de EPH
-lmfit <- lm(P21~factor(CH04)+CH06,data = bases_df)
-
+lmfit <- lm(P21~CH06, data = bases_df)
 # Resumen del modelo
-summary(lmfit)
+broom::tidy(lmfit)
 ```
 
 (al final de la clase podemos charlar sobre los resultados)
@@ -290,85 +310,41 @@ De forma Tidy, la librería `broom` nos da los resultados sobre los coeficientes
 broom::tidy(lmfit)
 ```
  
- Si lo queremos hacer por region
+Si lo queremos hacer por género, veamos cómo podemos hacerlo usando MAP. 
  
-### Loopeando
-
-```{r}
-
-resultados <- tibble()
-
-for (region in unique(bases_df$REGION)) {
-  # Creamos un dataset por region
-  data <- bases_df %>% 
-    filter(REGION==region)
-  # Calcular el modelo lineal
-  lmfit <- lm(P21~factor(CH04)+CH06,data = data)
-  # Guardar los resultados de los coeficientes 
-  lmtidy <- broom::tidy(lmfit)
-  # Asignamos la variable region
-  lmtidy$region <- region
-  # Unimos los dataframes
-  resultados <- bind_rows(resultados,lmtidy)
-
-}
-
-resultados
-```
-
 ## Usando MAP
 
-Primero me armo una funcion que me simplifica el codigo. La funcion nos devuelve la informacion de los coeficientes del modelo lineal calculado sobre el dataframe __porcion__
+Primero armamos una funcion que simplifica el código y nos devuelve la información de los coeficientes del modelo lineal calculado sobre el dataframe __base__. 
 
 ```{r}
-fun<-function(porcion,grupo) {  broom::tidy(lm(P21~factor(CH04)+CH06,data = porcion))}
+fun <- function(base, grupo){broom::tidy(lm(P21~CH06, data = base))}
 ```
+
+Calculamos la regresión lineal para cada grupo. En este caso elegimos género, pero podría haber sido por región también u otra variable de interés. 
 
 ```{r}
 bases_df_lm <- bases_df %>% 
-  # Agrupamos por region
-  group_by(REGION) %>%
+  # Agrupamos por género
+  group_by(CH04) %>%
   # Anidamos
   nest() %>% 
-  # Creamos una columna que tenga el dataframe como resultado de la funcion
-  mutate(lm = map(data,fun))
-
+  # Creamos una variable que contenga el dataframe resultante de aplicar la función que creamos antes
+  mutate(lm = map(data, fun))
 bases_df_lm
+```
+Obtenemos como resultado un data frame con los dos modelos anidados. Veamos los resultados del modelo, desanidando la variable lm. 
 
+```{r}
 # Desanidamos por la variable lm
 bases_df_lm %>% 
   unnest(lm)
 ```
 
-O incluso más facil, utilizando `group_modify` (que es un atajo que solo acepta DF)
-
-```{r}
-bases_df %>% 
-  group_by(REGION) %>% 
-  group_modify(fun)
-```
-
-Pero MAP sirve para operar con cualquier objeto de R.
-
-Por ejemplo podemos guardar el __objeto__ `S3:lm` que es la regresion lineal entrenada. Ese objeto no es ni un vector, ni una lista, ni un DF. No es una estructura de datos, sino que es algo distinto, con _propiedades_ como `predict()` para predecir, el `summary()` que vimos, etc.
-
-```{r}
-# La funcion calcula el modelo lineal sobre cada porcion de datos
-fun<-function(porcion,grupo) {  lm(P21~factor(CH04)+CH06,data = porcion)}
-
-bases_df %>%
-  # Agrupar por region
-  group_by(REGION) %>%
-  # Anidar
-  nest() %>%
-  # Calcular el modelo lineal
-  mutate(lm = map(data,fun))
-```
-
+#### me quedé acá - falta actualizar WALK #### 
 
 ## Walk
 
-Las funciones `Walk` Tienen la misma forma que los `map`, pero se usan cuando lo que queremos iterar no genera una salida, sino que nos interesan los efectos secundarios que generan.
+Las funciones `Walk` tienen la misma forma que los `map`, pero se usan cuando lo que queremos iterar no genera una salida, sino que nos interesan los efectos secundarios que generan.
 
 ```{r}
 map2(.x = ABC_123$Letras,.y = ABC_123$Num,.f = funcion_prueba)[1:3]
@@ -402,10 +378,11 @@ Eso que vemos es el efecto secundario dentro de la función (imprimir)
 
 > ¿Cuándo usar estas herramientas?
 
-A lo largo del curso vimos diferentes técnicas para manipulación de datos. En particular, la librería dplyr nos permitía fácilmente modificar y crear nuevas variables, agrupando. ¿Cuando usamos `dplyr` y cuando usamos `purrr`?
+En el curso hemos visto diferentes técnicas para manipulación de datos. En particular, la librería dplyr nos permitía fácilmente modificar y crear nuevas variables, agrupando. ¿Cuando usamos `dplyr` y cuando usamos `purrr`?
 
 - Si trabajamos sobre un DF simple, sin variables anidadas (lo que conocíamos hasta hoy) podemos usar `dplyr`
-- Si queremos trabajar con DF anidados, con cosas que no son DF, o si el resultado de la operación que vamos a realizar a nivel archivo es algo distinto a un valor único, nos conviene usar `map` y `purrr`
 
-- Las funciones `walk` son útiles por ejemplo para escribir archivos en disco de forma iterativa. Algo que no genera una salida
+- Si queremos trabajar con DF anidados, con cosas que no son DF, o si el resultado de la operación que vamos a realizar a nivel archivo es algo distinto a un valor único, nos conviene usar `map` y `purrr`.
+
+- Las funciones `walk` son útiles por ejemplo para escribir archivos en disco de forma iterativa. Algo que no genera una salida. 
 

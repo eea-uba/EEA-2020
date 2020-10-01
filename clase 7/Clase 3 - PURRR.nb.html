@@ -2971,7 +2971,7 @@ map(.x = c(10,100,1000), .f=log10)</code></pre>
 <p>Veamos que el resultado de map es una lista. Si sabemos cuál es el tipo de dato de nuestros resultados podemos usar variaciones de map que explicitan el tipo de dato y devuelven los resultados en un vector. Algunas de ellas son:</p>
 <ul>
 <li><p>map_lgl() devuelve un vector de booleanos</p></li>
-<li><p>map_dbl() devuelve un vector de numéricos</p></li>
+<li><p>map_dbl() devuelve un vector numérico</p></li>
 <li><p>map_chr() devuelve un vector de strings</p></li>
 </ul>
 <p>Volvamos a ver nuestro ejemplo usando <code>map_dbl</code></p>
@@ -2988,10 +2988,12 @@ map(.x = c(10,100,1000), .f=log10)</code></pre>
 </div>
 <div id="map-funciones" class="section level3">
 <h3>Map: funciones</h3>
-<p>Se pueden aplicar funciones de R base o de las librerías como así también funciones definidas por el usuario. Muchas veces no es necesario definir una función de antemano, sino que podemos usar <strong>funciones anónimas</strong> o <strong>funciones lambda</strong></p>
+<p>Se pueden aplicar funciones de R base o de las librerías como así también funciones definidas por el usuario. Muchas veces no es necesario definir una función de antemano, sino que podemos usar <strong>funciones anónimas</strong> o <strong>funciones lambda</strong>.</p>
 <div id="funciones-anónimas" class="section level4">
 <h4>Funciones anónimas</h4>
-<p>La función se define en una única linea</p>
+<p>La función se define en una única linea.</p>
+<p><strong>Ejemplo numérico</strong></p>
+<p>Por ejemplo, calculamos una función cuadrática para un vector numérico que va del 1 al 10.</p>
 <!-- rnb-text-end -->
 <!-- rnb-chunk-begin -->
 <!-- rnb-source-begin eyJkYXRhIjoiYGBgclxuIyBDYWxjdWxhbW9zIHVuYSBmdW5jacOzbiBjdWFkcsOhdGljYSBwYXJhIGVsIHZlY3RvclxubWFwX2RibCgueCA9IGMoMToxMCksIC5mID0gZnVuY3Rpb24oeCkgeF4yKzEpXG5gYGAifQ== -->
@@ -3003,7 +3005,8 @@ map_dbl(.x = c(1:10), .f = function(x) x^2+1)</code></pre>
 <!-- rnb-output-end -->
 <!-- rnb-chunk-end -->
 <!-- rnb-text-begin -->
-<p>A partir de un vector de strings queremos contar la cantidad de letras “A” en cada elemento. Para eso combinamos las funciones <code>str_to_upper</code> y <code>str_count</code></p>
+<p><strong>Ejemplo con strings</strong></p>
+<p>A partir de un vector de strings queremos contar la cantidad de letras “A” en cada elemento. Para eso combinamos las funciones <code>str_to_upper</code> y <code>str_count</code>.</p>
 <!-- rnb-text-end -->
 <!-- rnb-chunk-begin -->
 <!-- rnb-source-begin eyJkYXRhIjoiYGBgclxubWFwX2RibCgueCA9IGMoXCJwYXBhcyBGUklUQVNcIiwgXCJiYXRhdGFzIEhFUlZJREFTXCIsIFwiYm9uaWF0byBBTCBIT1JOT1wiKSxcbiAgICAgICAgLmYgPSBmdW5jdGlvbih4KSBzdHJfY291bnQoc3RyaW5nID0gc3RyX3RvX3VwcGVyKHgpLCBwYXR0ZXJuID0gXCJBXCIpKVxuYGBgIn0= -->
@@ -3032,42 +3035,47 @@ map_dbl(.x = c(1:10), .f =  ~.x^2 - .x)</code></pre>
 <!-- rnb-text-begin -->
 </div>
 </div>
-<div id="map-multiples-argumentos" class="section level3">
-<h3>Map: Multiples argumentos</h3>
+<div id="map-múltiples-argumentos" class="section level3">
+<h3>Map: Múltiples argumentos</h3>
 <p>Usamos <code>map2</code> cuando queremos aplicar una función sobre dos listas o vectores:</p>
 <ul>
 <li>map2(.x, .y, .f, …)</li>
 <li>map2(INPUT_UNO, INPUT_DOS, FUNCTION_A_APLICAR, OTROS_OPCIONALES)</li>
 </ul>
-<p>Veamos un ejemplo para generar observaciones de distribuciones normales a partir de los vectores de mu y sigma (este es el ejemplo del libro <em>R for Data Science</em>)</p>
-<p>La funcion <code>rnorm</code> toma los parámetros n (cantidad de observaciones), mu y sigma</p>
+<p><strong>Ejemplo numérico</strong></p>
+<p>Veamos un ejemplo para generar observaciones de distribuciones normales a partir de los vectores de mu y sigma (este es el ejemplo del libro <em>R for Data Science</em>).</p>
+<p>La funcion <code>rnorm</code> sirve para generar muestras aleatorias de distribución normal con media igual a mu y desviación estándar igual a sigma, donde n indica la cantidad de observaciones a generar.</p>
 <!-- rnb-text-end -->
 <!-- rnb-chunk-begin -->
-<!-- rnb-source-begin eyJkYXRhIjoiYGBgclxuIyBWZWN0b3IgZGUgbXVcbm11ID0gYygwLCAzLCAtNSwgMi4xKVxuIyBWZWN0b3IgZGUgc2lnbWFcbnNpZ21hID0gYygxLCAwLjUsIDUsIDAuMDEpXG5cbiMgR2VuZXJhbW9zIDEwIG9ic2VydmFjaW9uZXMgYSBwYXJ0aXIgZGUgbnVlc3Ryb3MgdmVjdG9yZXNcbm1hcDIoLnggPSBtdSwgLnkgPSBzaWdtYSwgLmY9IHJub3JtLCBuID0gMTApXG5gYGAifQ== -->
-<pre class="r"><code># Vector de mu
+<!-- rnb-source-begin eyJkYXRhIjoiYGBgclxuIyBWZWN0b3IgZGUgbXUgPSBtZWRpYXNcbm11ID0gYygwLCAzLCAtNSwgMi4xKVxuIyBWZWN0b3IgZGUgc2lnbWEgPSBkZXN2w61vcyBlc3TDoW5kYXJcbnNpZ21hID0gYygxLCAwLjUsIDUsIDAuMDEpXG4jIEdlbmVyYW1vcyAxMCBvYnNlcnZhY2lvbmVzIGEgcGFydGlyIGRlIG51ZXN0cm9zIHZlY3RvcmVzXG5tYXAyKC54ID0gbXUsIC55ID0gc2lnbWEsIC5mPSBybm9ybSwgbiA9IDEwKVxuYGBgIn0= -->
+<pre class="r"><code># Vector de mu = medias
 mu = c(0, 3, -5, 2.1)
-# Vector de sigma
+# Vector de sigma = desvíos estándar
 sigma = c(1, 0.5, 5, 0.01)
-
 # Generamos 10 observaciones a partir de nuestros vectores
 map2(.x = mu, .y = sigma, .f= rnorm, n = 10)</code></pre>
 <!-- rnb-source-end -->
-<!-- rnb-output-begin eyJkYXRhIjoiW1sxXV1cbiBbMV0gLTEuODUzODA4MyAgMS41NTI4NTEyIC0wLjY1MTUzNTYgIDEuNjE3NzE1NiAtMS4xMTU3MjIxIC0wLjIzMjQxMjMgIDAuMzc4MDI5OSAgMC4zNjc0NjM2ICAwLjM3NzQ4OTYgLTAuODAwNjIwMFxuXG5bWzJdXVxuIFsxXSAyLjYwMjAzNyAyLjc5Nzc1OSAyLjcxNTM5NCAzLjUwNzMwNCAyLjcxNjU1MiAyLjk3MjY4MCAzLjA1MjY3NSAyLjc0MjM2NSAzLjc4NjY3MiAzLjEyNDAxMlxuXG5bWzNdXVxuIFsxXSAtMTMuODAxNzgwICAtMi4wNTk5MTAgIC02LjA2MzcwNiAgLTUuNzAxNTY3IC0xMC41MjkwMjUgICAyLjM3ODY0MSAgLTcuMTg0NDcxICAtNS41OTUxNjAgICAyLjcxNzQwNyAtMTkuMjAxMTQzXG5cbltbNF1dXG4gWzFdIDIuMTAzOTM2IDIuMTAxMDQ5IDIuMDk4OTMyIDIuMDk3MzIzIDIuMDkzNDc3IDIuMDkxMjQ1IDIuMDgzMTg5IDIuMDk5NDIyIDIuMTA5NDM5IDIuMDk4NjQ3XG4ifQ== -->
+<!-- rnb-output-begin eyJkYXRhIjoiW1sxXV1cbiBbMV0gIDAuOTk0NTQ2NSAgMC44OTc2NzQwICAxLjI2OTU3NjIgLTEuNDY4NTQzNyAgMC41MTk5NDE5ICAwLjE1OTUxNjZcbiBbN10gLTAuMzMwNzA4NSAgMS41NDM0MTE4ICAwLjM1MTYwNDMgLTEuMjk1MTI1NlxuXG5bWzJdXVxuIFsxXSAzLjE4NTU0NyAzLjA1ODczNSAzLjQ5NTA3NSAyLjE2OTk0NyAyLjU1OTY5OSAyLjE4MjMwNiAyLjcyMjAxNFxuIFs4XSAyLjA4NjI0MyAyLjcwMzg5MiAyLjY2ODAxMlxuXG5bWzNdXVxuIFsxXSAgIDcuMTI2NDQ2ICAgMS45NDEzMDYgLTEwLjYxODg0NyAgLTEuMzEwNDMxICAtNi43MDEwNzcgIC05LjM2NDA1MlxuIFs3XSAgLTMuNTAzMDE0IC0xMC4yNTQ0MTIgIC00LjYwNjAwNiAtMTMuMzE0NzY3XG5cbltbNF1dXG4gWzFdIDIuMTAwMzkyIDIuMTExNTI3IDIuMDkyMDk4IDIuMTEzMzIxIDIuMDg1MjQyIDIuMTE2NTE3IDIuMDk4ODU4XG4gWzhdIDIuMDc2OTU0IDIuMTEwNTA5IDIuMDk2MzM0XG4ifQ== -->
 <pre><code>[[1]]
- [1] -1.8538083  1.5528512 -0.6515356  1.6177156 -1.1157221 -0.2324123  0.3780299  0.3674636  0.3774896 -0.8006200
+ [1]  0.9945465  0.8976740  1.2695762 -1.4685437  0.5199419  0.1595166
+ [7] -0.3307085  1.5434118  0.3516043 -1.2951256
 
 [[2]]
- [1] 2.602037 2.797759 2.715394 3.507304 2.716552 2.972680 3.052675 2.742365 3.786672 3.124012
+ [1] 3.185547 3.058735 3.495075 2.169947 2.559699 2.182306 2.722014
+ [8] 2.086243 2.703892 2.668012
 
 [[3]]
- [1] -13.801780  -2.059910  -6.063706  -5.701567 -10.529025   2.378641  -7.184471  -5.595160   2.717407 -19.201143
+ [1]   7.126446   1.941306 -10.618847  -1.310431  -6.701077  -9.364052
+ [7]  -3.503014 -10.254412  -4.606006 -13.314767
 
 [[4]]
- [1] 2.103936 2.101049 2.098932 2.097323 2.093477 2.091245 2.083189 2.099422 2.109439 2.098647</code></pre>
+ [1] 2.100392 2.111527 2.092098 2.113321 2.085242 2.116517 2.098858
+ [8] 2.076954 2.110509 2.096334</code></pre>
 <!-- rnb-output-end -->
 <!-- rnb-chunk-end -->
 <!-- rnb-text-begin -->
-<p>Ahora veamos con un ejemplo para crear una lista de compras</p>
+<p><strong>Ejemplo con strings</strong></p>
+<p>Ahora veamos con un ejemplo para crear una lista de compras.</p>
 <!-- rnb-text-end -->
 <!-- rnb-chunk-begin -->
 <!-- rnb-source-begin eyJkYXRhIjoiYGBgclxuIyBWZWN0b3Jlc1xua2lsb3MgPSBjKDEwLCAxLCA2LCA4LCAzKVxudmVyZHVyYXMgPSAgYyhcInBhcGFcIiwgXCJiYXRhdGFcIiwgXCJ6YXBhbGxvXCIsIFwiYm9uaWF0b1wiLCBcInphbmFob3JpYVwiKVxuXG5tYXAyX2NocigueCA9IHZlcmR1cmFzLCAueSA9a2lsb3MsIC5mID0gZnVuY3Rpb24oeCx5KSBzdHJfYyhzdHJfdG9fdGl0bGUoeCkseSwgc2VwPVwiOiBcIikpXG5gYGAifQ== -->
@@ -3077,8 +3085,9 @@ verduras =  c(&quot;papa&quot;, &quot;batata&quot;, &quot;zapallo&quot;, &quot;b
 
 map2_chr(.x = verduras, .y =kilos, .f = function(x,y) str_c(str_to_title(x),y, sep=&quot;: &quot;))</code></pre>
 <!-- rnb-source-end -->
-<!-- rnb-output-begin eyJkYXRhIjoiWzFdIFwiUGFwYTogMTBcIiAgICAgXCJCYXRhdGE6IDFcIiAgICBcIlphcGFsbG86IDZcIiAgIFwiQm9uaWF0bzogOFwiICAgXCJaYW5haG9yaWE6IDNcIlxuIn0= -->
-<pre><code>[1] &quot;Papa: 10&quot;     &quot;Batata: 1&quot;    &quot;Zapallo: 6&quot;   &quot;Boniato: 8&quot;   &quot;Zanahoria: 3&quot;</code></pre>
+<!-- rnb-output-begin eyJkYXRhIjoiWzFdIFwiUGFwYTogMTBcIiAgICAgXCJCYXRhdGE6IDFcIiAgICBcIlphcGFsbG86IDZcIiAgIFwiQm9uaWF0bzogOFwiICBcbls1XSBcIlphbmFob3JpYTogM1wiXG4ifQ== -->
+<pre><code>[1] &quot;Papa: 10&quot;     &quot;Batata: 1&quot;    &quot;Zapallo: 6&quot;   &quot;Boniato: 8&quot;  
+[5] &quot;Zanahoria: 3&quot;</code></pre>
 <!-- rnb-output-end -->
 <!-- rnb-chunk-end -->
 <!-- rnb-text-begin -->
@@ -3087,10 +3096,10 @@ map2_chr(.x = verduras, .y =kilos, .f = function(x,y) str_c(str_to_title(x),y, s
 <li>pmap(.l, .f, …)</li>
 <li>pmap(VECTOR_O_LIST_DE_INPUTS, FUNCTION_A_APLICAR, OTROS_OPCIONALES)</li>
 </ul>
-<p>Volvamos al ejemplo para generar observaciones de distribuciones normales a partir de los vectores de mu y sigma, pero ahora incorporamos la cantidad de observaciones como un argumento adicional (este ejemplo también es del libro <em>R for Data Science</em>)</p>
+<p>Volvamos al ejemplo para generar observaciones de distribuciones normales a partir de los vectores de mu y sigma, pero ahora incorporamos la cantidad de observaciones como un argumento adicional (este ejemplo también es del libro <em>R for Data Science</em>).</p>
 <!-- rnb-text-end -->
 <!-- rnb-chunk-begin -->
-<!-- rnb-source-begin eyJkYXRhIjoiYGBgclxuIyBWZWN0b3IgZGUgbXVcbm11ID0gYygwLCAzLCAtNSwgMi4xKVxuIyBWZWN0b3IgZGUgc2lnbWFcbnNpZ21hID0gYygxLCAwLjUsIDUsIDAuMDEpXG4jIFZlY3RvciBkZSBjYW50aWRhZCBkZSBvYnNlcnZhY2lvbmVzIFxubiA9IGMoMTo0KVxuIyBMaXN0YSBkZSBhcmd1bWVudG9zXG5hcmd1bWVudG9zIDwtIGxpc3QobiwgbXUsIHNpZ21hKVxuXG4jIEdlbmVyYW1vcyAxMCBvYnNlcnZhY2lvbmVzIGEgcGFydGlyIGRlIG51ZXN0cm9zIHZlY3RvcmVzXG5wbWFwKC5sID0gYXJndW1lbnRvcywgLmYgPSBybm9ybSlcbmBgYCJ9 -->
+<!-- rnb-source-begin eyJkYXRhIjoiYGBgclxuIyBWZWN0b3IgZGUgbXVcbm11ID0gYygwLCAzLCAtNSwgMi4xKVxuIyBWZWN0b3IgZGUgc2lnbWFcbnNpZ21hID0gYygxLCAwLjUsIDUsIDAuMDEpXG4jIFZlY3RvciBkZSBjYW50aWRhZCBkZSBvYnNlcnZhY2lvbmVzIFxubiA9IGMoMTo0KVxuIyBMaXN0YSBkZSBhcmd1bWVudG9zXG5hcmd1bWVudG9zIDwtIGxpc3QobiwgbXUsIHNpZ21hKVxuIyBHZW5lcmFtb3MgbGFzIG9ic2VydmFjaW9uZXMgYSBwYXJ0aXIgZGUgbnVlc3RyYSBsaXN0YSBkZSBwYXLDoW1ldHJvc1xucG1hcCgubCA9IGFyZ3VtZW50b3MsIC5mID0gcm5vcm0pXG5gYGAifQ== -->
 <pre class="r"><code># Vector de mu
 mu = c(0, 3, -5, 2.1)
 # Vector de sigma
@@ -3099,22 +3108,21 @@ sigma = c(1, 0.5, 5, 0.01)
 n = c(1:4)
 # Lista de argumentos
 argumentos &lt;- list(n, mu, sigma)
-
-# Generamos 10 observaciones a partir de nuestros vectores
+# Generamos las observaciones a partir de nuestra lista de parámetros
 pmap(.l = argumentos, .f = rnorm)</code></pre>
 <!-- rnb-source-end -->
-<!-- rnb-output-begin eyJkYXRhIjoiW1sxXV1cblsxXSAwLjYxOTMwNzdcblxuW1syXV1cblsxXSAyLjYxNzM5NiAyLjQ1MDA2N1xuXG5bWzNdXVxuWzFdIC01LjgxNDEwOCAtNi41MzAwNTYgLTMuMjQzNzU4XG5cbltbNF1dXG5bMV0gMi4wOTM1NDYgMi4xMTE1NTMgMi4xMDM2MTQgMi4wOTI2NzZcbiJ9 -->
+<!-- rnb-output-begin eyJkYXRhIjoiW1sxXV1cblsxXSAwLjczNDIzNjVcblxuW1syXV1cblsxXSAzLjI3MzA5MyAzLjcyNTMzMFxuXG5bWzNdXVxuWzFdIC03LjE1MTkwMCAgMS4wMzY5MDAgLTMuNDQ1MTYxXG5cbltbNF1dXG5bMV0gMi4xMTA0MzkgMi4xMDM2MzQgMi4xMDA2OTMgMi4wOTg5NDRcbiJ9 -->
 <pre><code>[[1]]
-[1] 0.6193077
+[1] 0.7342365
 
 [[2]]
-[1] 2.617396 2.450067
+[1] 3.273093 3.725330
 
 [[3]]
-[1] -5.814108 -6.530056 -3.243758
+[1] -7.151900  1.036900 -3.445161
 
 [[4]]
-[1] 2.093546 2.111553 2.103614 2.092676</code></pre>
+[1] 2.110439 2.103634 2.100693 2.098944</code></pre>
 <!-- rnb-output-end -->
 <!-- rnb-chunk-end -->
 <!-- rnb-text-begin -->
@@ -3125,119 +3133,179 @@ pmap(.l = argumentos, .f = rnorm)</code></pre>
 <div id="dataframes" class="section level3">
 <h3>Dataframes</h3>
 <p>Las funciones de PURRR se pueden utilizar para realizar operaciones sobre dataframes. La sintaxis que vamos a utilizar es:</p>
-<p><code>map(dataframe, funcion)</code></p>
-<p>De esta manera vamos a estar aplicando la función sobre todas las columnas del dataframe</p>
+<p><code>map(dataframe, función)</code></p>
+<p>De esta manera vamos a estar aplicando la función sobre todas las columnas del dataframe. Veamos un ejemplo usando nuestra encuesta de sueldos del sector IT limpia.</p>
 <!-- rnb-text-end -->
 <!-- rnb-chunk-begin -->
-<!-- rnb-source-begin eyJkYXRhIjoiYGBgclxuZW5jdWVzdGFfc3VlbGRvc19saW1waWEgPSByZWFkX2NzdihcIn4vRnVlbnRlcy9lbmN1ZXN0YV9zdWVsZG9zX2l0X2xpbXBpYS5jc3ZcIilcbmBgYCJ9 -->
-<pre class="r"><code>encuesta_sueldos_limpia = read_csv(&quot;~/Fuentes/encuesta_sueldos_it_limpia.csv&quot;)</code></pre>
+<!-- rnb-source-begin eyJkYXRhIjoiYGBgclxuIyBjYXJnYW1vcyBlbCBkYXRhc2V0XG5lbmN1ZXN0YV9zdWVsZG9zX2xpbXBpYSA9IHJlYWRfY3N2KFwiLi4vRnVlbnRlcy9lbmN1ZXN0YV9kc19maW5hbC5jc3ZcIilcbmBgYCJ9 -->
+<pre class="r"><code># cargamos el dataset
+encuesta_sueldos_limpia = read_csv(&quot;../Fuentes/encuesta_ds_final.csv&quot;)</code></pre>
 <!-- rnb-source-end -->
-<!-- rnb-output-begin eyJkYXRhIjoiUGFyc2VkIHdpdGggY29sdW1uIHNwZWNpZmljYXRpb246XG5jb2xzKFxuICBlZGFkID0gXHUwMDFiWzMybWNvbF9kb3VibGUoKVx1MDAxYlszOW0sXG4gIGFub3NfZGVfZXhwZXJpZW5jaWEgPSBcdTAwMWJbMzJtY29sX2RvdWJsZSgpXHUwMDFiWzM5bSxcbiAgYW5vc19lbl9sYV9lbXByZXNhX2FjdHVhbCA9IFx1MDAxYlszMm1jb2xfZG91YmxlKClcdTAwMWJbMzltLFxuICBhbm9zX2VuX2VsX3B1ZXN0b19hY3R1YWwgPSBcdTAwMWJbMzJtY29sX2RvdWJsZSgpXHUwMDFiWzM5bSxcbiAgcGVyZmlsID0gXHUwMDFiWzMxbWNvbF9jaGFyYWN0ZXIoKVx1MDAxYlszOW0sXG4gIHNhbGFyaW9fYnJ1dG8gPSBcdTAwMWJbMzJtY29sX2RvdWJsZSgpXHUwMDFiWzM5bSxcbiAgc2FsYXJpb19uZXRvID0gXHUwMDFiWzMybWNvbF9kb3VibGUoKVx1MDAxYlszOW1cbilcbiJ9 -->
-<pre><code>Parsed with column specification:
+<!-- rnb-output-begin eyJkYXRhIjoiTWlzc2luZyBjb2x1bW4gbmFtZXMgZmlsbGVkIGluOiAnWDEnIFsxXVBhcnNlZCB3aXRoIGNvbHVtbiBzcGVjaWZpY2F0aW9uOlxuY29scyhcbiAgWDEgPSBjb2xfZG91YmxlKCksXG4gIGVkYWQgPSBjb2xfZG91YmxlKCksXG4gIGFub3NfZGVfZXhwZXJpZW5jaWEgPSBjb2xfZG91YmxlKCksXG4gIGFub3NfZW5fbGFfZW1wcmVzYV9hY3R1YWwgPSBjb2xfZG91YmxlKCksXG4gIGFub3NfZW5fZWxfcHVlc3RvX2FjdHVhbCA9IGNvbF9kb3VibGUoKSxcbiAgdHJhYmFqb19kZSA9IGNvbF9jaGFyYWN0ZXIoKSxcbiAgc2FsYXJpb19icnV0byA9IGNvbF9kb3VibGUoKSxcbiAgc2FsYXJpb19uZXRvID0gY29sX2RvdWJsZSgpLFxuICBzdWVsZG9fZG9sYXJpemFkbyA9IGNvbF9sb2dpY2FsKClcbilcbiJ9 -->
+<pre><code>Missing column names filled in: &#39;X1&#39; [1]Parsed with column specification:
 cols(
-  edad = [32mcol_double()[39m,
-  anos_de_experiencia = [32mcol_double()[39m,
-  anos_en_la_empresa_actual = [32mcol_double()[39m,
-  anos_en_el_puesto_actual = [32mcol_double()[39m,
-  perfil = [31mcol_character()[39m,
-  salario_bruto = [32mcol_double()[39m,
-  salario_neto = [32mcol_double()[39m
+  X1 = col_double(),
+  edad = col_double(),
+  anos_de_experiencia = col_double(),
+  anos_en_la_empresa_actual = col_double(),
+  anos_en_el_puesto_actual = col_double(),
+  trabajo_de = col_character(),
+  salario_bruto = col_double(),
+  salario_neto = col_double(),
+  sueldo_dolarizado = col_logical()
 )</code></pre>
+<!-- rnb-output-end -->
+<!-- rnb-source-begin eyJkYXRhIjoiYGBgclxuZW5jdWVzdGFfc3VlbGRvc19saW1waWEgJT4lXG4gICMgY3JlYW1vcyB2YXJpYWJsZSBwZXJmaWwgQkkvREEgdnMgRFMvRElcbiAgbXV0YXRlKHBlcmZpbCA9IGNhc2Vfd2hlbih0cmFiYWpvX2RlID09IFwiQkkgQW5hbHlzdCAvIERhdGEgQW5hbHlzdFwiIH4gXCJCSS9EQVwiLCBUUlVFIH4gXCJEUy9ERVwiKSlcbmBgYCJ9 -->
+<pre class="r"><code>encuesta_sueldos_limpia %&gt;%
+  # creamos variable perfil BI/DA vs DS/DI
+  mutate(perfil = case_when(trabajo_de == &quot;BI Analyst / Data Analyst&quot; ~ &quot;BI/DA&quot;, TRUE ~ &quot;DS/DE&quot;))</code></pre>
+<!-- rnb-source-end -->
+<!-- rnb-frame-begin eyJtZXRhZGF0YSI6eyJjbGFzc2VzIjpbInNwZWNfdGJsX2RmIiwidGJsX2RmIiwidGJsIiwiZGF0YS5mcmFtZSJdLCJucm93IjoyNDQsIm5jb2wiOjEwfSwicmRmIjoiSDRzSUFBQUFBQUFBQnUxZGEyeFV4eFcrUEp5QUc2S05RQ3BJTk4xUzJrWTBNVzhJaE1lMU1TUThFckROd3p6dDY5MXJlKzMxMnJKTm02WVBXZWtmK2xDYUgxU3QyajlSL3JTcVZLbHErNnRxSkt1dElqV3ExQ3BxV3RvMDdXTE1LellZZzZHUUZPaDY1L3NHNXR5ZFhHT00yU1crRW53K2MrWTdjK2JNekRselYyYXBMSzllV2x4ZDdEak9GR2VxTTltWlVwVDUwWGxvdzQ3RlM1WXZjWnlwa3pQU3BJeG0rakMrbU9rMU0vUERjUGRITTMrRzFsOXdzby9yQUtjQkk4Qlp3Tm5BdWNBb2NCNXdQdkR6d0NlQUM0QlBBa3VBaTRDTGdVdUFTNEhMZ011Qks0QXJnVThEVndGWEE1OEJyZ0d1QmE0RHJnZTZ4QzZGcFpCTElaZEJMb084QWZJR3lPV1F5eUZ2aEx3UjhpYklteUEvQy9sWnlNOUJmZzd5WnNpYklXK0J2QVh5VnNoYklXK0R2QTN5ODVDZmgvd0M1QmNnYjRlOEhmSU95RHRjSU51N0ZWWkFYd0Y5QmZRVjBGZENYd2w5SmZTVjBGZEJYd1Y5RmZSVjBPK0VmaWYwTzZIZkNmMHU2SGRCdnd2NlhkRHZobjQzOUx1aDN3MzlIdWozUUw4SCtqM1FWME5mRFgwMTlOWFE3NFYrTC9SN29kOEwvVDdvOTBHL0QvcDkwTytIZmovMCs2SGZELzBCNkE5QWZ3RDZBOUFmaFA0ZzlBZWhQd2o5SWVnUFFYOEkra1BRMTBCZkEzME45RFhRMTBKZkd3V2lYMjB0RVAxclh3T1NsMWJvZ2UrQjc0SHZnZStCNzRIdmdlK0JYd2QrSGZoMTROZUJYd2QrSGZoMTROZUJId00vQm40TS9CajRNZkJqNE1mQWo0RWZCejhPZmh6OE9QaHg4T1BneDhHUGcrK0Q3NFB2ZysrRDc0UHZnKytENzROZkQzNDkrUFhnMTROZkQzNDkrUFhnMTRQZkFINEQrQTNnTjREZkFINEQrQTNnTjREZkNINGorSTNnTjRMZkNINGorSTNnTjRLZkFEOEJmZ0w4QlBnSjhCUGdKOEJQZ044RWZoUDRUZUEzZ2Q4RWZoUDRUZUEzZ2Q4TWZqUDR6ZUEzZzk4TWZqUDR6ZUEzZzU4RVB3bCtFdndrK0Vud2srQW53VStDM3dKK0MvZ3Q0TGVBM3dKK0MvZ3Q0TGVBbndJL0JYNEsvQlQ0S2NWM1VLZDFQV09kb3J4ZXlHdUZMUHV4dnJtaTNSWHRaWkJaNzZTZXZMVkNwcDcxa3ZXT2RaSjFqbldiOVp6MWxIWllmMWVIeVBTVDlsZy9PVy9XWmZycEN0Ung3VExIZjhhQ0hGZjZLZmtyTFh5NURxem45SWYzQk50NmNqejJweDNwSDNtTUY5ZXZETWg5eEhzUjd5MWNCN2srdkdlc0VmM2xmTWlqWFRrKzI3VWZ3djkxQWpuZTB3TEpwNTczS2UwUGtQdVE4ZUIra0hZNVQ5cmx2cGZ6b0orMmVhNFRlcm1PNndYS2VhOFdLT05GZTlKZm5pL2VsN2srZ1hnTG1YWmNJT1BCdU5HL3dINFM3U3VFdkViMDQ3Z2NqK3RPZituUE9zSGplTGI5TFBjamNaWG94M25JL1VQa2VITC95ZlVnMGo3UGk5d1g4djFFdnljQU9YODVEdU8wVnZCWEN1Uzg1RGp5M01oMXNLMFAyOHNzZnNsNHJ4QklQZC9iNUxuaU90TlBtYy9sK3hmNWpLLzBoK095SCsxelBIbmVxTGZ0citVQ2FVZWVZN20rNk9ld1RrUFE3OFY4bitiN3NDUGErWDR0MzZ2Wkx0K3I1enZHbzkrbjJXK3VrS2NKSkkvMk9SN1hyVVRJMGwrK3g1Ty9TUFNqUGlMOFdDRDZNWTdUUkw5Wm9oOWwycFB6blNmNjIzaU1Qei9Id0xqOC9FTi9EaUxYaFR6dUc0NjNDSWg0ODlIalVlWjRVV0YzdnVndjE2bEU5T2U0M0pmOG5NUVIvdk5jMFM3WGNiN0EyVUtXZmxIbWVzNFY3VEsrY244NXBsNzd0MHpJbkpmY1YzTCswbTVVK0VYa3ZPaVhQRi9pbkdrLzBKK1BYbmZha2VzamtmMkUzOW9lNTdkVXRNdjU4UE13amw4aStvdjlxL3VKK010NWhlckZmdERqeVhWOTB1d1gwRWNFTGpEdFdUOXZYR0RLdXArSWcxNC9hUzhLNUhyTDlaSDV4OG45NlBGb1Q1NVRSK2lKTWc0eXJ3bC9BL21HUEk1ak9WK2FKK0lSc0J1eHRGdk9FL1dPYU9mbnNwclBmU0xybVJoUFB0S1BnRjlQNUI1L3BJOXRYRGVvTit2MHJOeDh1VTl0NDhuOWJhc0hBYis0N2xIVEQ1bFBBdWRGMUQ5ci9vcVkvV2hYanEvbHFKQ0pNdCtML0dDTnU4eC9QTGNsd2I0ajhTdHMvMGkrcml0aXY4c25rQWN0L1NuYjdnMVd1NEt2MjVubmVkOWRZZmJUNDBaeXQ0Zk4zNVlQYkEvUGRkaDYydktaTmQvSXZDWHZWMks5d3g0M1RNL3pJZksvZFovSWZSb3lydVp4L1VwTTVCTVlUNHdqK3dYdXc3WitGbjNnbmhBQjh0eUY3RnZwbjYxT08wSU9uQjl4ejVMMmJPUEp2QmYyYUwraVFGR25iZjF0ZWQzR3M1MWp5ZGQyUXVJVTlsakhLOGx0Uit2RDhydGxuREEvYkg2TjlVTzdZWFZhemt1ZWk0QmQzbGRFZXlDT2tkeDg2MzExcFBmdGtEcWs3WkkzVytqbCs0V05MKzR4dHZNY3NHdlpONEY4SXMvcmJMT2RmdGoyVGVBK2I0dVBMUzlRanVUdUovdUgzUk9rZjlhNktlcGQ2RHBhN052bWY4ZDFXdGdONk9kOWRQK3c5UW5ycCsweXowZHkrMkhMVTFvVytVelhVWXVkd1AyV2FKbXY3ZHlFN3M4N3JOT2hjUkoyNUR3RDc1VWg5U0tzVHR2R0Q3ei9qZFQvdTZ6VGdmd3AzbHZrdzM1aDUxWEt0amhZeDVGNXoxSmZiZVBZeGh0cG5RNnJXeU45N2xlZHZ1MkpaUDRNNFJmTTVwUnRqcGFtdk9SWE9qcWpDNlBsWHFkSHNaQTZQSjV0cTRvbC9GUm40bGFuamFtR1JNcjMyKytvVjM1NWsxOCtqNWVadk5reStlRHBBelNWL05yekJUYmhCeTE0K1pWeXhqVzZCWmJWSnpya1did0xaMTN6OEZqbDRXQ0ZzNTZGc3pVTHpKRzhjVGUvSnZ3QWhXV2lRK0hlNkNaY2VxQmR5cHNzazY5VHo2OHdUc3lzOEx6Snd3eFNZR1krZHVNVTRnYk9MNS96WnEwTGNTRUtjVko1NkZJZSt2eHhqMUxlcElVSlIvTHgvWHVpdzkxMzRHOUQ5dDUwaHAvU1NaL01vdnYrSWVDN0NudlYxNGk0WjlUWEs1UVdxL2JTNmVyckxrb2ZYcXowZzRwZit0RDMzU3dXdlJWVitCdWwvNCtyOUVVL1Z2b3BxOUpabk56WHJWQjlqWXc3cFA2WnRIdGxwY0tleCtEZjIxMEtmK1VxZjA2cmR1ZEh3SmV5ZHR5enlpK2lici81aG1yL0FQTzZycjd1UnJjVHIzL2JtSS9iOTQ3Wi85SVJVdzdGR2NyZS8yYWFpSGhxZWZDb2tqK3NOdjJVZUJ4K2ZZQjF1blpjNFVYRTc5cGZnYTliOEhNS2U0c1U3eXI4NEh3cDIvRDhKak1PYkQvOUxZVW5qb3pNVHUvanVkc0gzTnp0L3owSFBCSlIyQVlaKzgrR1Z5NDVCakorbE05dE0vR0syci91bFNQZENyOWsrc1U0WDc3bTNCR2V3bmlYMXlyK2tEcDM3bEIzVjI1ODJURVI2M1hwVGFWbi9CbnZTeFk4K1RXTGZsNWE0U2N3cjU5ZXlHTGZuTFFSdjR1dktQMHhyTVBGNzZxNFhOeTF3NGdIenovUE1lT3A3V3ovYUdSOHptSS9EeDcvaTJGbjZPZHEzTUczTWQ1UmN6ekt5QWM2WG9PZDNiZjdGOEFMdi8yRlF2QTBOZ0kvVTZ2d1Uwb2VlQ00zMHQ1QU85QlZ5UE5DUFBjRElQS01SckVQYmRpTC9jRHp5N3dnKzEwWGN2K3JhcHorUTBDVlYzVis2MU41cDNUS1Q5emJaVjBIYk1qOWZmRzFidFdPdk1SMWhMNDB2aWs5M0VIblBZbWNCK1d6NnV2SjNOTnRBdFhYZGVuOWN2S2FHUmZ1ZDlTMVcvaXlpU2VPaENET1JjK2ZWTHg2Y0E1NnBpcjVPUEkxODRrTjA5ZzMvOGI2ditjRHNTNy9VbDk3NXI2TGVQOEQ5ZXZ2YXI0TzZ6VEgxK2Y2bXVsditxUTVQNngvb1A3MS85blF1emQrcHBEeGh6K2F4L3JGK3NIMTF1dVBmTWI1WFJYclNmK1l2Nm1YNjhROFFmM2xIYTVoNStvWGxaNTUveUxXUlo0TDVzL3p2emZ0WHNZOTVQSVBYelhpeVBrd0gxLzV0VGxQNlovT1J4aVBkc2luelBYbHVNeGJzbjR5LzFKbVBxU2NQdFpsdERNUE1kL1k3SEI5Wkw3clBkcWRSZHlyZEx3QzlRSDIwci9NcmFkOTZmZmdaN3R5MmlIcS9JMTdIR1d0UDJyR1Qvc3R6alA3RGE2UHFQRXhIK1lkcnIvdUIyUy9DL3U3VEw4eHpnbmh0NjRUaUR2cmcyNkhIZVo3N2c5WkgzcldkQnQ4K2tlN3h4RUg5bWUvZ1Qrb09ERXZEdnd1bmNWVDM2ak5vdHp2NytCY25YOUw5VHUzMVRYOE92ZEhoVHovekt0Y0wxMnZZRzlna2hrZjFoMmVOOXBsM21jL1dkZG92Ly9yS2c3NlhzVzgxS3Y4N0s4MDdWTHVXNkxzOWVPK3pQM0grdlgrbTkyR0g3SU8wUTd4N090ZGhoN3ZFMjdmVk9YSG1lOHAvWmtLNkw5cDJ0WDFDM2xKeStwckZXL2xmN0ZmMkk5eFo1NlI3YWUvazFhNFZkbGp2VHVGdUgySWVUT1BrbmRxaTJ1MDA2NituM3dCdko0dW94L1B4OUNDcUdwbi9zUCs2c1Y3R2QvUEtIUGZjajl3M2llK3F0cDVucmovZFgwOGFpTDc0VDFSdDZkWEFIRk8wcmlYTVQrdzdwRDNYbytwbDhoNksvR2ZXRmZXWDk1M2oxV1k4dDhRLzJPZlZvano1cWh2d0IxeUpwNkpaK0o1a0o2SWMrdGZJeFdWYlY1WVhqcG1Rbm5Wd3ZLTk9ZWFJjRVpqWUlTYTBjeG5iS016WHVHOWE5TmpPK2hvRm11RUh0ejFkcmt2d25oNVBab2dqcWJiL1Q4eWQ4MjVMeWZyL3UvRWUzaWM3K0d1dW9lY3NkMUlZenZvZUZtN2h4Nk1yU2JQa3VwNEJmNGVwcHJ4T28xNWRuN3lyQmpkL3h3L2VzRXgvbXVkb3BUWDRuYzQ2Z1drR0kyVHF4ZmpwNmwrM0l2ajU1bGVxcldqSnU3WCtDKzIrZTBKUHhWTGVGRE55YXI4VkUzU3EvRmIydHI5RHEvR2kzVWU5cExvTUpzZC9HUk4yMkcvbzdQVjFCZDN0bnQxWGxOcnhqeGFablI0U2E4OTBWcFQxMzY0c3hXTmo3QXg1ZXUyeHpvTys4bDRodGs2ckhySmkxUHhVTWJMK2tSU1RIaDZlK3VYU3pqcEdjT1Q3Y3I4ZGZQbXpVZGtaR0pKcjRPUllXTngzT3YwU3VyYk0veU1kRU5RSG01dDYweTBwaktreWNQL1cxR1JJRTlxRncyUnc2bGhUK0pQeFJvUHA1cWZXcmJZVVIvd1RITFVNd00vRDkzMmM3RWFjL0pOMkNyaWJQM3M3OWpRK2FSWDV6TzRqMmFtbkoxeFNWdDdJc1ZmMnlqT3RIYVVkTFoyM2xxRVdHdVNMZG5KT1RmK0R6R1pzQ1NtYVFBQSJ9 -->
+<div data-pagedtable="false">
+<script data-pagedtable-source type="application/json">
+{"columns":[{"label":["X1"],"name":[1],"type":["dbl"],"align":["right"]},{"label":["edad"],"name":[2],"type":["dbl"],"align":["right"]},{"label":["anos_de_experiencia"],"name":[3],"type":["dbl"],"align":["right"]},{"label":["anos_en_la_empresa_actual"],"name":[4],"type":["dbl"],"align":["right"]},{"label":["anos_en_el_puesto_actual"],"name":[5],"type":["dbl"],"align":["right"]},{"label":["trabajo_de"],"name":[6],"type":["chr"],"align":["left"]},{"label":["salario_bruto"],"name":[7],"type":["dbl"],"align":["right"]},{"label":["salario_neto"],"name":[8],"type":["dbl"],"align":["right"]},{"label":["sueldo_dolarizado"],"name":[9],"type":["lgl"],"align":["right"]},{"label":["perfil"],"name":[10],"type":["chr"],"align":["left"]}],"data":[{"1":"1","2":"28","3":"2","4":"2","5":"2","6":"BI Analyst / Data Analyst","7":"43000","8":"38000","9":"FALSE","10":"BI/DA"},{"1":"2","2":"34","3":"9","4":"5","5":"5","6":"BI Analyst / Data Analyst","7":"140000","8":"80000","9":"FALSE","10":"BI/DA"},{"1":"3","2":"28","3":"3","4":"1","5":"3","6":"BI Analyst / Data Analyst","7":"54000","8":"45000","9":"FALSE","10":"BI/DA"},{"1":"4","2":"31","3":"12","4":"0","5":"0","6":"BI Analyst / Data Analyst","7":"55000","8":"40000","9":"FALSE","10":"BI/DA"},{"1":"5","2":"28","3":"2","4":"1","5":"1","6":"BI Analyst / Data Analyst","7":"41700","8":"34600","9":"FALSE","10":"BI/DA"},{"1":"6","2":"29","3":"3","4":"2","5":"3","6":"BI Analyst / Data Analyst","7":"50000","8":"42000","9":"FALSE","10":"BI/DA"},{"1":"7","2":"28","3":"5","4":"0","5":"0","6":"Data Scientist / Data Engineer","7":"220000","8":"120000","9":"FALSE","10":"DS/DE"},{"1":"8","2":"28","3":"7","4":"0","5":"0","6":"Data Scientist / Data Engineer","7":"208000","8":"135000","9":"FALSE","10":"DS/DE"},{"1":"9","2":"31","3":"8","4":"1","5":"6","6":"BI Analyst / Data Analyst","7":"190000","8":"130000","9":"FALSE","10":"BI/DA"},{"1":"10","2":"35","3":"5","4":"13","5":"2","6":"BI Analyst / Data Analyst","7":"70000","8":"59000","9":"FALSE","10":"BI/DA"},{"1":"11","2":"32","3":"10","4":"0","5":"0","6":"Data Scientist / Data Engineer","7":"185000","8":"120000","9":"FALSE","10":"DS/DE"},{"1":"12","2":"31","3":"11","4":"7","5":"1","6":"Data Scientist / Data Engineer","7":"178500","8":"125600","9":"FALSE","10":"DS/DE"},{"1":"13","2":"33","3":"10","4":"0","5":"0","6":"Data Scientist / Data Engineer","7":"178000","8":"110000","9":"FALSE","10":"DS/DE"},{"1":"14","2":"32","3":"0","4":"4","5":"4","6":"BI Analyst / Data Analyst","7":"32000","8":"29000","9":"FALSE","10":"BI/DA"},{"1":"15","2":"37","3":"15","4":"0","5":"0","6":"BI Analyst / Data Analyst","7":"177000","8":"135000","9":"FALSE","10":"BI/DA"},{"1":"16","2":"39","3":"10","4":"0","5":"0","6":"Data Scientist / Data Engineer","7":"157500","8":"119000","9":"FALSE","10":"DS/DE"},{"1":"17","2":"33","3":"7","4":"3","5":"1","6":"BI Analyst / Data Analyst","7":"155000","8":"105000","9":"FALSE","10":"BI/DA"},{"1":"18","2":"32","3":"10","4":"8","5":"2","6":"Data Scientist / Data Engineer","7":"150000","8":"90000","9":"FALSE","10":"DS/DE"},{"1":"19","2":"31","3":"3","4":"5","5":"3","6":"BI Analyst / Data Analyst","7":"83000","8":"55000","9":"FALSE","10":"BI/DA"},{"1":"20","2":"29","3":"3","4":"3","5":"3","6":"BI Analyst / Data Analyst","7":"91000","8":"87000","9":"FALSE","10":"BI/DA"},{"1":"21","2":"31","3":"2","4":"4","5":"2","6":"BI Analyst / Data Analyst","7":"37000","8":"31000","9":"FALSE","10":"BI/DA"},{"1":"22","2":"32","3":"5","4":"1","5":"1","6":"BI Analyst / Data Analyst","7":"146000","8":"100000","9":"FALSE","10":"BI/DA"},{"1":"23","2":"38","3":"8","4":"2","5":"4","6":"Data Scientist / Data Engineer","7":"145000","8":"110000","9":"FALSE","10":"DS/DE"},{"1":"24","2":"47","3":"20","4":"15","5":"3","6":"BI Analyst / Data Analyst","7":"51000","8":"40000","9":"FALSE","10":"BI/DA"},{"1":"25","2":"41","3":"15","4":"10","5":"9","6":"BI Analyst / Data Analyst","7":"136000","8":"98000","9":"FALSE","10":"BI/DA"},{"1":"26","2":"50","3":"20","4":"1","5":"5","6":"BI Analyst / Data Analyst","7":"135000","8":"100000","9":"FALSE","10":"BI/DA"},{"1":"27","2":"25","3":"2","4":"4","5":"2","6":"BI Analyst / Data Analyst","7":"52000","8":"44000","9":"FALSE","10":"BI/DA"},{"1":"28","2":"23","3":"3","4":"0","5":"0","6":"BI Analyst / Data Analyst","7":"52000","8":"43000","9":"FALSE","10":"BI/DA"},{"1":"29","2":"40","3":"14","4":"4","5":"2","6":"Data Scientist / Data Engineer","7":"135000","8":"95000","9":"FALSE","10":"DS/DE"},{"1":"30","2":"31","3":"5","4":"10","5":"4","6":"BI Analyst / Data Analyst","7":"130000","8":"100000","9":"FALSE","10":"BI/DA"},{"1":"31","2":"36","3":"16","4":"3","5":"6","6":"BI Analyst / Data Analyst","7":"110000","8":"87300","9":"FALSE","10":"BI/DA"},{"1":"32","2":"26","3":"2","4":"0","5":"0","6":"BI Analyst / Data Analyst","7":"120000","8":"110000","9":"FALSE","10":"BI/DA"},{"1":"33","2":"36","3":"14","4":"3","5":"3","6":"BI Analyst / Data Analyst","7":"130000","8":"99000","9":"FALSE","10":"BI/DA"},{"1":"34","2":"26","3":"4","4":"0","5":"4","6":"Data Scientist / Data Engineer","7":"130000","8":"96000","9":"FALSE","10":"DS/DE"},{"1":"35","2":"36","3":"10","4":"8","5":"2","6":"Data Scientist / Data Engineer","7":"121000","8":"77000","9":"FALSE","10":"DS/DE"},{"1":"36","2":"37","3":"13","4":"0","5":"0","6":"BI Analyst / Data Analyst","7":"70000","8":"60000","9":"FALSE","10":"BI/DA"},{"1":"37","2":"25","3":"2","4":"2","5":"2","6":"BI Analyst / Data Analyst","7":"57000","8":"42000","9":"FALSE","10":"BI/DA"},{"1":"38","2":"51","3":"25","4":"5","5":"5","6":"BI Analyst / Data Analyst","7":"120000","8":"85000","9":"FALSE","10":"BI/DA"},{"1":"39","2":"28","3":"3","4":"5","5":"1","6":"BI Analyst / Data Analyst","7":"80000","8":"63000","9":"FALSE","10":"BI/DA"},{"1":"40","2":"42","3":"10","4":"10","5":"5","6":"BI Analyst / Data Analyst","7":"120000","8":"95000","9":"FALSE","10":"BI/DA"},{"1":"41","2":"29","3":"5","4":"0","5":"0","6":"Data Scientist / Data Engineer","7":"120000","8":"89000","9":"FALSE","10":"DS/DE"},{"1":"42","2":"32","3":"2","4":"1","5":"1","6":"Data Scientist / Data Engineer","7":"120000","8":"88457","9":"FALSE","10":"DS/DE"},{"1":"43","2":"32","3":"5","4":"0","5":"0","6":"Data Scientist / Data Engineer","7":"120000","8":"80000","9":"FALSE","10":"DS/DE"},{"1":"44","2":"28","3":"4","4":"0","5":"3","6":"Data Scientist / Data Engineer","7":"120000","8":"90000","9":"FALSE","10":"DS/DE"},{"1":"45","2":"35","3":"15","4":"5","5":"3","6":"BI Analyst / Data Analyst","7":"119000","8":"86000","9":"FALSE","10":"BI/DA"},{"1":"46","2":"31","3":"10","4":"0","5":"0","6":"BI Analyst / Data Analyst","7":"115000","8":"93000","9":"FALSE","10":"BI/DA"},{"1":"47","2":"27","3":"9","4":"7","5":"3","6":"BI Analyst / Data Analyst","7":"115000","8":"90000","9":"FALSE","10":"BI/DA"},{"1":"48","2":"27","3":"2","4":"15","5":"15","6":"BI Analyst / Data Analyst","7":"50000","8":"43000","9":"FALSE","10":"BI/DA"},{"1":"49","2":"27","3":"2","4":"0","5":"0","6":"Data Scientist / Data Engineer","7":"115000","8":"95000","9":"FALSE","10":"DS/DE"},{"1":"50","2":"36","3":"5","4":"0","5":"5","6":"BI Analyst / Data Analyst","7":"72000","8":"60000","9":"FALSE","10":"BI/DA"},{"1":"51","2":"31","3":"4","4":"0","5":"0","6":"Data Scientist / Data Engineer","7":"112000","8":"84000","9":"FALSE","10":"DS/DE"},{"1":"52","2":"36","3":"12","4":"3","5":"6","6":"BI Analyst / Data Analyst","7":"110000","8":"80000","9":"FALSE","10":"BI/DA"},{"1":"53","2":"35","3":"6","4":"0","5":"5","6":"Data Scientist / Data Engineer","7":"110000","8":"86000","9":"FALSE","10":"DS/DE"},{"1":"54","2":"31","3":"3","4":"8","5":"2","6":"Data Scientist / Data Engineer","7":"110000","8":"80000","9":"FALSE","10":"DS/DE"},{"1":"55","2":"23","3":"1","4":"1","5":"1","6":"BI Analyst / Data Analyst","7":"35000","8":"30000","9":"FALSE","10":"BI/DA"},{"1":"56","2":"27","3":"1","4":"1","5":"0","6":"Data Scientist / Data Engineer","7":"108000","8":"89000","9":"FALSE","10":"DS/DE"},{"1":"57","2":"27","3":"3","4":"1","5":"1","6":"BI Analyst / Data Analyst","7":"106000","8":"73000","9":"FALSE","10":"BI/DA"},{"1":"58","2":"31","3":"5","4":"1","5":"1","6":"BI Analyst / Data Analyst","7":"75000","8":"62000","9":"FALSE","10":"BI/DA"},{"1":"59","2":"35","3":"12","4":"0","5":"12","6":"Data Scientist / Data Engineer","7":"105800","8":"80000","9":"FALSE","10":"DS/DE"},{"1":"60","2":"55","3":"30","4":"3","5":"3","6":"BI Analyst / Data Analyst","7":"105000","8":"78000","9":"FALSE","10":"BI/DA"},{"1":"61","2":"32","3":"9","4":"9","5":"9","6":"BI Analyst / Data Analyst","7":"105000","8":"80000","9":"FALSE","10":"BI/DA"},{"1":"62","2":"46","3":"16","4":"5","5":"5","6":"BI Analyst / Data Analyst","7":"105000","8":"75000","9":"FALSE","10":"BI/DA"},{"1":"63","2":"28","3":"7","4":"2","5":"5","6":"BI Analyst / Data Analyst","7":"103000","8":"80000","9":"FALSE","10":"BI/DA"},{"1":"64","2":"29","3":"0","4":"0","5":"0","6":"BI Analyst / Data Analyst","7":"41000","8":"34500","9":"FALSE","10":"BI/DA"},{"1":"65","2":"28","3":"4","4":"0","5":"3","6":"BI Analyst / Data Analyst","7":"100000","8":"75000","9":"FALSE","10":"BI/DA"},{"1":"66","2":"36","3":"2","4":"1","5":"2","6":"BI Analyst / Data Analyst","7":"70000","8":"66000","9":"FALSE","10":"BI/DA"},{"1":"67","2":"32","3":"6","4":"4","5":"4","6":"BI Analyst / Data Analyst","7":"100000","8":"70000","9":"FALSE","10":"BI/DA"},{"1":"68","2":"35","3":"8","4":"5","5":"5","6":"BI Analyst / Data Analyst","7":"100000","8":"80000","9":"FALSE","10":"BI/DA"},{"1":"69","2":"27","3":"5","4":"2","5":"0","6":"BI Analyst / Data Analyst","7":"100000","8":"78000","9":"FALSE","10":"BI/DA"},{"1":"70","2":"36","3":"10","4":"0","5":"0","6":"Data Scientist / Data Engineer","7":"100000","8":"80000","9":"FALSE","10":"DS/DE"},{"1":"71","2":"29","3":"4","4":"2","5":"3","6":"BI Analyst / Data Analyst","7":"62000","8":"55000","9":"FALSE","10":"BI/DA"},{"1":"72","2":"26","3":"3","4":"3","5":"1","6":"BI Analyst / Data Analyst","7":"80000","8":"70000","9":"FALSE","10":"BI/DA"},{"1":"73","2":"33","3":"3","4":"1","5":"1","6":"Data Scientist / Data Engineer","7":"100000","8":"70000","9":"FALSE","10":"DS/DE"},{"1":"74","2":"37","3":"15","4":"1","5":"1","6":"BI Analyst / Data Analyst","7":"48200","8":"42150","9":"FALSE","10":"BI/DA"},{"1":"75","2":"34","3":"5","4":"0","5":"0","6":"BI Analyst / Data Analyst","7":"40000","8":"37000","9":"FALSE","10":"BI/DA"},{"1":"76","2":"30","3":"9","4":"0","5":"0","6":"BI Analyst / Data Analyst","7":"100000","8":"85000","9":"FALSE","10":"BI/DA"},{"1":"77","2":"43","3":"23","4":"1","5":"1","6":"BI Analyst / Data Analyst","7":"100000","8":"80000","9":"FALSE","10":"BI/DA"},{"1":"78","2":"40","3":"19","4":"2","5":"3","6":"Data Scientist / Data Engineer","7":"100000","8":"80000","9":"FALSE","10":"DS/DE"},{"1":"79","2":"25","3":"2","4":"2","5":"1","6":"Data Scientist / Data Engineer","7":"100000","8":"78000","9":"FALSE","10":"DS/DE"},{"1":"80","2":"23","3":"1","4":"1","5":"1","6":"BI Analyst / Data Analyst","7":"41200","8":"34196","9":"FALSE","10":"BI/DA"},{"1":"81","2":"57","3":"36","4":"17","5":"10","6":"Data Scientist / Data Engineer","7":"100000","8":"80000","9":"FALSE","10":"DS/DE"},{"1":"82","2":"28","3":"4","4":"35","5":"2","6":"Data Scientist / Data Engineer","7":"100000","8":"80000","9":"FALSE","10":"DS/DE"},{"1":"83","2":"43","3":"20","4":"22","5":"5","6":"BI Analyst / Data Analyst","7":"64000","8":"55000","9":"FALSE","10":"BI/DA"},{"1":"84","2":"31","3":"10","4":"2","5":"2","6":"Data Scientist / Data Engineer","7":"100000","8":"80000","9":"FALSE","10":"DS/DE"},{"1":"85","2":"35","3":"10","4":"0","5":"0","6":"Data Scientist / Data Engineer","7":"100000","8":"75000","9":"FALSE","10":"DS/DE"},{"1":"86","2":"25","3":"6","4":"4","5":"2","6":"Data Scientist / Data Engineer","7":"98000","8":"70200","9":"FALSE","10":"DS/DE"},{"1":"87","2":"30","3":"10","4":"2","5":"2","6":"BI Analyst / Data Analyst","7":"96385","8":"80000","9":"FALSE","10":"BI/DA"},{"1":"88","2":"26","3":"5","4":"0","5":"0","6":"BI Analyst / Data Analyst","7":"96000","8":"78000","9":"FALSE","10":"BI/DA"},{"1":"89","2":"33","3":"10","4":"1","5":"1","6":"BI Analyst / Data Analyst","7":"95000","8":"78000","9":"FALSE","10":"BI/DA"},{"1":"90","2":"30","3":"5","4":"1","5":"1","6":"BI Analyst / Data Analyst","7":"95000","8":"73000","9":"FALSE","10":"BI/DA"},{"1":"91","2":"37","3":"14","4":"0","5":"12","6":"BI Analyst / Data Analyst","7":"95000","8":"72500","9":"FALSE","10":"BI/DA"},{"1":"92","2":"35","3":"7","4":"3","5":"3","6":"Data Scientist / Data Engineer","7":"95000","8":"73000","9":"FALSE","10":"DS/DE"},{"1":"93","2":"27","3":"5","4":"1","5":"1","6":"BI Analyst / Data Analyst","7":"94000","8":"78000","9":"FALSE","10":"BI/DA"},{"1":"94","2":"30","3":"5","4":"1","5":"1","6":"BI Analyst / Data Analyst","7":"94000","8":"72000","9":"FALSE","10":"BI/DA"},{"1":"95","2":"30","3":"4","4":"4","5":"4","6":"BI Analyst / Data Analyst","7":"35000","8":"30000","9":"FALSE","10":"BI/DA"},{"1":"96","2":"28","3":"3","4":"0","5":"0","6":"Data Scientist / Data Engineer","7":"94000","8":"70000","9":"FALSE","10":"DS/DE"},{"1":"97","2":"24","3":"2","4":"0","5":"0","6":"BI Analyst / Data Analyst","7":"60000","8":"43000","9":"FALSE","10":"BI/DA"},{"1":"98","2":"24","3":"2","4":"0","5":"0","6":"BI Analyst / Data Analyst","7":"60000","8":"43000","9":"FALSE","10":"BI/DA"},{"1":"99","2":"37","3":"4","4":"6","5":"2","6":"BI Analyst / Data Analyst","7":"92500","8":"72000","9":"FALSE","10":"BI/DA"},{"1":"100","2":"28","3":"1","4":"1","5":"1","6":"Data Scientist / Data Engineer","7":"92300","8":"70641","9":"FALSE","10":"DS/DE"},{"1":"101","2":"48","3":"20","4":"0","5":"0","6":"Data Scientist / Data Engineer","7":"92000","8":"74000","9":"FALSE","10":"DS/DE"},{"1":"102","2":"31","3":"1","4":"0","5":"0","6":"BI Analyst / Data Analyst","7":"64000","8":"53000","9":"FALSE","10":"BI/DA"},{"1":"103","2":"34","3":"9","4":"5","5":"9","6":"BI Analyst / Data Analyst","7":"75000","8":"63000","9":"FALSE","10":"BI/DA"},{"1":"104","2":"38","3":"14","4":"10","5":"0","6":"BI Analyst / Data Analyst","7":"90000","8":"72000","9":"FALSE","10":"BI/DA"},{"1":"105","2":"29","3":"5","4":"2","5":"2","6":"BI Analyst / Data Analyst","7":"90000","8":"72000","9":"FALSE","10":"BI/DA"},{"1":"106","2":"42","3":"15","4":"1","5":"1","6":"BI Analyst / Data Analyst","7":"90000","8":"74000","9":"FALSE","10":"BI/DA"},{"1":"107","2":"28","3":"5","4":"4","5":"1","6":"Data Scientist / Data Engineer","7":"90000","8":"67000","9":"FALSE","10":"DS/DE"},{"1":"108","2":"24","3":"2","4":"1","5":"0","6":"Data Scientist / Data Engineer","7":"90000","8":"75000","9":"FALSE","10":"DS/DE"},{"1":"109","2":"23","3":"2","4":"1","5":"1","6":"Data Scientist / Data Engineer","7":"90000","8":"70000","9":"FALSE","10":"DS/DE"},{"1":"110","2":"37","3":"8","4":"3","5":"1","6":"BI Analyst / Data Analyst","7":"47000","8":"40000","9":"FALSE","10":"BI/DA"},{"1":"111","2":"39","3":"7","4":"1","5":"1","6":"BI Analyst / Data Analyst","7":"87000","8":"78000","9":"FALSE","10":"BI/DA"},{"1":"112","2":"30","3":"7","4":"3","5":"1","6":"BI Analyst / Data Analyst","7":"86000","8":"70000","9":"FALSE","10":"BI/DA"},{"1":"113","2":"26","3":"6","4":"5","5":"0","6":"BI Analyst / Data Analyst","7":"85000","8":"66000","9":"FALSE","10":"BI/DA"},{"1":"114","2":"27","3":"4","4":"3","5":"1","6":"BI Analyst / Data Analyst","7":"85000","8":"68000","9":"FALSE","10":"BI/DA"},{"1":"115","2":"25","3":"5","4":"0","5":"0","6":"BI Analyst / Data Analyst","7":"85000","8":"70000","9":"FALSE","10":"BI/DA"},{"1":"116","2":"30","3":"7","4":"0","5":"7","6":"BI Analyst / Data Analyst","7":"84000","8":"67000","9":"FALSE","10":"BI/DA"},{"1":"117","2":"26","3":"7","4":"0","5":"4","6":"BI Analyst / Data Analyst","7":"84000","8":"64000","9":"FALSE","10":"BI/DA"},{"1":"118","2":"30","3":"8","4":"0","5":"0","6":"BI Analyst / Data Analyst","7":"82000","8":"60000","9":"FALSE","10":"BI/DA"},{"1":"119","2":"25","3":"1","4":"0","5":"0","6":"BI Analyst / Data Analyst","7":"81000","8":"65000","9":"FALSE","10":"BI/DA"},{"1":"120","2":"28","3":"4","4":"2","5":"1","6":"BI Analyst / Data Analyst","7":"80000","8":"65000","9":"FALSE","10":"BI/DA"},{"1":"121","2":"29","3":"0","4":"0","5":"0","6":"BI Analyst / Data Analyst","7":"40000","8":"37350","9":"FALSE","10":"BI/DA"},{"1":"122","2":"31","3":"12","4":"0","5":"2","6":"BI Analyst / Data Analyst","7":"80000","8":"68000","9":"FALSE","10":"BI/DA"},{"1":"123","2":"31","3":"4","4":"0","5":"0","6":"BI Analyst / Data Analyst","7":"80000","8":"63000","9":"FALSE","10":"BI/DA"},{"1":"124","2":"27","3":"3","4":"15","5":"15","6":"Data Scientist / Data Engineer","7":"80000","8":"66000","9":"FALSE","10":"DS/DE"},{"1":"125","2":"30","3":"3","4":"3","5":"1","6":"BI Analyst / Data Analyst","7":"44000","8":"36500","9":"FALSE","10":"BI/DA"},{"1":"126","2":"26","3":"3","4":"3","5":"15","6":"Data Scientist / Data Engineer","7":"80000","8":"65000","9":"FALSE","10":"DS/DE"},{"1":"127","2":"26","3":"3","4":"1","5":"2","6":"Data Scientist / Data Engineer","7":"80000","8":"68000","9":"FALSE","10":"DS/DE"},{"1":"128","2":"30","3":"4","4":"0","5":"0","6":"Data Scientist / Data Engineer","7":"78382","8":"65058","9":"FALSE","10":"DS/DE"},{"1":"129","2":"37","3":"15","4":"3","5":"1","6":"BI Analyst / Data Analyst","7":"78000","8":"50000","9":"FALSE","10":"BI/DA"},{"1":"130","2":"28","3":"5","4":"5","5":"4","6":"Data Scientist / Data Engineer","7":"76431","8":"65047","9":"FALSE","10":"DS/DE"},{"1":"131","2":"23","3":"0","4":"0","5":"0","6":"Data Scientist / Data Engineer","7":"55503","8":"46067","9":"FALSE","10":"DS/DE"},{"1":"132","2":"37","3":"14","4":"2","5":"2","6":"Data Scientist / Data Engineer","7":"95000","8":"85000","9":"FALSE","10":"DS/DE"},{"1":"133","2":"41","3":"19","4":"0","5":"9","6":"BI Analyst / Data Analyst","7":"76000","8":"63000","9":"FALSE","10":"BI/DA"},{"1":"134","2":"21","3":"0","4":"0","5":"0","6":"Data Scientist / Data Engineer","7":"25000","8":"22000","9":"FALSE","10":"DS/DE"},{"1":"135","2":"43","3":"2","4":"2","5":"2","6":"Data Scientist / Data Engineer","7":"75980","8":"63063","9":"FALSE","10":"DS/DE"},{"1":"136","2":"30","3":"8","4":"3","5":"3","6":"Data Scientist / Data Engineer","7":"75093","8":"59994","9":"FALSE","10":"DS/DE"},{"1":"137","2":"37","3":"17","4":"17","5":"4","6":"BI Analyst / Data Analyst","7":"75000","8":"60000","9":"FALSE","10":"BI/DA"},{"1":"138","2":"34","3":"12","4":"15","5":"2","6":"Data Scientist / Data Engineer","7":"70000","8":"61000","9":"FALSE","10":"DS/DE"},{"1":"139","2":"37","3":"15","4":"15","5":"1","6":"Data Scientist / Data Engineer","7":"150000","8":"120000","9":"FALSE","10":"DS/DE"},{"1":"140","2":"23","3":"0","4":"0","5":"0","6":"Data Scientist / Data Engineer","7":"60000","8":"48000","9":"FALSE","10":"DS/DE"},{"1":"141","2":"32","3":"6","4":"1","5":"1","6":"Data Scientist / Data Engineer","7":"95000","8":"80000","9":"FALSE","10":"DS/DE"},{"1":"142","2":"24","3":"3","4":"0","5":"1","6":"BI Analyst / Data Analyst","7":"75000","8":"62000","9":"FALSE","10":"BI/DA"},{"1":"143","2":"38","3":"12","4":"5","5":"5","6":"BI Analyst / Data Analyst","7":"75000","8":"63000","9":"FALSE","10":"BI/DA"},{"1":"144","2":"27","3":"3","4":"0","5":"0","6":"BI Analyst / Data Analyst","7":"75000","8":"63500","9":"FALSE","10":"BI/DA"},{"1":"145","2":"29","3":"2","4":"0","5":"0","6":"Data Scientist / Data Engineer","7":"75000","8":"70000","9":"FALSE","10":"DS/DE"},{"1":"146","2":"26","3":"1","4":"1","5":"1","6":"Data Scientist / Data Engineer","7":"47000","8":"41000","9":"FALSE","10":"DS/DE"},{"1":"147","2":"32","3":"4","4":"25","5":"25","6":"Data Scientist / Data Engineer","7":"53000","8":"42000","9":"FALSE","10":"DS/DE"},{"1":"148","2":"29","3":"3","4":"3","5":"3","6":"Data Scientist / Data Engineer","7":"73245","8":"60000","9":"FALSE","10":"DS/DE"},{"1":"149","2":"22","3":"2","4":"2","5":"1","6":"Data Scientist / Data Engineer","7":"60000","8":"54000","9":"FALSE","10":"DS/DE"},{"1":"150","2":"29","3":"1","4":"0","5":"0","6":"Data Scientist / Data Engineer","7":"84700","8":"70000","9":"FALSE","10":"DS/DE"},{"1":"151","2":"28","3":"4","4":"1","5":"1","6":"BI Analyst / Data Analyst","7":"73000","8":"60500","9":"FALSE","10":"BI/DA"},{"1":"152","2":"32","3":"6","4":"3","5":"0","6":"BI Analyst / Data Analyst","7":"72000","8":"60000","9":"FALSE","10":"BI/DA"},{"1":"153","2":"34","3":"10","4":"2","5":"2","6":"Data Scientist / Data Engineer","7":"150000","8":"80000","9":"FALSE","10":"DS/DE"},{"1":"154","2":"23","3":"0","4":"0","5":"0","6":"Data Scientist / Data Engineer","7":"72000","8":"58350","9":"FALSE","10":"DS/DE"},{"1":"155","2":"35","3":"3","4":"15","5":"15","6":"Data Scientist / Data Engineer","7":"136000","8":"92000","9":"FALSE","10":"DS/DE"},{"1":"156","2":"21","3":"2","4":"0","5":"2","6":"Data Scientist / Data Engineer","7":"82000","8":"65000","9":"FALSE","10":"DS/DE"},{"1":"157","2":"37","3":"14","4":"4","5":"4","6":"BI Analyst / Data Analyst","7":"71500","8":"59170","9":"FALSE","10":"BI/DA"},{"1":"158","2":"30","3":"10","4":"7","5":"2","6":"BI Analyst / Data Analyst","7":"70000","8":"58000","9":"FALSE","10":"BI/DA"},{"1":"159","2":"32","3":"3","4":"3","5":"3","6":"Data Scientist / Data Engineer","7":"70000","8":"60000","9":"FALSE","10":"DS/DE"},{"1":"160","2":"26","3":"2","4":"1","5":"1","6":"Data Scientist / Data Engineer","7":"70000","8":"58000","9":"FALSE","10":"DS/DE"},{"1":"161","2":"29","3":"4","4":"1","5":"0","6":"BI Analyst / Data Analyst","7":"68555","8":"55700","9":"FALSE","10":"BI/DA"},{"1":"162","2":"26","3":"4","4":"0","5":"0","6":"BI Analyst / Data Analyst","7":"68000","8":"57500","9":"FALSE","10":"BI/DA"},{"1":"163","2":"33","3":"13","4":"5","5":"5","6":"Data Scientist / Data Engineer","7":"68000","8":"55000","9":"FALSE","10":"DS/DE"},{"1":"164","2":"28","3":"0","4":"0","5":"0","6":"Data Scientist / Data Engineer","7":"67200","8":"57000","9":"FALSE","10":"DS/DE"},{"1":"165","2":"43","3":"1","4":"1","5":"1","6":"Data Scientist / Data Engineer","7":"66070","8":"54838","9":"FALSE","10":"DS/DE"},{"1":"166","2":"43","3":"2","4":"2","5":"2","6":"Data Scientist / Data Engineer","7":"66000","8":"54000","9":"FALSE","10":"DS/DE"},{"1":"167","2":"25","3":"3","4":"3","5":"1","6":"BI Analyst / Data Analyst","7":"65000","8":"54000","9":"FALSE","10":"BI/DA"},{"1":"168","2":"33","3":"13","4":"0","5":"0","6":"Data Scientist / Data Engineer","7":"65000","8":"53000","9":"FALSE","10":"DS/DE"},{"1":"169","2":"27","3":"3","4":"3","5":"2","6":"BI Analyst / Data Analyst","7":"65000","8":"58000","9":"FALSE","10":"BI/DA"},{"1":"170","2":"24","3":"1","4":"1","5":"1","6":"Data Scientist / Data Engineer","7":"70000","8":"58000","9":"FALSE","10":"DS/DE"},{"1":"171","2":"37","3":"12","4":"4","5":"5","6":"BI Analyst / Data Analyst","7":"64400","8":"52500","9":"FALSE","10":"BI/DA"},{"1":"172","2":"37","3":"15","4":"7","5":"3","6":"Data Scientist / Data Engineer","7":"64000","8":"53000","9":"FALSE","10":"DS/DE"},{"1":"173","2":"32","3":"7","4":"7","5":"1","6":"BI Analyst / Data Analyst","7":"62000","8":"51000","9":"FALSE","10":"BI/DA"},{"1":"174","2":"30","3":"2","4":"0","5":"0","6":"BI Analyst / Data Analyst","7":"62000","8":"55330","9":"FALSE","10":"BI/DA"},{"1":"175","2":"30","3":"1","4":"1","5":"1","6":"Data Scientist / Data Engineer","7":"60600","8":"50300","9":"FALSE","10":"DS/DE"},{"1":"176","2":"26","3":"8","4":"0","5":"0","6":"BI Analyst / Data Analyst","7":"60500","8":"49800","9":"FALSE","10":"BI/DA"},{"1":"177","2":"26","3":"5","4":"5","5":"5","6":"BI Analyst / Data Analyst","7":"60500","8":"50200","9":"FALSE","10":"BI/DA"},{"1":"178","2":"26","3":"3","4":"0","5":"0","6":"Data Scientist / Data Engineer","7":"60000","8":"54000","9":"FALSE","10":"DS/DE"},{"1":"179","2":"25","3":"3","4":"3","5":"3","6":"BI Analyst / Data Analyst","7":"60000","8":"50000","9":"FALSE","10":"BI/DA"},{"1":"180","2":"40","3":"13","4":"4","5":"4","6":"BI Analyst / Data Analyst","7":"60000","8":"49500","9":"FALSE","10":"BI/DA"},{"1":"181","2":"27","3":"2","4":"0","5":"0","6":"BI Analyst / Data Analyst","7":"60000","8":"50000","9":"FALSE","10":"BI/DA"},{"1":"182","2":"25","3":"2","4":"0","5":"0","6":"BI Analyst / Data Analyst","7":"60000","8":"49900","9":"FALSE","10":"BI/DA"},{"1":"183","2":"24","3":"0","4":"0","5":"0","6":"Data Scientist / Data Engineer","7":"42000","8":"35000","9":"FALSE","10":"DS/DE"},{"1":"184","2":"25","3":"0","4":"0","5":"0","6":"Data Scientist / Data Engineer","7":"41000","8":"34000","9":"FALSE","10":"DS/DE"},{"1":"185","2":"41","3":"12","4":"2","5":"1","6":"Data Scientist / Data Engineer","7":"110000","8":"70000","9":"FALSE","10":"DS/DE"},{"1":"186","2":"43","3":"8","4":"8","5":"2","6":"BI Analyst / Data Analyst","7":"60000","8":"50000","9":"FALSE","10":"BI/DA"},{"1":"187","2":"35","3":"10","4":"10","5":"10","6":"BI Analyst / Data Analyst","7":"60000","8":"48000","9":"FALSE","10":"BI/DA"},{"1":"188","2":"30","3":"4","4":"4","5":"1","6":"Data Scientist / Data Engineer","7":"120000","8":"90000","9":"FALSE","10":"DS/DE"},{"1":"189","2":"26","3":"2","4":"0","5":"0","6":"Data Scientist / Data Engineer","7":"60000","8":"50000","9":"FALSE","10":"DS/DE"},{"1":"190","2":"34","3":"8","4":"0","5":"0","6":"BI Analyst / Data Analyst","7":"58500","8":"48000","9":"FALSE","10":"BI/DA"},{"1":"191","2":"29","3":"8","4":"2","5":"2","6":"BI Analyst / Data Analyst","7":"58100","8":"48223","9":"FALSE","10":"BI/DA"},{"1":"192","2":"25","3":"3","4":"1","5":"1","6":"Data Scientist / Data Engineer","7":"57480","8":"47708","9":"FALSE","10":"DS/DE"},{"1":"193","2":"23","3":"2","4":"2","5":"0","6":"BI Analyst / Data Analyst","7":"57000","8":"47000","9":"FALSE","10":"BI/DA"},{"1":"194","2":"23","3":"3","4":"0","5":"0","6":"Data Scientist / Data Engineer","7":"56000","8":"46000","9":"FALSE","10":"DS/DE"},{"1":"195","2":"33","3":"10","4":"4","5":"1","6":"Data Scientist / Data Engineer","7":"161000","8":"114000","9":"FALSE","10":"DS/DE"},{"1":"196","2":"24","3":"2","4":"0","5":"0","6":"Data Scientist / Data Engineer","7":"56000","8":"44000","9":"FALSE","10":"DS/DE"},{"1":"197","2":"25","3":"1","4":"0","5":"1","6":"BI Analyst / Data Analyst","7":"55000","8":"48000","9":"FALSE","10":"BI/DA"},{"1":"198","2":"30","3":"1","4":"1","5":"1","6":"BI Analyst / Data Analyst","7":"55000","8":"45650","9":"FALSE","10":"BI/DA"},{"1":"199","2":"28","3":"3","4":"2","5":"2","6":"BI Analyst / Data Analyst","7":"55000","8":"44000","9":"FALSE","10":"BI/DA"},{"1":"200","2":"28","3":"2","4":"2","5":"1","6":"Data Scientist / Data Engineer","7":"55000","8":"50000","9":"FALSE","10":"DS/DE"},{"1":"201","2":"32","3":"4","4":"2","5":"1","6":"Data Scientist / Data Engineer","7":"90000","8":"70000","9":"FALSE","10":"DS/DE"},{"1":"202","2":"29","3":"5","4":"0","5":"0","6":"Data Scientist / Data Engineer","7":"76300","8":"63800","9":"FALSE","10":"DS/DE"},{"1":"203","2":"28","3":"4","4":"0","5":"0","6":"BI Analyst / Data Analyst","7":"54000","8":"44820","9":"FALSE","10":"BI/DA"},{"1":"204","2":"32","3":"3","4":"3","5":"3","6":"Data Scientist / Data Engineer","7":"53000","8":"44000","9":"FALSE","10":"DS/DE"},{"1":"205","2":"29","3":"1","4":"0","5":"0","6":"Data Scientist / Data Engineer","7":"90000","8":"72000","9":"FALSE","10":"DS/DE"},{"1":"206","2":"37","3":"15","4":"3","5":"15","6":"Data Scientist / Data Engineer","7":"10630918","8":"82594","9":"FALSE","10":"DS/DE"},{"1":"207","2":"30","3":"7","4":"1","5":"1","6":"BI Analyst / Data Analyst","7":"50000","8":"45000","9":"FALSE","10":"BI/DA"},{"1":"208","2":"26","3":"1","4":"0","5":"0","6":"BI Analyst / Data Analyst","7":"50000","8":"42500","9":"FALSE","10":"BI/DA"},{"1":"209","2":"33","3":"1","4":"0","5":"0","6":"Data Scientist / Data Engineer","7":"50000","8":"41500","9":"FALSE","10":"DS/DE"},{"1":"210","2":"28","3":"4","4":"0","5":"1","6":"Data Scientist / Data Engineer","7":"110000","8":"83000","9":"FALSE","10":"DS/DE"},{"1":"211","2":"22","3":"1","4":"0","5":"1","6":"Data Scientist / Data Engineer","7":"50000","8":"41500","9":"FALSE","10":"DS/DE"},{"1":"212","2":"22","3":"1","4":"1","5":"1","6":"Data Scientist / Data Engineer","7":"51800","8":"36500","9":"FALSE","10":"DS/DE"},{"1":"213","2":"33","3":"5","4":"2","5":"2","6":"Data Scientist / Data Engineer","7":"48000","8":"42000","9":"FALSE","10":"DS/DE"},{"1":"214","2":"20","3":"2","4":"2","5":"1","6":"Data Scientist / Data Engineer","7":"48000","8":"35000","9":"FALSE","10":"DS/DE"},{"1":"215","2":"24","3":"2","4":"15","5":"15","6":"BI Analyst / Data Analyst","7":"47790","8":"39900","9":"FALSE","10":"BI/DA"},{"1":"216","2":"23","3":"1","4":"1","5":"1","6":"BI Analyst / Data Analyst","7":"47000","8":"40000","9":"FALSE","10":"BI/DA"},{"1":"217","2":"21","3":"0","4":"0","5":"0","6":"Data Scientist / Data Engineer","7":"45000","8":"37350","9":"FALSE","10":"DS/DE"},{"1":"218","2":"25","3":"2","4":"2","5":"2","6":"Data Scientist / Data Engineer","7":"42000","8":"35000","9":"FALSE","10":"DS/DE"},{"1":"219","2":"36","3":"18","4":"3","5":"3","6":"BI Analyst / Data Analyst","7":"44000","8":"36000","9":"FALSE","10":"BI/DA"},{"1":"220","2":"26","3":"1","4":"0","5":"1","6":"BI Analyst / Data Analyst","7":"43000","8":"36000","9":"FALSE","10":"BI/DA"},{"1":"221","2":"34","3":"6","4":"3","5":"3","6":"Data Scientist / Data Engineer","7":"43000","8":"40000","9":"FALSE","10":"DS/DE"},{"1":"222","2":"35","3":"12","4":"0","5":"0","6":"BI Analyst / Data Analyst","7":"42000","8":"32000","9":"FALSE","10":"BI/DA"},{"1":"223","2":"24","3":"2","4":"2","5":"0","6":"BI Analyst / Data Analyst","7":"42000","8":"36000","9":"FALSE","10":"BI/DA"},{"1":"224","2":"40","3":"4","4":"0","5":"0","6":"BI Analyst / Data Analyst","7":"40000","8":"33200","9":"FALSE","10":"BI/DA"},{"1":"225","2":"30","3":"1","4":"1","5":"0","6":"Data Scientist / Data Engineer","7":"40000","8":"33000","9":"FALSE","10":"DS/DE"},{"1":"226","2":"26","3":"0","4":"0","5":"0","6":"BI Analyst / Data Analyst","7":"40000","8":"33600","9":"FALSE","10":"BI/DA"},{"1":"227","2":"22","3":"0","4":"0","5":"0","6":"BI Analyst / Data Analyst","7":"40000","8":"30000","9":"FALSE","10":"BI/DA"},{"1":"228","2":"24","3":"1","4":"0","5":"0","6":"BI Analyst / Data Analyst","7":"39000","8":"31000","9":"FALSE","10":"BI/DA"},{"1":"229","2":"21","3":"1","4":"1","5":"1","6":"Data Scientist / Data Engineer","7":"38500","8":"32000","9":"FALSE","10":"DS/DE"},{"1":"230","2":"23","3":"1","4":"0","5":"0","6":"BI Analyst / Data Analyst","7":"38000","8":"30600","9":"FALSE","10":"BI/DA"},{"1":"231","2":"29","3":"1","4":"1","5":"1","6":"BI Analyst / Data Analyst","7":"36900","8":"30000","9":"FALSE","10":"BI/DA"},{"1":"232","2":"31","3":"12","4":"2","5":"2","6":"BI Analyst / Data Analyst","7":"36000","8":"30000","9":"FALSE","10":"BI/DA"},{"1":"233","2":"21","3":"0","4":"0","5":"0","6":"BI Analyst / Data Analyst","7":"35000","8":"30000","9":"FALSE","10":"BI/DA"},{"1":"234","2":"30","3":"2","4":"0","5":"0","6":"BI Analyst / Data Analyst","7":"35000","8":"29000","9":"FALSE","10":"BI/DA"},{"1":"235","2":"32","3":"0","4":"0","5":"0","6":"BI Analyst / Data Analyst","7":"35000","8":"29000","9":"FALSE","10":"BI/DA"},{"1":"236","2":"26","3":"0","4":"0","5":"0","6":"BI Analyst / Data Analyst","7":"35000","8":"29000","9":"FALSE","10":"BI/DA"},{"1":"237","2":"21","3":"0","4":"0","5":"0","6":"BI Analyst / Data Analyst","7":"33000","8":"27000","9":"FALSE","10":"BI/DA"},{"1":"238","2":"21","3":"0","4":"0","5":"0","6":"BI Analyst / Data Analyst","7":"31000","8":"26000","9":"FALSE","10":"BI/DA"},{"1":"239","2":"23","3":"0","4":"0","5":"0","6":"BI Analyst / Data Analyst","7":"30100","8":"25000","9":"FALSE","10":"BI/DA"},{"1":"240","2":"25","3":"1","4":"0","5":"0","6":"BI Analyst / Data Analyst","7":"30000","8":"24900","9":"FALSE","10":"BI/DA"},{"1":"241","2":"28","3":"0","4":"0","5":"0","6":"BI Analyst / Data Analyst","7":"29000","8":"25000","9":"FALSE","10":"BI/DA"},{"1":"242","2":"25","3":"0","4":"0","5":"0","6":"BI Analyst / Data Analyst","7":"28000","8":"23000","9":"FALSE","10":"BI/DA"},{"1":"243","2":"24","3":"2","4":"2","5":"2","6":"BI Analyst / Data Analyst","7":"26000","8":"24700","9":"FALSE","10":"BI/DA"},{"1":"244","2":"23","3":"1","4":"1","5":"0","6":"BI Analyst / Data Analyst","7":"24000","8":"22000","9":"FALSE","10":"BI/DA"}],"options":{"columns":{"min":{},"max":[10],"total":[10]},"rows":{"min":[10],"max":[10],"total":[244]},"pages":{}}}
+  </script>
+</div>
+<!-- rnb-frame-end -->
+<!-- rnb-chunk-end -->
+<!-- rnb-text-begin -->
+<p>Comencemos analizando la cantidad de valores distintos para cada columna. Para ello usamos la función <code>n_distinct</code>.</p>
+<!-- rnb-text-end -->
+<!-- rnb-chunk-begin -->
+<!-- rnb-source-begin eyJkYXRhIjoiYGBgclxubWFwKGVuY3Vlc3RhX3N1ZWxkb3NfbGltcGlhLCBuX2Rpc3RpbmN0KVxuYGBgIn0= -->
+<pre class="r"><code>map(encuesta_sueldos_limpia, n_distinct)</code></pre>
+<!-- rnb-source-end -->
+<!-- rnb-output-begin eyJkYXRhIjoiJFgxXG5bMV0gMjQ0XG5cbiRlZGFkXG5bMV0gMzFcblxuJGFub3NfZGVfZXhwZXJpZW5jaWFcblsxXSAyNVxuXG4kYW5vc19lbl9sYV9lbXByZXNhX2FjdHVhbFxuWzFdIDE3XG5cbiRhbm9zX2VuX2VsX3B1ZXN0b19hY3R1YWxcblsxXSAxM1xuXG4kdHJhYmFqb19kZVxuWzFdIDJcblxuJHNhbGFyaW9fYnJ1dG9cblsxXSAxMTZcblxuJHNhbGFyaW9fbmV0b1xuWzFdIDExNVxuXG4kc3VlbGRvX2RvbGFyaXphZG9cblsxXSAxXG4ifQ== -->
+<pre><code>$X1
+[1] 244
+
+$edad
+[1] 31
+
+$anos_de_experiencia
+[1] 25
+
+$anos_en_la_empresa_actual
+[1] 17
+
+$anos_en_el_puesto_actual
+[1] 13
+
+$trabajo_de
+[1] 2
+
+$salario_bruto
+[1] 116
+
+$salario_neto
+[1] 115
+
+$sueldo_dolarizado
+[1] 1</code></pre>
 <!-- rnb-output-end -->
 <!-- rnb-chunk-end -->
 <!-- rnb-text-begin -->
-<p>Comencemos analizando la cantidad de valores distintos para cada columna. Para ello usamos la función <code>n_distinct</code></p>
+<p>Usando la función <code>str()</code> se puede consultar de forma compacta la estructura interna de un objeto R. Es especialmente adecuado para mostrar de forma compacta el contenido (abreviado) de listas.</p>
 <!-- rnb-text-end -->
 <!-- rnb-chunk-begin -->
-<!-- rnb-source-begin eyJkYXRhIjoiYGBgclxubWFwKGVuY3Vlc3RhX3N1ZWxkb3NfbGltcGlhLCBuX2Rpc3RpbmN0KSAlPiVcbiAgc3RyKClcblxuYGBgIn0= -->
+<!-- rnb-source-begin eyJkYXRhIjoiYGBgclxubWFwKGVuY3Vlc3RhX3N1ZWxkb3NfbGltcGlhLCBuX2Rpc3RpbmN0KSAlPiVcbiAgc3RyKCkgIyBBZ3JlZ2Ftb3Mgc3RyIHBhcmEgcXVlIGxhIHNhbGlkYSBsdXpjYSBtZWpvclxuYGBgIn0= -->
 <pre class="r"><code>map(encuesta_sueldos_limpia, n_distinct) %&gt;%
-  str()
-</code></pre>
+  str() # Agregamos str para que la salida luzca mejor</code></pre>
 <!-- rnb-source-end -->
-<!-- rnb-output-begin eyJkYXRhIjoiTGlzdCBvZiA3XG4gJCBlZGFkICAgICAgICAgICAgICAgICAgICAgOiBpbnQgMzFcbiAkIGFub3NfZGVfZXhwZXJpZW5jaWEgICAgICA6IGludCAyNVxuICQgYW5vc19lbl9sYV9lbXByZXNhX2FjdHVhbDogaW50IDE3XG4gJCBhbm9zX2VuX2VsX3B1ZXN0b19hY3R1YWwgOiBpbnQgMTNcbiAkIHBlcmZpbCAgICAgICAgICAgICAgICAgICA6IGludCAyXG4gJCBzYWxhcmlvX2JydXRvICAgICAgICAgICAgOiBpbnQgMTE3XG4gJCBzYWxhcmlvX25ldG8gICAgICAgICAgICAgOiBpbnQgMTE2XG4ifQ== -->
-<pre><code>List of 7
+<!-- rnb-output-begin eyJkYXRhIjoiTGlzdCBvZiA5XG4gJCBYMSAgICAgICAgICAgICAgICAgICAgICAgOiBpbnQgMjQ0XG4gJCBlZGFkICAgICAgICAgICAgICAgICAgICAgOiBpbnQgMzFcbiAkIGFub3NfZGVfZXhwZXJpZW5jaWEgICAgICA6IGludCAyNVxuICQgYW5vc19lbl9sYV9lbXByZXNhX2FjdHVhbDogaW50IDE3XG4gJCBhbm9zX2VuX2VsX3B1ZXN0b19hY3R1YWwgOiBpbnQgMTNcbiAkIHRyYWJham9fZGUgICAgICAgICAgICAgICA6IGludCAyXG4gJCBzYWxhcmlvX2JydXRvICAgICAgICAgICAgOiBpbnQgMTE2XG4gJCBzYWxhcmlvX25ldG8gICAgICAgICAgICAgOiBpbnQgMTE1XG4gJCBzdWVsZG9fZG9sYXJpemFkbyAgICAgICAgOiBpbnQgMVxuIn0= -->
+<pre><code>List of 9
+ $ X1                       : int 244
  $ edad                     : int 31
  $ anos_de_experiencia      : int 25
  $ anos_en_la_empresa_actual: int 17
  $ anos_en_el_puesto_actual : int 13
- $ perfil                   : int 2
- $ salario_bruto            : int 117
- $ salario_neto             : int 116</code></pre>
+ $ trabajo_de               : int 2
+ $ salario_bruto            : int 116
+ $ salario_neto             : int 115
+ $ sueldo_dolarizado        : int 1</code></pre>
 <!-- rnb-output-end -->
 <!-- rnb-chunk-end -->
 <!-- rnb-text-begin -->
-<p>Ahora calculamos el promedio sobre las columnas numéricas</p>
+<p>Ahora calculamos el promedio sobre las columnas numéricas.</p>
 <!-- rnb-text-end -->
 <!-- rnb-chunk-begin -->
-<!-- rnb-source-begin eyJkYXRhIjoiYGBgclxuZW5jdWVzdGFfc3VlbGRvc19saW1waWEgJT4lIFxuICBzZWxlY3RfaWYoaXMubnVtZXJpYykgJT4lIFxuICBtYXAobWVhbikgJT4lIFxuICBzdHIoKVxuYGBgIn0= -->
+<!-- rnb-source-begin eyJkYXRhIjoiYGBgclxuZW5jdWVzdGFfc3VlbGRvc19saW1waWEgJT4lIFxuICBzZWxlY3RfaWYoaXMubnVtZXJpYykgJT4lIFxuICBtYXAobWVhbikgJT4lIFxuICBzdHIoKVxuXG5gYGAifQ== -->
 <pre class="r"><code>encuesta_sueldos_limpia %&gt;% 
   select_if(is.numeric) %&gt;% 
   map(mean) %&gt;% 
-  str()</code></pre>
-<!-- rnb-source-end -->
-<!-- rnb-output-begin eyJkYXRhIjoiTGlzdCBvZiA2XG4gJCBlZGFkICAgICAgICAgICAgICAgICAgICAgOiBudW0gMzAuNlxuICQgYW5vc19kZV9leHBlcmllbmNpYSAgICAgIDogbnVtIDUuOTlcbiAkIGFub3NfZW5fbGFfZW1wcmVzYV9hY3R1YWw6IG51bSAyLjdcbiAkIGFub3NfZW5fZWxfcHVlc3RvX2FjdHVhbCA6IG51bSAyLjE1XG4gJCBzYWxhcmlvX2JydXRvICAgICAgICAgICAgOiBudW0gMTIyMjYzXG4gJCBzYWxhcmlvX25ldG8gICAgICAgICAgICAgOiBudW0gNjE5NzNcbiJ9 -->
-<pre><code>List of 6
- $ edad                     : num 30.6
- $ anos_de_experiencia      : num 5.99
- $ anos_en_la_empresa_actual: num 2.7
- $ anos_en_el_puesto_actual : num 2.15
- $ salario_bruto            : num 122263
- $ salario_neto             : num 61973</code></pre>
-<!-- rnb-output-end -->
-<!-- rnb-chunk-end -->
-<!-- rnb-text-begin -->
-<p>Calculamos la mediana sobre las columnas numéricas, sabiendo que el resultado de la función es un número podemos usar la función <code>map_dbl</code></p>
-<!-- rnb-text-end -->
-<!-- rnb-chunk-begin -->
-<!-- rnb-source-begin eyJkYXRhIjoiYGBgclxuZW5jdWVzdGFfc3VlbGRvc19saW1waWEgJT4lIFxuICBzZWxlY3RfaWYoaXMubnVtZXJpYykgJT4lIFxuICBtYXBfZGJsKG1lZGlhbilcblxuYGBgIn0= -->
-<pre class="r"><code>encuesta_sueldos_limpia %&gt;% 
-  select_if(is.numeric) %&gt;% 
-  map_dbl(median)
+  str()
 </code></pre>
 <!-- rnb-source-end -->
-<!-- rnb-output-begin eyJkYXRhIjoiICAgICAgICAgICAgICAgICAgICAgZWRhZCAgICAgICBhbm9zX2RlX2V4cGVyaWVuY2lhIGFub3NfZW5fbGFfZW1wcmVzYV9hY3R1YWwgIGFub3NfZW5fZWxfcHVlc3RvX2FjdHVhbCBcbiAgICAgICAgICAgICAgICAgICAgICAgMzAgICAgICAgICAgICAgICAgICAgICAgICAgNCAgICAgICAgICAgICAgICAgICAgICAgICAxICAgICAgICAgICAgICAgICAgICAgICAgIDEgXG4gICAgICAgICAgICBzYWxhcmlvX2JydXRvICAgICAgICAgICAgICBzYWxhcmlvX25ldG8gXG4gICAgICAgICAgICAgICAgICAgIDc1MDAwICAgICAgICAgICAgICAgICAgICAgNjAwMDAgXG4ifQ== -->
-<pre><code>                     edad       anos_de_experiencia anos_en_la_empresa_actual  anos_en_el_puesto_actual 
-                       30                         4                         1                         1 
-            salario_bruto              salario_neto 
-                    75000                     60000 </code></pre>
+<!-- rnb-output-begin eyJkYXRhIjoiTGlzdCBvZiA3XG4gJCBYMSAgICAgICAgICAgICAgICAgICAgICAgOiBudW0gMTIyXG4gJCBlZGFkICAgICAgICAgICAgICAgICAgICAgOiBudW0gMzAuNlxuICQgYW5vc19kZV9leHBlcmllbmNpYSAgICAgIDogbnVtIDYuMDFcbiAkIGFub3NfZW5fbGFfZW1wcmVzYV9hY3R1YWw6IG51bSAyLjdcbiAkIGFub3NfZW5fZWxfcHVlc3RvX2FjdHVhbCA6IG51bSAyLjE1XG4gJCBzYWxhcmlvX2JydXRvICAgICAgICAgICAgOiBudW0gMTIyNjU2XG4gJCBzYWxhcmlvX25ldG8gICAgICAgICAgICAgOiBudW0gNjIxNDFcbiJ9 -->
+<pre><code>List of 7
+ $ X1                       : num 122
+ $ edad                     : num 30.6
+ $ anos_de_experiencia      : num 6.01
+ $ anos_en_la_empresa_actual: num 2.7
+ $ anos_en_el_puesto_actual : num 2.15
+ $ salario_bruto            : num 122656
+ $ salario_neto             : num 62141</code></pre>
 <!-- rnb-output-end -->
 <!-- rnb-chunk-end -->
 <!-- rnb-text-begin -->
+<p>Calculamos la mediana sobre las columnas numéricas. Sabiendo que el resultado de la función es un número podemos usar directamente la función <code>map_dbl</code>.</p>
+<!-- rnb-text-end -->
+<!-- rnb-chunk-begin -->
+<!-- rnb-source-begin eyJkYXRhIjoiYGBgclxuIyB1c2FuZG8gbWFwX2RibCBcbmVuY3Vlc3RhX3N1ZWxkb3NfbGltcGlhICU+JSBcbiAgc2VsZWN0X2lmKGlzLm51bWVyaWMpICU+JSBcbiAgbWFwX2RibChtZWRpYW4pXG5gYGAifQ== -->
+<pre class="r"><code># usando map_dbl 
+encuesta_sueldos_limpia %&gt;% 
+  select_if(is.numeric) %&gt;% 
+  map_dbl(median)</code></pre>
+<!-- rnb-source-end -->
+<!-- rnb-output-begin eyJkYXRhIjoiICAgICAgICAgICAgICAgICAgICAgICBYMSAgICAgICAgICAgICAgICAgICAgICBlZGFkIFxuICAgICAgICAgICAgICAgICAgICAxMjIuNSAgICAgICAgICAgICAgICAgICAgICAzMC4wIFxuICAgICAgYW5vc19kZV9leHBlcmllbmNpYSBhbm9zX2VuX2xhX2VtcHJlc2FfYWN0dWFsIFxuICAgICAgICAgICAgICAgICAgICAgIDQuMCAgICAgICAgICAgICAgICAgICAgICAgMS4wIFxuIGFub3NfZW5fZWxfcHVlc3RvX2FjdHVhbCAgICAgICAgICAgICBzYWxhcmlvX2JydXRvIFxuICAgICAgICAgICAgICAgICAgICAgIDEuMCAgICAgICAgICAgICAgICAgICA3NTAwMC4wIFxuICAgICAgICAgICAgIHNhbGFyaW9fbmV0byBcbiAgICAgICAgICAgICAgICAgIDYwMDAwLjAgXG4ifQ== -->
+<pre><code>                       X1                      edad 
+                    122.5                      30.0 
+      anos_de_experiencia anos_en_la_empresa_actual 
+                      4.0                       1.0 
+ anos_en_el_puesto_actual             salario_bruto 
+                      1.0                   75000.0 
+             salario_neto 
+                  60000.0 </code></pre>
+<!-- rnb-output-end -->
+<!-- rnb-chunk-end -->
+<!-- rnb-text-begin -->
+<p>Recordemos que esta función devuelve un vector numérico no una lista como en el caso anterior, por eso no usamos la función <code>str()</code> para ver el resultado en forma compacta.</p>
 </div>
 <div id="modelos" class="section level3">
 <h3>Modelos</h3>
+<p>Podemos usar la función map para calcular distintos modelos modelos. Por ejemplo, calculemos un modelo distinto según el perfil (DA y DS).</p>
 <!-- rnb-text-end -->
 <!-- rnb-chunk-begin -->
-<!-- rnb-source-begin eyJkYXRhIjoiYGBgclxubW9kZWxvc19wb3JfcGVyZmlsID0gZW5jdWVzdGFfc3VlbGRvc19saW1waWEgJT4lIFxuICAgICAgICAgICAgICAgICAgICAgICAgc3BsaXQoLiRwZXJmaWwpICU+JSBcbiAgICAgICAgICAgICAgICAgICAgICAgIG1hcCh+bG0oc2FsYXJpb19uZXRvIH4gZWRhZCwgZGF0YSA9IC4pKVxuXG5gYGAifQ== -->
+<!-- rnb-source-begin eyJkYXRhIjoiYGBgclxubW9kZWxvc19wb3JfcGVyZmlsID0gZW5jdWVzdGFfc3VlbGRvc19saW1waWEgJT4lIFxuICAgICAgICAgICAgICAgICAgICAgICAgIyBzZXBhcmFtb3MgZWwgZGF0YXNldCBzZWfDum4gcGVyZmlsXG4gICAgICAgICAgICAgICAgICAgICAgICBzcGxpdCguJHBlcmZpbCkgJT4lIFxuICAgICAgICAgICAgICAgICAgICAgICAgIyBjcmVhbW9zIHVuIG1vZGVsbyBwYXJhIGNhZGEgcGVyZmlsICBcbiAgICAgICAgICAgICAgICAgICAgICAgIG1hcCh+bG0oc2FsYXJpb19uZXRvIH4gZWRhZCwgZGF0YSA9IC4pKVxuYGBgIn0= -->
 <pre class="r"><code>modelos_por_perfil = encuesta_sueldos_limpia %&gt;% 
+                        # separamos el dataset según perfil
                         split(.$perfil) %&gt;% 
-                        map(~lm(salario_neto ~ edad, data = .))
-</code></pre>
+                        # creamos un modelo para cada perfil  
+                        map(~lm(salario_neto ~ edad, data = .))</code></pre>
 <!-- rnb-source-end -->
 <!-- rnb-chunk-end -->
 <!-- rnb-text-begin -->
-<p>El resultado de esto es una lista con los modelos</p>
+<p>El resultado de esto es una lista con los dos modelos. Analicemos los elementos de cada uno utilizando la función tidy() de la librería broom.</p>
 <!-- rnb-text-end -->
 <!-- rnb-chunk-begin -->
-<!-- rnb-source-begin eyJkYXRhIjoiYGBgclxubW9kZWxvc19wb3JfcGVyZmlsICU+JSBtYXAoYnJvb206OnRpZHkpXG5cbmBgYCJ9 -->
-<pre class="r"><code>modelos_por_perfil %&gt;% map(broom::tidy)
-</code></pre>
+<!-- rnb-source-begin eyJkYXRhIjoiYGBgclxubW9kZWxvc19wb3JfcGVyZmlsICU+JSBtYXAoYnJvb206OnRpZHkpXG5gYGAifQ== -->
+<pre class="r"><code>modelos_por_perfil %&gt;% map(broom::tidy)</code></pre>
 <!-- rnb-source-end -->
-<!-- rnb-output-begin eyJkYXRhIjoiJGBCSSBBbmFseXN0IC8gRGF0YSBBbmFseXN0YFxuIn0= -->
-<pre><code>$`BI Analyst / Data Analyst`</code></pre>
+<!-- rnb-output-begin eyJkYXRhIjoiJGBCSS9EQWBcbiJ9 -->
+<pre><code>$`BI/DA`</code></pre>
 <!-- rnb-output-end -->
-<!-- rnb-frame-begin eyJtZXRhZGF0YSI6eyJjbGFzc2VzIjpbInRibF9kZiIsInRibCIsImRhdGEuZnJhbWUiXSwibmNvbCI6NSwibnJvdyI6Mn0sInJkZiI6Ikg0c0lBQUFBQUFBQUF3dHlpVERtaXVCaVlHQmdabUJtQTJKV0lKT0JOVFRFVGRlQ2dZR0ZDY2hoWkdCaDRBVFJGVUJGd2lCWklCWUFZaWFvQkxlR1oxNUphbEZ5YWtHSkpsU0lKVFVsTVFWSTg0R1VPWnhjSUhKVitYbTF3N1JrNHovTHZSN0R4UTlNTzdzc2ZkOU5oNExuY2o2bWo1eGc0dlkvdGl0NWVDMS83eUJxS0M3N09uODZYSHovMDdiZXhaTEZkblBtdGoxWGFKRkhjeDlyWG1KdWFqSFViYXd3aHdBZGxndGxjNlFXbDJUbUpwYWtRdm1jeFNVcGVxbEZSZmxGQ0lIRWtreWdvbVNvQUh1QlhsbGlUbWtxbWsyY1JmbmxlakRiZUVGT2F3QVMvLy8vLzRmdXBPU2N4R0tZazJDQ1hDbUpKWWw2YVVWQS9VQWV1aGIyL0lLU3pQdzhvQ1ltNUxDR1IwSVJtb0JBYVI3SUpTbTZ5Um1sZWRtNnBzWWdHOER5RU1BTFpUTWhzVmtoZGpMOVJ3c3N0dFM4OU13OFdQQ3c1aVFtcGVaQU9YeEFMNE45ckZkUWxKbFhBdk1LVUxSWXJ5Uy9KQkdtamlzNVB3Y21Bdlljd3o4QWFDVEpVMk1DQUFBPSJ9 -->
+<!-- rnb-frame-begin eyJtZXRhZGF0YSI6eyJjbGFzc2VzIjpbInRibF9kZiIsInRibCIsImRhdGEuZnJhbWUiXSwibnJvdyI6MiwibmNvbCI6NX0sInJkZiI6Ikg0c0lBQUFBQUFBQUJndHlpVERtaXVCaVlHQmdabUJoWUdKZ1pnVXlHZGljQXd5TlRJMFlHRmlZZ0R4R29Bd25pSzRBcWhJR01rQnFCSUNZQ1NyQnJlR1pWNUphbEp4YVVLSUpGV0pKVFVsTUFkSjhJR1VPcDY5ZHZ0RWFkOXBoNnZQWjY1ZThXQTRYUDdENE90ZURoYk1kQ3Q1WlM2ejdKUUFUdC85MVpBZERHdHM4QjVITlNiZTNIRHNORjkreCtXaTh5NnBxdTVVbUFjZStNU3VodVk4MUx6RTN0UmpxTmxhWVE0QU95NFd5T1ZLTFN6SnpFMHRTb1h6TzRwSVV2ZFNpb3Z3aWhFQmlTU1pRVVRKVWdMMUFyeXd4cHpRVnpTYk9vdnh5UFpodHZDQ25OUUNKLy8vLy8wTjNVbkpPWWpITVNUQkJycFRFa2tTOXRDS2dmaUFQWFF0N2ZrRkpabjRlVUJNVGNsakRJNkVJVFVDZ05BL2traFRkNUl6U3ZHeGRVeE9RRFdCNUNPQ0ZzcG1RMkt3UU81bitvd1VXVzJwZWVtWWVMSGhZY3hLVFVuT2dIRDZnbDhFKzFpc295c3dyZ1hrRktGcXNWNUpma2doVHg1V2Nud01UQVh1TzRSOEE2cHJLeUdRQ0FBQT0ifQ== -->
 <div data-pagedtable="false">
 <script data-pagedtable-source type="application/json">
-{"columns":[{"label":["term"],"name":[1],"type":["chr"],"align":["left"]},{"label":["estimate"],"name":[2],"type":["dbl"],"align":["right"]},{"label":["std.error"],"name":[3],"type":["dbl"],"align":["right"]},{"label":["statistic"],"name":[4],"type":["dbl"],"align":["right"]},{"label":["p.value"],"name":[5],"type":["dbl"],"align":["right"]}],"data":[{"1":"(Intercept)","2":"13120.163","3":"8493.6066","4":"1.54471","5":"1.245960e-01"},{"1":"edad","2":"1432.801","3":"270.4449","4":"5.29794","5":"4.264018e-07"}],"options":{"columns":{"min":{},"max":[10],"total":[5]},"rows":{"min":[10],"max":[10],"total":[2]},"pages":{}}}
+{"columns":[{"label":["term"],"name":[1],"type":["chr"],"align":["left"]},{"label":["estimate"],"name":[2],"type":["dbl"],"align":["right"]},{"label":["std.error"],"name":[3],"type":["dbl"],"align":["right"]},{"label":["statistic"],"name":[4],"type":["dbl"],"align":["right"]},{"label":["p.value"],"name":[5],"type":["dbl"],"align":["right"]}],"data":[{"1":"(Intercept)","2":"14253.655","3":"8519.6800","4":"1.673027","5":"9.649309e-02"},{"1":"edad","2":"1401.902","3":"270.8894","4":"5.175182","5":"7.511484e-07"}],"options":{"columns":{"min":{},"max":[10],"total":[5]},"rows":{"min":[10],"max":[10],"total":[2]},"pages":{}}}
   </script>
 </div>
 <!-- rnb-frame-end -->
-<!-- rnb-output-begin eyJkYXRhIjoiXG4kYERhdGEgU2NpZW50aXN0IC8gRGF0YSBFbmdpbmVlcmBcbiJ9 -->
+<!-- rnb-output-begin eyJkYXRhIjoiXG4kYERTL0RFYFxuIn0= -->
 <pre><code>
-$`Data Scientist / Data Engineer`</code></pre>
+$`DS/DE`</code></pre>
 <!-- rnb-output-end -->
-<!-- rnb-frame-begin eyJtZXRhZGF0YSI6eyJjbGFzc2VzIjpbInRibF9kZiIsInRibCIsImRhdGEuZnJhbWUiXSwibmNvbCI6NSwibnJvdyI6Mn0sInJkZiI6Ikg0c0lBQUFBQUFBQUF3dHlpVERtaXVCaVlHQmdabUJtQTJKV0lKT0JOVFRFVGRlQ2dZR0ZDY2hoWkdCaDRBVFJGVUJGd2lCWklCWUFZaWFvQkxlR1oxNUphbEZ5YWtHSkpsU0lKVFVsTVFWSTg0R1VPZHcrZU4zWjFtbXh3NVFmMmZZWFh4NkhpeDl0c2lnOXJqRGRvY3hjOGRQallHKzRPTXZTOS9HckdoYzc4Sm04bEpGNm1nNFR0MjkzMDluclBTL1Aza2lHWVVQNTdXQTA5N0htSmVhbUZrUGR4Z3B6Q05CaHVWQTJSMnB4U1dadVlra3FsTTlaWEpLaWwxcFVsRitFRUVnc3lRUXFTb1lLc0Jmb2xTWG1sS2FpMmNSWmxGK3VCN09ORitTMEJpRHgvLy8vZitoT1NzNUpMSVk1Q1NiSWxaSllrcWlYVmdUVUQrU2hhMkhQTHlqSnpNOERhbUpDRG10NEpCU2hDUWlVNW9GY2txS2JuRkdhbDYxcmFneXlBU3dQQWJ4UU5oTVNteFZpSjlOL3RNQmlTODFMejh5REJROXJUbUpTYWc2VXd3ZjBNdGpIZWdWRm1Ya2xNSzhBUll2MVN2SkxFbUhxdUpMemMyQWlZTTh4L0FNQS9nRk9EbU1DQUFBPSJ9 -->
+<!-- rnb-frame-begin eyJtZXRhZGF0YSI6eyJjbGFzc2VzIjpbInRibF9kZiIsInRibCIsImRhdGEuZnJhbWUiXSwibnJvdyI6MiwibmNvbCI6NX0sInJkZiI6Ikg0c0lBQUFBQUFBQUJndHlpVERtaXVCaVlHQmdabUJoWUdKZ1pnVXlHZGljQXd5TlRJMFlHRmlZZ0R4R29Bd25pSzRBcWhJR01rQnFCSUNZQ1NyQnJlR1pWNUphbEp4YVVLSUpGV0pKVFVsTUFkSjhJR1VPdHc5ZWQ3WjEydUl3NVVlMi9jV1hCK0RpUjVzc1NvOHJUSFVvTTFmODlEallDeTdPc3ZSOS9LckdqUTU4Smk5bHBKN0d3Y1R0MjkxMDluclAvV2x2Sk1Pd29mejJNalQzc2VZbDVxWVdROTNHQ25NSTBHRzVVRFpIYW5GSlptNWlTU3FVejFsY2txS1hXbFNVWDRRUVNDekpCQ3BLaGdxd0YraVZKZWFVcHFMWnhGbVVYNjRIczQwWDVMUUdJUEgvLy85LzZFNUt6a2tzaGprSkpzaVZrbGlTcUpkV0JOUVA1S0ZyWWM4dktNbk16d05xWWtJT2EzZ2tGS0VKQ0pUbWdWeVNvcHVjVVpxWHJXdHFBcklCTEE4QnZGQTJFeEtiRldJbjAzKzB3R0pMelV2UHpJTUZEMnRPWWxKcURwVERCL1F5Mk1kNkJVV1plU1V3cndCRmkvVks4a3NTWWVxNGt2TnpZQ0pnenpIOEF3RE1iK2VzWkFJQUFBPT0ifQ== -->
 <div data-pagedtable="false">
 <script data-pagedtable-source type="application/json">
 {"columns":[{"label":["term"],"name":[1],"type":["chr"],"align":["left"]},{"label":["estimate"],"name":[2],"type":["dbl"],"align":["right"]},{"label":["std.error"],"name":[3],"type":["dbl"],"align":["right"]},{"label":["statistic"],"name":[4],"type":["dbl"],"align":["right"]},{"label":["p.value"],"name":[5],"type":["dbl"],"align":["right"]}],"data":[{"1":"(Intercept)","2":"28423.363","3":"11012.4411","4":"2.581023","5":"0.0113643165"},{"1":"edad","2":"1342.105","3":"355.4458","4":"3.775835","5":"0.0002763273"}],"options":{"columns":{"min":{},"max":[10],"total":[5]},"rows":{"min":[10],"max":[10],"total":[2]},"pages":{}}}
@@ -3249,17 +3317,21 @@ $`Data Scientist / Data Engineer`</code></pre>
 <!-- rnb-output-end -->
 <!-- rnb-chunk-end -->
 <!-- rnb-text-begin -->
+<p>Evaluemos ahora la capacidad explicativa de los modelos. Para ello, comparamos el <span class="math inline">\(R^2\)</span> de cada uno (en este caso como son modelos simples podemos utilizar esta métrica).</p>
 <!-- rnb-text-end -->
 <!-- rnb-chunk-begin -->
-<!-- rnb-source-begin eyJkYXRhIjoiYGBgclxubW9kZWxvc19wb3JfcGVyZmlsICU+JSBtYXAoc3VtbWFyeSkgJT4lIG1hcF9kYmwoXCJyLnNxdWFyZWRcIilcbmBgYCJ9 -->
-<pre class="r"><code>modelos_por_perfil %&gt;% map(summary) %&gt;% map_dbl(&quot;r.squared&quot;)</code></pre>
+<!-- rnb-source-begin eyJkYXRhIjoiYGBgclxubW9kZWxvc19wb3JfcGVyZmlsICU+JSBcbiAgbWFwKGJyb29tOjpnbGFuY2UpICU+JSBcbiAgbWFwX2RibChcInIuc3F1YXJlZFwiKVxuYGBgIn0= -->
+<pre class="r"><code>modelos_por_perfil %&gt;% 
+  map(broom::glance) %&gt;% 
+  map_dbl(&quot;r.squared&quot;)</code></pre>
 <!-- rnb-source-end -->
-<!-- rnb-output-begin eyJkYXRhIjoiICAgICBCSSBBbmFseXN0IC8gRGF0YSBBbmFseXN0IERhdGEgU2NpZW50aXN0IC8gRGF0YSBFbmdpbmVlciBcbiAgICAgICAgICAgICAgICAgICAgIDAuMTYyMTc5OCAgICAgICAgICAgICAgICAgICAgICAwLjEyOTMwNjQgXG4ifQ== -->
-<pre><code>     BI Analyst / Data Analyst Data Scientist / Data Engineer 
-                     0.1621798                      0.1293064 </code></pre>
+<!-- rnb-output-begin eyJkYXRhIjoiICAgIEJJL0RBICAgICBEUy9ERSBcbjAuMTU2ODIyMyAwLjEyOTMwNjQgXG4ifQ== -->
+<pre><code>    BI/DA     DS/DE 
+0.1568223 0.1293064 </code></pre>
 <!-- rnb-output-end -->
 <!-- rnb-chunk-end -->
 <!-- rnb-text-begin -->
+<p>Mientras el modelo de edad para los BI/DA logra explicar el 15.6% de la variabilidad del sueldo neto, el modelo de edad para los DS/DE logra captar un porcenaje menor (12,9%).</p>
 </div>
 </div>
 <div id="ejemplo-iterando-en-la-eph" class="section level2">
@@ -3268,32 +3340,63 @@ $`Data Scientist / Data Engineer`</code></pre>
 <p>Por ejemplo, podemos armar un vector con los path a las bases individuales, con el comando <code>fs::dir_ls</code>. Se le especifica el <strong>path</strong> donde buscar los archivos y en este caso una expresion regular <strong>regexp</strong> para que devuelva aquellos archivos que coinciden con la misma.</p>
 <!-- rnb-text-end -->
 <!-- rnb-chunk-begin -->
-<!-- rnb-source-begin eyJkYXRhIjoiYGBgclxuIyBCdXNjYW1vcyBlbiBlbCBwYXRoIGFxdWVsbG9zIGFxdWVsbG9zIGFyY2hpdm9zIHF1ZSBtYXRjaGVhbiBhIGxhIGV4cHJlc2lvbiByZWd1bGFyXG5iYXNlc19pbmRpdmlkdWFsZXNfcGF0aCA8LSBkaXJfbHMocGF0aCA9ICcuLi9GdWVudGVzLycsIHJlZ2V4cD0gJ2luZGl2aWR1YWwnKVxuYmFzZXNfaW5kaXZpZHVhbGVzX3BhdGhcbmBgYCJ9 -->
-<pre class="r"><code># Buscamos en el path aquellos aquellos archivos que matchean a la expresion regular
-bases_individuales_path &lt;- dir_ls(path = '../Fuentes/', regexp= 'individual')
+<!-- rnb-source-begin eyJkYXRhIjoiYGBgclxuYGBgclxuIyBCdXNjYW1vcyBlbiBlbCBwYXRoIGFxdWVsbG9zIGFxdWVsbG9zIGFyY2hpdm9zIHF1ZSBtYXRjaGVhbiBhIGxhIGV4cHJlc2lvbiByZWd1bGFyXG5iYXNlc19pbmRpdmlkdWFsZXNfcGF0aCA8LSBkaXJfbHMocGF0aCA9ICcuLi9GdWVudGVzLycsIHJlZ2V4cD0gJ2luZGl2aWR1YWwnKVxuYmFzZXNfaW5kaXZpZHVhbGVzX3BhdGhcbmBgYFxuYGBgIn0= -->
+<pre class="r"><code>```r
+# Buscamos en el path aquellos aquellos archivos que matchean a la expresion regular
+bases_individuales_path &lt;- dir_ls(path = &#39;../Fuentes/&#39;, regexp= &#39;individual&#39;)
 bases_individuales_path</code></pre>
-<!-- rnb-source-end -->
-<!-- rnb-chunk-end -->
-<!-- rnb-text-begin -->
-<p>Luego, como en la función que usamos para leer las bases definimos muchos parametros, nos podemos armar una función <em>wrapper</em> que sólo necesite un parámetro, y que simplifique la escritura del map.</p>
-<!-- rnb-text-end -->
-<!-- rnb-chunk-begin -->
-<!-- rnb-source-begin eyJkYXRhIjoiYGBgclxuYGBgclxuYGBgclxuYmFzZXNfZGZcbmBgYFxuYGBgXG5gYGAifQ== -->
-<p><code>r</code>r</p>
-<pre class="r"><code>bases_df</code></pre>
+<pre><code>
+&lt;!-- rnb-source-end --&gt;
+
+&lt;!-- rnb-chunk-end --&gt;
+
+
+&lt;!-- rnb-text-begin --&gt;
+
+
+Luego, como en la función que usamos para leer las bases definimos muchos parametros, nos podemos armar una función _wrapper_ que sólo necesite un parámetro, y que simplifique la escritura del map.
+
+
+&lt;!-- rnb-text-end --&gt;
+
+
+&lt;!-- rnb-chunk-begin --&gt;
+
+
+&lt;!-- rnb-source-begin eyJkYXRhIjoiYGBgclxuYGBgclxuYGBgclxuYGBgclxuYmFzZXNfZGZcbmBgYFxuYGBgXG5gYGBcbmBgYCJ9 --&gt;
+
+```r
+```r
+```r
+```r
+bases_df</code></pre>
 <pre><code></code></pre>
-<!-- rnb-source-end -->
-<!-- rnb-chunk-end -->
-<!-- rnb-text-begin -->
-<!-- rnb-text-end -->
-<!-- rnb-chunk-begin -->
-<!-- rnb-source-begin eyJkYXRhIjoiYGBgclxuYGBgclxuIyBDYWxjdWxhbW9zIHVuYSByZWdyZXNpb24gbGluZWFsIHNvYnJlIGVsIGRhdGFzZXQgcXVlIHRpZW5lIHRvZGFzIGxhcyBvYnNlcnZhY2lvbmVzIGRlIEVQSFxubG1maXQgPC0gbG0oUDIxfmZhY3RvcihDSDA0KStDSDA2LGRhdGEgPSBiYXNlc19kZilcblxuIyBSZXN1bWVuIGRlbCBtb2RlbG9cbnN1bW1hcnkobG1maXQpXG5gYGBcbmBgYCJ9 -->
-<p><code>r</code>r # Calculamos una regresion lineal sobre el dataset que tiene todas las observaciones de EPH lmfit &lt;- lm(P21~factor(CH04)+CH06,data = bases_df)</p>
-</div>
-</div>
-<div id="resumen-del-modelo" class="section level1">
-<h1>Resumen del modelo</h1>
-<p>summary(lmfit)</p>
+<pre><code>
+&lt;!-- rnb-source-end --&gt;
+
+&lt;!-- rnb-chunk-end --&gt;
+
+
+&lt;!-- rnb-text-begin --&gt;
+
+
+
+&lt;!-- rnb-text-end --&gt;
+
+
+&lt;!-- rnb-chunk-begin --&gt;
+
+
+&lt;!-- rnb-source-begin eyJkYXRhIjoiYGBgclxuYGBgclxuYGBgclxuIyBDYWxjdWxhbW9zIHVuYSByZWdyZXNpb24gbGluZWFsIHNvYnJlIGVsIGRhdGFzZXQgcXVlIHRpZW5lIHRvZGFzIGxhcyBvYnNlcnZhY2lvbmVzIGRlIEVQSFxubG1maXQgPC0gbG0oUDIxfmZhY3RvcihDSDA0KStDSDA2LGRhdGEgPSBiYXNlc19kZilcblxuIyBSZXN1bWVuIGRlbCBtb2RlbG9cbnN1bW1hcnkobG1maXQpXG5gYGBcbmBgYFxuYGBgIn0= --&gt;
+
+```r
+```r
+```r
+# Calculamos una regresion lineal sobre el dataset que tiene todas las observaciones de EPH
+lmfit &lt;- lm(P21~factor(CH04)+CH06,data = bases_df)
+
+# Resumen del modelo
+summary(lmfit)</code></pre>
 <pre><code></code></pre>
 <!-- rnb-source-end -->
 <!-- rnb-chunk-end -->
@@ -3302,8 +3405,10 @@ bases_individuales_path</code></pre>
 <p>Si queremos abrir (“desanidar”) estas dataframes anidados usamos el comando <code>unnest()</code></p>
 <!-- rnb-text-end -->
 <!-- rnb-chunk-begin -->
-<!-- rnb-source-begin eyJkYXRhIjoiYGBgclxuYGBgclxuYnJvb206OnRpZHkobG1maXQpXG5gYGBcbmBgYCJ9 -->
-<p><code>r</code>r broom::tidy(lmfit)</p>
+<!-- rnb-source-begin eyJkYXRhIjoiYGBgclxuYGBgclxuYGBgclxuYnJvb206OnRpZHkobG1maXQpXG5gYGBcbmBgYFxuYGBgIn0= -->
+<pre class="r"><code>```r
+```r
+broom::tidy(lmfit)</code></pre>
 <pre><code></code></pre>
 <!-- rnb-source-end -->
 <!-- rnb-chunk-end -->
@@ -3314,12 +3419,28 @@ bases_individuales_path</code></pre>
 <p>Esto mismo lo podemos usar para fragmentar el dataset por alguna variable, con la funcion <code>group_by()</code></p>
 <!-- rnb-text-end -->
 <!-- rnb-chunk-begin -->
-<!-- rnb-source-begin eyJkYXRhIjoiYGBgclxuYGBgclxuXG5yZXN1bHRhZG9zIDwtIHRpYmJsZSgpXG5cbmZvciAocmVnaW9uIGluIHVuaXF1ZShiYXNlc19kZiRSRUdJT04pKSB7XG4gICMgQ3JlYW1vcyB1biBkYXRhc2V0IHBvciByZWdpb25cbiAgZGF0YSA8LSBiYXNlc19kZiAlPiUgXG4gICAgZmlsdGVyKFJFR0lPTj09cmVnaW9uKVxuICAjIENhbGN1bGFyIGVsIG1vZGVsbyBsaW5lYWxcbiAgbG1maXQgPC0gbG0oUDIxfmZhY3RvcihDSDA0KStDSDA2LGRhdGEgPSBkYXRhKVxuICAjIEd1YXJkYXIgbG9zIHJlc3VsdGFkb3MgZGUgbG9zIGNvZWZpY2llbnRlcyBcbiAgbG10aWR5IDwtIGJyb29tOjp0aWR5KGxtZml0KVxuICAjIEFzaWduYW1vcyBsYSB2YXJpYWJsZSByZWdpb25cbiAgbG10aWR5JHJlZ2lvbiA8LSByZWdpb25cbiAgIyBVbmltb3MgbG9zIGRhdGFmcmFtZXNcbiAgcmVzdWx0YWRvcyA8LSBiaW5kX3Jvd3MocmVzdWx0YWRvcyxsbXRpZHkpXG5cbn1cblxucmVzdWx0YWRvc1xuYGBgXG5gYGAifQ== -->
-<p><code>r</code>r</p>
-<p>resultados &lt;- tibble()</p>
-<p>for (region in unique(bases_df<span class="math inline">\(REGION)) {  # Creamos un dataset por region  data &lt;- bases_df %&gt;%  filter(REGION==region)  # Calcular el modelo lineal  lmfit &lt;- lm(P21~factor(CH04)+CH06,data = data)  # Guardar los resultados de los coeficientes  lmtidy &lt;- broom::tidy(lmfit)  # Asignamos la variable region  lmtidy\)</span>region &lt;- region # Unimos los dataframes resultados &lt;- bind_rows(resultados,lmtidy)</p>
-<p>}</p>
-<p>resultados</p>
+<!-- rnb-source-begin eyJkYXRhIjoiYGBgclxuYGBgclxuYGBgclxuXG5yZXN1bHRhZG9zIDwtIHRpYmJsZSgpXG5cbmZvciAocmVnaW9uIGluIHVuaXF1ZShiYXNlc19kZiRSRUdJT04pKSB7XG4gICMgQ3JlYW1vcyB1biBkYXRhc2V0IHBvciByZWdpb25cbiAgZGF0YSA8LSBiYXNlc19kZiAlPiUgXG4gICAgZmlsdGVyKFJFR0lPTj09cmVnaW9uKVxuICAjIENhbGN1bGFyIGVsIG1vZGVsbyBsaW5lYWxcbiAgbG1maXQgPC0gbG0oUDIxfmZhY3RvcihDSDA0KStDSDA2LGRhdGEgPSBkYXRhKVxuICAjIEd1YXJkYXIgbG9zIHJlc3VsdGFkb3MgZGUgbG9zIGNvZWZpY2llbnRlcyBcbiAgbG10aWR5IDwtIGJyb29tOjp0aWR5KGxtZml0KVxuICAjIEFzaWduYW1vcyBsYSB2YXJpYWJsZSByZWdpb25cbiAgbG10aWR5JHJlZ2lvbiA8LSByZWdpb25cbiAgIyBVbmltb3MgbG9zIGRhdGFmcmFtZXNcbiAgcmVzdWx0YWRvcyA8LSBiaW5kX3Jvd3MocmVzdWx0YWRvcyxsbXRpZHkpXG5cbn1cblxucmVzdWx0YWRvc1xuYGBgXG5gYGBcbmBgYCJ9 -->
+<pre class="r"><code>```r
+```r
+
+resultados &lt;- tibble()
+
+for (region in unique(bases_df$REGION)) {
+  # Creamos un dataset por region
+  data &lt;- bases_df %&gt;% 
+    filter(REGION==region)
+  # Calcular el modelo lineal
+  lmfit &lt;- lm(P21~factor(CH04)+CH06,data = data)
+  # Guardar los resultados de los coeficientes 
+  lmtidy &lt;- broom::tidy(lmfit)
+  # Asignamos la variable region
+  lmtidy$region &lt;- region
+  # Unimos los dataframes
+  resultados &lt;- bind_rows(resultados,lmtidy)
+
+}
+
+resultados</code></pre>
 <pre><code></code></pre>
 <!-- rnb-source-end -->
 <!-- rnb-chunk-end -->
@@ -3329,6 +3450,7 @@ bases_individuales_path</code></pre>
 <p>¿ De qué sirve todo esto?</p>
 </blockquote>
 <p>No todo en la vida es un Dataframe. Hay estucturas de datos que no se pueden normalizar a filas y columnas. En esos casos recurríamos tradicionalmente a los loops. Con MAP podemos tener los elementos agrupados en un sólo objeto y aún conservar sus formas diferentes.</p>
+</div>
 <div id="ejemplo.-regresión-lineal" class="section level2">
 <h2>Ejemplo. Regresión lineal</h2>
 <p>Si bien no nos vamos a meter en el detalle del modelo lineal en este encuentro, es útil usarlo como ejemplo de lo que podemos hacer con MAP.</p>
@@ -3338,8 +3460,10 @@ P21 = \beta_0 + \beta_1*CH04 + \beta_2*CH06
 <p>Es un modelo que explica el ingreso (P21) en funcion del sexo (CH04) y edad (CH06)</p>
 <!-- rnb-text-end -->
 <!-- rnb-chunk-begin -->
-<!-- rnb-source-begin eyJkYXRhIjoiYGBgclxuYGBgclxuZnVuPC1mdW5jdGlvbihwb3JjaW9uLGdydXBvKSB7ICBicm9vbTo6dGlkeShsbShQMjF+ZmFjdG9yKENIMDQpK0NIMDYsZGF0YSA9IHBvcmNpb24pKX1cbmBgYFxuYGBgIn0= -->
-<p><code>r</code>r fun&lt;-function(porcion,grupo) { broom::tidy(lm(P21~factor(CH04)+CH06,data = porcion))}</p>
+<!-- rnb-source-begin eyJkYXRhIjoiYGBgclxuYGBgclxuYGBgclxuZnVuPC1mdW5jdGlvbihwb3JjaW9uLGdydXBvKSB7ICBicm9vbTo6dGlkeShsbShQMjF+ZmFjdG9yKENIMDQpK0NIMDYsZGF0YSA9IHBvcmNpb24pKX1cbmBgYFxuYGBgXG5gYGAifQ== -->
+<pre class="r"><code>```r
+```r
+fun&lt;-function(porcion,grupo) {  broom::tidy(lm(P21~factor(CH04)+CH06,data = porcion))}</code></pre>
 <pre><code></code></pre>
 <!-- rnb-source-end -->
 <!-- rnb-chunk-end -->
@@ -3348,14 +3472,22 @@ P21 = \beta_0 + \beta_1*CH04 + \beta_2*CH06
 <p>De forma Tidy, la librería <code>broom</code> nos da los resultados sobre los coeficientes en un DF.</p>
 <!-- rnb-text-end -->
 <!-- rnb-chunk-begin -->
-<!-- rnb-source-begin eyJkYXRhIjoiYGBgclxuYGBgclxuYmFzZXNfZGZfbG0gPC0gYmFzZXNfZGYgJT4lIFxuICAjIEFncnVwYW1vcyBwb3IgcmVnaW9uXG4gIGdyb3VwX2J5KFJFR0lPTikgJT4lXG4gICMgQW5pZGFtb3NcbiAgbmVzdCgpICU+JSBcbiAgIyBDcmVhbW9zIHVuYSBjb2x1bW5hIHF1ZSB0ZW5nYSBlbCBkYXRhZnJhbWUgY29tbyByZXN1bHRhZG8gZGUgbGEgZnVuY2lvblxuICBtdXRhdGUobG0gPSBtYXAoZGF0YSxmdW4pKVxuXG5iYXNlc19kZl9sbVxuXG4jIERlc2FuaWRhbW9zIHBvciBsYSB2YXJpYWJsZSBsbVxuYmFzZXNfZGZfbG0gJT4lIFxuICB1bm5lc3QobG0pXG5gYGBcbmBgYCJ9 -->
-<p><code>r</code>r bases_df_lm &lt;- bases_df %&gt;% # Agrupamos por region group_by(REGION) %&gt;% # Anidamos nest() %&gt;% # Creamos una columna que tenga el dataframe como resultado de la funcion mutate(lm = map(data,fun))</p>
-<p>bases_df_lm</p>
-</div>
-</div>
-<div id="desanidamos-por-la-variable-lm" class="section level1">
-<h1>Desanidamos por la variable lm</h1>
-<p>bases_df_lm %&gt;% unnest(lm)</p>
+<!-- rnb-source-begin eyJkYXRhIjoiYGBgclxuYGBgclxuYGBgclxuYmFzZXNfZGZfbG0gPC0gYmFzZXNfZGYgJT4lIFxuICAjIEFncnVwYW1vcyBwb3IgcmVnaW9uXG4gIGdyb3VwX2J5KFJFR0lPTikgJT4lXG4gICMgQW5pZGFtb3NcbiAgbmVzdCgpICU+JSBcbiAgIyBDcmVhbW9zIHVuYSBjb2x1bW5hIHF1ZSB0ZW5nYSBlbCBkYXRhZnJhbWUgY29tbyByZXN1bHRhZG8gZGUgbGEgZnVuY2lvblxuICBtdXRhdGUobG0gPSBtYXAoZGF0YSxmdW4pKVxuXG5iYXNlc19kZl9sbVxuXG4jIERlc2FuaWRhbW9zIHBvciBsYSB2YXJpYWJsZSBsbVxuYmFzZXNfZGZfbG0gJT4lIFxuICB1bm5lc3QobG0pXG5gYGBcbmBgYFxuYGBgIn0= -->
+<pre class="r"><code>```r
+```r
+bases_df_lm &lt;- bases_df %&gt;% 
+  # Agrupamos por region
+  group_by(REGION) %&gt;%
+  # Anidamos
+  nest() %&gt;% 
+  # Creamos una columna que tenga el dataframe como resultado de la funcion
+  mutate(lm = map(data,fun))
+
+bases_df_lm
+
+# Desanidamos por la variable lm
+bases_df_lm %&gt;% 
+  unnest(lm)</code></pre>
 <pre><code></code></pre>
 <!-- rnb-source-end -->
 <!-- rnb-chunk-end -->
@@ -3365,30 +3497,27 @@ P21 = \beta_0 + \beta_1*CH04 + \beta_2*CH06
 <h3>Loopeando</h3>
 <!-- rnb-text-end -->
 <!-- rnb-chunk-begin -->
-<!-- rnb-source-begin eyJkYXRhIjoiYGBgclxuYGBgclxuYmFzZXNfZGYgJT4lIFxuICBncm91cF9ieShSRUdJT04pICU+JSBcbiAgZ3JvdXBfbW9kaWZ5KGZ1bilcbmBgYFxuYGBgIn0= -->
-<p><code>r</code>r bases_df %&gt;% group_by(REGION) %&gt;% group_modify(fun)</p>
+<!-- rnb-source-begin eyJkYXRhIjoiYGBgclxuYGBgclxuYGBgclxuYmFzZXNfZGYgJT4lIFxuICBncm91cF9ieShSRUdJT04pICU+JSBcbiAgZ3JvdXBfbW9kaWZ5KGZ1bilcbmBgYFxuYGBgXG5gYGAifQ== -->
+<pre class="r"><code>```r
+```r
+bases_df %&gt;% 
+  group_by(REGION) %&gt;% 
+  group_modify(fun)</code></pre>
 <pre><code></code></pre>
 <!-- rnb-source-end -->
 <!-- rnb-chunk-end -->
 <!-- rnb-text-begin -->
+</div>
 </div>
 <div id="usando-map" class="section level2">
 <h2>Usando MAP</h2>
 <p>Primero me armo una funcion que me simplifica el codigo. La funcion nos devuelve la informacion de los coeficientes del modelo lineal calculado sobre el dataframe <strong>porcion</strong></p>
 <!-- rnb-text-end -->
 <!-- rnb-chunk-begin -->
-<!-- rnb-source-begin eyJkYXRhIjoiYGBgclxuYGBgclxuIyBMYSBmdW5jaW9uIGNhbGN1bGEgZWwgbW9kZWxvIGxpbmVhbCBzb2JyZSBjYWRhIHBvcmNpb24gZGUgZGF0b3NcbmZ1bjwtZnVuY3Rpb24ocG9yY2lvbixncnVwbykgeyAgbG0oUDIxfmZhY3RvcihDSDA0KStDSDA2LGRhdGEgPSBwb3JjaW9uKX1cblxuYmFzZXNfZGYgJT4lXG4gICMgQWdydXBhciBwb3IgcmVnaW9uXG4gIGdyb3VwX2J5KFJFR0lPTikgJT4lXG4gICMgQW5pZGFyXG4gIG5lc3QoKSAlPiVcbiAgIyBDYWxjdWxhciBlbCBtb2RlbG8gbGluZWFsXG4gIG11dGF0ZShsbSA9IG1hcChkYXRhLGZ1bikpXG5gYGBcbmBgYCJ9 -->
-<p><code>r</code>r # La funcion calcula el modelo lineal sobre cada porcion de datos fun&lt;-function(porcion,grupo) { lm(P21~factor(CH04)+CH06,data = porcion)}</p>
-<p>bases_df %&gt;% # Agrupar por region group_by(REGION) %&gt;% # Anidar nest() %&gt;% # Calcular el modelo lineal mutate(lm = map(data,fun))</p>
-<pre><code></code></pre>
-<!-- rnb-source-end -->
-<!-- rnb-chunk-end -->
-<!-- rnb-text-begin -->
-<!-- rnb-text-end -->
-<!-- rnb-chunk-begin -->
 <!-- rnb-source-begin eyJkYXRhIjoiYGBgclxuYGBgclxuYGBgclxuIyBMYSBmdW5jaW9uIGNhbGN1bGEgZWwgbW9kZWxvIGxpbmVhbCBzb2JyZSBjYWRhIHBvcmNpb24gZGUgZGF0b3NcbmZ1bjwtZnVuY3Rpb24ocG9yY2lvbixncnVwbykgeyAgbG0oUDIxfmZhY3RvcihDSDA0KStDSDA2LGRhdGEgPSBwb3JjaW9uKX1cblxuYmFzZXNfZGYgJT4lXG4gICMgQWdydXBhciBwb3IgcmVnaW9uXG4gIGdyb3VwX2J5KFJFR0lPTikgJT4lXG4gICMgQW5pZGFyXG4gIG5lc3QoKSAlPiVcbiAgIyBDYWxjdWxhciBlbCBtb2RlbG8gbGluZWFsXG4gIG11dGF0ZShsbSA9IG1hcChkYXRhLGZ1bikpXG5gYGBcbmBgYFxuYGBgIn0= -->
-<p><code>r</code>r</p>
-<pre class="r"><code># La funcion calcula el modelo lineal sobre cada porcion de datos
+<pre class="r"><code>```r
+```r
+# La funcion calcula el modelo lineal sobre cada porcion de datos
 fun&lt;-function(porcion,grupo) {  lm(P21~factor(CH04)+CH06,data = porcion)}
 
 bases_df %&gt;%
@@ -3402,16 +3531,53 @@ bases_df %&gt;%
 <!-- rnb-source-end -->
 <!-- rnb-chunk-end -->
 <!-- rnb-text-begin -->
-<p>O incluso más facil, utilizando <code>group_modify</code> (que es un atajo que solo acepta DF)</p>
 <!-- rnb-text-end -->
 <!-- rnb-chunk-begin -->
-<!-- rnb-source-begin eyJkYXRhIjoiYGBgclxuYGBgclxuIyBmdW5jaW9uIHBhcmEgaW1wcmltaXJcbmltcHJpbWlyX3NhbGlkYSA8LSBmdW5jdGlvbih4LHkpe1xuICBwcmludChmdW5jaW9uX3BydWViYSh4LHkpKVxufVxuXG4jIE1hcFxubWFwMihBQkNfMTIzJExldHJhcyxBQkNfMTIzJE51bSxpbXByaW1pcl9zYWxpZGEpXG5gYGBcbmBgYCJ9 -->
-<p><code>r</code>r # funcion para imprimir imprimir_salida &lt;- function(x,y){ print(funcion_prueba(x,y)) }</p>
-</div>
-</div>
-<div id="map-1" class="section level1">
-<h1>Map</h1>
-<p>map2(ABC_123<span class="math inline">\(Letras,ABC_123\)</span>Num,imprimir_salida)</p>
+<!-- rnb-source-begin eyJkYXRhIjoiYGBgclxuYGBgclxuYGBgclxuYGBgclxuIyBMYSBmdW5jaW9uIGNhbGN1bGEgZWwgbW9kZWxvIGxpbmVhbCBzb2JyZSBjYWRhIHBvcmNpb24gZGUgZGF0b3NcbmZ1bjwtZnVuY3Rpb24ocG9yY2lvbixncnVwbykgeyAgbG0oUDIxfmZhY3RvcihDSDA0KStDSDA2LGRhdGEgPSBwb3JjaW9uKX1cblxuYmFzZXNfZGYgJT4lXG4gICMgQWdydXBhciBwb3IgcmVnaW9uXG4gIGdyb3VwX2J5KFJFR0lPTikgJT4lXG4gICMgQW5pZGFyXG4gIG5lc3QoKSAlPiVcbiAgIyBDYWxjdWxhciBlbCBtb2RlbG8gbGluZWFsXG4gIG11dGF0ZShsbSA9IG1hcChkYXRhLGZ1bikpXG5gYGBcbmBgYFxuYGBgXG5gYGAifQ== -->
+<pre class="r"><code>```r
+```r
+```r
+# La funcion calcula el modelo lineal sobre cada porcion de datos
+fun&lt;-function(porcion,grupo) {  lm(P21~factor(CH04)+CH06,data = porcion)}
+
+bases_df %&gt;%
+  # Agrupar por region
+  group_by(REGION) %&gt;%
+  # Anidar
+  nest() %&gt;%
+  # Calcular el modelo lineal
+  mutate(lm = map(data,fun))</code></pre>
+<pre><code></code></pre>
+<pre><code>
+&lt;!-- rnb-source-end --&gt;
+
+&lt;!-- rnb-chunk-end --&gt;
+
+
+&lt;!-- rnb-text-begin --&gt;
+
+
+O incluso más facil, utilizando `group_modify` (que es un atajo que solo acepta DF)
+
+
+&lt;!-- rnb-text-end --&gt;
+
+
+&lt;!-- rnb-chunk-begin --&gt;
+
+
+&lt;!-- rnb-source-begin eyJkYXRhIjoiYGBgclxuYGBgclxuYGBgclxuIyBmdW5jaW9uIHBhcmEgaW1wcmltaXJcbmltcHJpbWlyX3NhbGlkYSA8LSBmdW5jdGlvbih4LHkpe1xuICBwcmludChmdW5jaW9uX3BydWViYSh4LHkpKVxufVxuXG4jIE1hcFxubWFwMihBQkNfMTIzJExldHJhcyxBQkNfMTIzJE51bSxpbXByaW1pcl9zYWxpZGEpXG5gYGBcbmBgYFxuYGBgIn0= --&gt;
+
+```r
+```r
+```r
+# funcion para imprimir
+imprimir_salida &lt;- function(x,y){
+  print(funcion_prueba(x,y))
+}
+
+# Map
+map2(ABC_123$Letras,ABC_123$Num,imprimir_salida)</code></pre>
 <pre><code></code></pre>
 <!-- rnb-source-end -->
 <!-- rnb-chunk-end -->
@@ -3420,49 +3586,99 @@ bases_df %&gt;%
 <p>Por ejemplo podemos guardar el <strong>objeto</strong> <code>S3:lm</code> que es la regresion lineal entrenada. Ese objeto no es ni un vector, ni una lista, ni un DF. No es una estructura de datos, sino que es algo distinto, con <em>propiedades</em> como <code>predict()</code> para predecir, el <code>summary()</code> que vimos, etc.</p>
 <!-- rnb-text-end -->
 <!-- rnb-chunk-begin -->
-<!-- rnb-source-begin eyJkYXRhIjoiYGBgclxuYGBgclxuIyBXYWxrXG53YWxrMihBQkNfMTIzJExldHJhcyxBQkNfMTIzJE51bSxpbXByaW1pcl9zYWxpZGEpXG5cbmBgYFxuYGBgIn0= -->
-<p><code>r</code>r # Walk walk2(ABC_123<span class="math inline">\(Letras,ABC_123\)</span>Num,imprimir_salida)</p>
+<!-- rnb-source-begin eyJkYXRhIjoiYGBgclxuYGBgclxuYGBgclxuIyBXYWxrXG53YWxrMihBQkNfMTIzJExldHJhcyxBQkNfMTIzJE51bSxpbXByaW1pcl9zYWxpZGEpXG5cbmBgYFxuYGBgXG5gYGAifQ== -->
+<pre class="r"><code>```r
+```r
+# Walk
+walk2(ABC_123$Letras,ABC_123$Num,imprimir_salida)
+</code></pre>
 <pre><code></code></pre>
 <!-- rnb-source-end -->
 <!-- rnb-chunk-end -->
 <!-- rnb-text-begin -->
+</div>
 <div id="walk" class="section level2">
 <h2>Walk</h2>
 <p>Las funciones <code>Walk</code> Tienen la misma forma que los <code>map</code>, pero se usan cuando lo que queremos iterar no genera una salida, sino que nos interesan los efectos secundarios que generan.</p>
 <!-- rnb-text-end -->
 <!-- rnb-chunk-begin -->
-<!-- rnb-source-begin eyJkYXRhIjoiYGBgclxubWFwMigueCA9IEFCQ18xMjMkTGV0cmFzLC55ID0gQUJDXzEyMyROdW0sLmYgPSBmdW5jaW9uX3BydWViYSlbMTozXVxuYGBgIn0= -->
-<pre class="r"><code>map2(.x = ABC_123$Letras,.y = ABC_123$Num,.f = funcion_prueba)[1:3]</code></pre>
-<!-- rnb-source-end -->
-<!-- rnb-chunk-end -->
-<!-- rnb-text-begin -->
-<!-- rnb-text-end -->
-<!-- rnb-chunk-begin -->
-<!-- rnb-source-begin eyJkYXRhIjoiYGBgclxud2FsazIoLnggPSBBQkNfMTIzJExldHJhcywueSA9IEFCQ18xMjMkTnVtLC5mID0gZnVuY2lvbl9wcnVlYmEpXG5gYGAifQ== -->
-<pre class="r"><code>walk2(.x = ABC_123$Letras,.y = ABC_123$Num,.f = funcion_prueba)</code></pre>
-<!-- rnb-source-end -->
-<!-- rnb-chunk-end -->
-<!-- rnb-text-begin -->
-<p>Notemos que <code>walk2</code> no devolvió un resultado</p>
-<!-- rnb-text-end -->
-<!-- rnb-chunk-begin -->
-<!-- rnb-source-begin eyJkYXRhIjoiYGBgclxuIyBmdW5jaW9uIHBhcmEgaW1wcmltaXJcbmltcHJpbWlyX3NhbGlkYSA8LSBmdW5jdGlvbih4LHkpe1xuICBwcmludChmdW5jaW9uX3BydWViYSh4LHkpKVxufVxuXG4jIE1hcFxubWFwMihBQkNfMTIzJExldHJhcyxBQkNfMTIzJE51bSxpbXByaW1pcl9zYWxpZGEpXG5gYGAifQ== -->
-<pre class="r"><code># funcion para imprimir
+<!-- rnb-source-begin eyJkYXRhIjoiYGBgclxuYGBgclxubWFwMigueCA9IEFCQ18xMjMkTGV0cmFzLC55ID0gQUJDXzEyMyROdW0sLmYgPSBmdW5jaW9uX3BydWViYSlbMTozXVxuYGBgXG5gYGAifQ== -->
+<pre class="r"><code>```r
+map2(.x = ABC_123$Letras,.y = ABC_123$Num,.f = funcion_prueba)[1:3]</code></pre>
+<pre><code>
+&lt;!-- rnb-source-end --&gt;
+
+&lt;!-- rnb-chunk-end --&gt;
+
+
+&lt;!-- rnb-text-begin --&gt;
+
+
+
+&lt;!-- rnb-text-end --&gt;
+
+
+&lt;!-- rnb-chunk-begin --&gt;
+
+
+&lt;!-- rnb-source-begin eyJkYXRhIjoiYGBgclxuYGBgclxud2FsazIoLnggPSBBQkNfMTIzJExldHJhcywueSA9IEFCQ18xMjMkTnVtLC5mID0gZnVuY2lvbl9wcnVlYmEpXG5gYGBcbmBgYCJ9 --&gt;
+
+```r
+```r
+walk2(.x = ABC_123$Letras,.y = ABC_123$Num,.f = funcion_prueba)</code></pre>
+<pre><code>
+&lt;!-- rnb-source-end --&gt;
+
+&lt;!-- rnb-chunk-end --&gt;
+
+
+&lt;!-- rnb-text-begin --&gt;
+
+
+Notemos que `walk2` no devolvió un resultado
+
+
+&lt;!-- rnb-text-end --&gt;
+
+
+&lt;!-- rnb-chunk-begin --&gt;
+
+
+&lt;!-- rnb-source-begin eyJkYXRhIjoiYGBgclxuYGBgclxuIyBmdW5jaW9uIHBhcmEgaW1wcmltaXJcbmltcHJpbWlyX3NhbGlkYSA8LSBmdW5jdGlvbih4LHkpe1xuICBwcmludChmdW5jaW9uX3BydWViYSh4LHkpKVxufVxuXG4jIE1hcFxubWFwMihBQkNfMTIzJExldHJhcyxBQkNfMTIzJE51bSxpbXByaW1pcl9zYWxpZGEpXG5gYGBcbmBgYCJ9 --&gt;
+
+```r
+```r
+# funcion para imprimir
 imprimir_salida &lt;- function(x,y){
   print(funcion_prueba(x,y))
 }
 
 # Map
 map2(ABC_123$Letras,ABC_123$Num,imprimir_salida)</code></pre>
-<!-- rnb-source-end -->
-<!-- rnb-chunk-end -->
-<!-- rnb-text-begin -->
-<!-- rnb-text-end -->
-<!-- rnb-chunk-begin -->
-<!-- rnb-source-begin eyJkYXRhIjoiYGBgclxuIyBXYWxrXG53YWxrMihBQkNfMTIzJExldHJhcyxBQkNfMTIzJE51bSxpbXByaW1pcl9zYWxpZGEpXG5cbmBgYCJ9 -->
-<pre class="r"><code># Walk
+<pre><code>
+&lt;!-- rnb-source-end --&gt;
+
+&lt;!-- rnb-chunk-end --&gt;
+
+
+&lt;!-- rnb-text-begin --&gt;
+
+
+
+&lt;!-- rnb-text-end --&gt;
+
+
+&lt;!-- rnb-chunk-begin --&gt;
+
+
+&lt;!-- rnb-source-begin eyJkYXRhIjoiYGBgclxuYGBgclxuIyBXYWxrXG53YWxrMihBQkNfMTIzJExldHJhcyxBQkNfMTIzJE51bSxpbXByaW1pcl9zYWxpZGEpXG5cbmBgYFxuYGBgIn0= --&gt;
+
+```r
+```r
+# Walk
 walk2(ABC_123$Letras,ABC_123$Num,imprimir_salida)
 </code></pre>
+<p>```</p>
 <!-- rnb-source-end -->
 <!-- rnb-chunk-end -->
 <!-- rnb-text-begin -->
@@ -3475,7 +3691,7 @@ walk2(ABC_123$Letras,ABC_123$Num,imprimir_salida)
 </blockquote>
 <p>A lo largo del curso vimos diferentes técnicas para manipulación de datos. En particular, la librería dplyr nos permitía fácilmente modificar y crear nuevas variables, agrupando. ¿Cuando usamos <code>dplyr</code> y cuando usamos <code>purrr</code>?</p>
 <ul>
-<li>Si trabajamos sobre un DF simple, sin variables anidadas (lo que conocíamos hasta hoy) podemos usar <code>dplyr</code></li>
+<li><p>Si trabajamos sobre un DF simple, sin variables anidadas (lo que conocíamos hasta hoy) podemos usar <code>dplyr</code></p></li>
 <li><p>Si queremos trabajar con DF anidados, con cosas que no son DF, o si el resultado de la operación que vamos a realizar a nivel archivo es algo distinto a un valor único, nos conviene usar <code>map</code> y <code>purrr</code></p></li>
 <li><p>Las funciones <code>walk</code> son útiles por ejemplo para escribir archivos en disco de forma iterativa. Algo que no genera una salida</p></li>
 </ul>
@@ -3483,7 +3699,7 @@ walk2(ABC_123$Letras,ABC_123$Num,imprimir_salida)
 </div>
 </div>
 
-<div id="rmd-source-code">LS0tCnRpdGxlOiAiVGlkeXZlcnNlOiBQVVJSUiIKYXV0aG9yOiAiSnVhbiBCYXJyaW9sYSB5IFNvZsOtYSBQZXJpbmkiCmRhdGU6ICIxNyBkZSBPY3R1YnJlIGRlIDIwMjAiCm91dHB1dDoKICBodG1sX25vdGVib29rOgogICAgdGhlbWU6IHNwYWNlbGFiCiAgICB0b2M6IHllcwogICAgdG9jX2Zsb2F0OiB5ZXMKICAgIGRmX3ByaW50OiBwYWdlZAotLS0KCkxpYnJlcmlhcyBxdWUgc2UgdXRpbGl6YW4gZW4gZXN0YSBjbGFzZToKCmBgYHtyIG1lc3NhZ2U9RkFMU0UsIHdhcm5pbmc9RkFMU0V9CmxpYnJhcnkodGlkeXZlcnNlKQpsaWJyYXJ5KG9wZW54bHN4KQpsaWJyYXJ5KGdndGhlbWVzKQpsaWJyYXJ5KGZzKQpgYGAKCkJhc2FkbyBlbiBsb3MgW3R1dG9yaWFsZXMgZGUgUFVSUlJdKGh0dHBzOi8vamVubnliYy5naXRodWIuaW8vcHVycnItdHV0b3JpYWwvaW5kZXguaHRtbCkgZGUgSmVubnkgQnJ5YW4geSBlbCBjYXDDrXR1bG8gW0l0ZXJhdGlvbl0oaHR0cHM6Ly9yNGRzLmhhZC5jby5uei9pdGVyYXRpb24uaHRtbCkgZGVsIGxpYnJvIFIgZm9yIERhdGEgU2NpZW5jZSBkZSBHYXJyZXR0IEdyb2xlbXVuZCB5IEhhZGxleSBXaWNraGFtCgojIFBVUlJSCgpbUFVSUlJdKGh0dHBzOi8vcHVycnIudGlkeXZlcnNlLm9yZy8pIGVzIHVuYSBsaWJyZXLDrWEgZW4gUiBxdWUgY29udGllbmUgZnVuY2lvbmVzIHkgbcOpdG9kb3MgZGUgcHJvZ3JhbWFjacOzbiBmdW5jaW9uYWwgZGVudHJvIGRlbCBlbnRvcm5vIGRlIHRpZHl2ZXJzZS4KCiMjIE1BUAoKTUFQIGVzIHVuYSAqKmZ1bmNpw7NuKiogcGFyYSBhcGxpY2FyIHVuYSBmdW5jacOzbiBhIGNhZGEgZWxlbWVudG8gZGUgdW5hIGVzdHJ1Y3R1cmEgZGUgZGF0b3MgY29tbyB1bmEgbGlzdGEgbyB2ZWN0b3IuIEVsIGZ1bmNpb25hbWllbnRvIGRlIG1hcCBjb25zaXN0ZSBlbiByZWNvcnJlciAoImxvb3BlYXIiKSBsYSBlc3RydWN0dXJhIGFwbGljYW5kbyBsYSBmdW5jacOzbiBhIGNhZGEgZWxlbWVudG8geSBndWFyZGFuZG8gbG9zIHJlc3VsdGFkb3MuIERlIGVzdGEgbWFuZXJhIHBvZGVtb3MgcmVlbXBsYXphciBsb3MgbG9vcHMgcG9yIHVuYSBmb3JtYSBtw6FzIGxlZ2libGUgeSBjbGFyYSBkZSBjw7NkaWdvLgoKTGEgZnVuY2nDs24gYG1hcGAgdG9tYSBjb21vIGFyZ3VtZW50b3M6CiAKICogLng6IHVuIHZlY3RvciBvIGxpc3RhIGlucHV0CiAKICogLmY6IHVuYSBmdW5jacOzbiBwYXJhIGFwbGljYXIKIAptYXAoVkVDVE9SX09fTElTVF9JTlBVVCwgRlVOQ1RJT05fQV9BUExJQ0FSLCBPVFJPU19PUENJT05BTEVTKQoKVmVhbW9zIHVuIGVqZW1wbG8gY29uIHVuIHZlY3RvciBudW3DqXJpY28KCmBgYHtyfQojIEFwbGljYW1vcyBsYSBmdW5jacOzbiBsb2cxMCBzb2JyZSB1biB2ZWN0b3IKbWFwKC54ID0gYygxMCwxMDAsMTAwMCksIC5mPWxvZzEwKQpgYGAKCiMjIyBNYXA6IHRpcG9zIGVzcGVjw61maWNvcwoKVmVhbW9zIHF1ZSBlbCByZXN1bHRhZG8gZGUgbWFwIGVzIHVuYSBsaXN0YS4gU2kgc2FiZW1vcyBjdcOhbCBlcyBlbCB0aXBvIGRlIGRhdG8gZGUgbnVlc3Ryb3MgcmVzdWx0YWRvcyBwb2RlbW9zIHVzYXIgdmFyaWFjaW9uZXMgZGUgbWFwIHF1ZSBleHBsaWNpdGFuIGVsIHRpcG8gZGUgZGF0byB5IGRldnVlbHZlbiBsb3MgcmVzdWx0YWRvcyBlbiB1biB2ZWN0b3IuIEFsZ3VuYXMgZGUgZWxsYXMgc29uOgoKICAqIG1hcF9sZ2woKSBkZXZ1ZWx2ZSB1biB2ZWN0b3IgZGUgYm9vbGVhbm9zCiAKICAqIG1hcF9kYmwoKSBkZXZ1ZWx2ZSB1biB2ZWN0b3IgZGUgbnVtw6lyaWNvcwoKICAqIG1hcF9jaHIoKSBkZXZ1ZWx2ZSB1biB2ZWN0b3IgZGUgc3RyaW5ncyAKClZvbHZhbW9zIGEgdmVyIG51ZXN0cm8gZWplbXBsbyB1c2FuZG8gYG1hcF9kYmxgCgpgYGB7cn0KbWFwX2RibCgueCA9IGMoMTAsMTAwLDEwMDApLCAuZj1sb2cxMCkKYGBgCgojIyMgTWFwOiBmdW5jaW9uZXMKClNlIHB1ZWRlbiBhcGxpY2FyIGZ1bmNpb25lcyBkZSBSIGJhc2UgbyBkZSBsYXMgbGlicmVyw61hcyBjb21vIGFzw60gdGFtYmnDqW4gZnVuY2lvbmVzIGRlZmluaWRhcyBwb3IgZWwgdXN1YXJpby4gIE11Y2hhcyB2ZWNlcyBubyBlcyBuZWNlc2FyaW8gZGVmaW5pciB1bmEgZnVuY2nDs24gZGUgYW50ZW1hbm8sIHNpbm8gcXVlIHBvZGVtb3MgdXNhciAqKmZ1bmNpb25lcyBhbsOzbmltYXMqKiBvICoqZnVuY2lvbmVzIGxhbWJkYSoqCgojIyMjIEZ1bmNpb25lcyBhbsOzbmltYXMKCkxhIGZ1bmNpw7NuIHNlIGRlZmluZSBlbiB1bmEgw7puaWNhIGxpbmVhCgpgYGB7cn0KIyBDYWxjdWxhbW9zIHVuYSBmdW5jacOzbiBjdWFkcsOhdGljYSBwYXJhIGVsIHZlY3RvcgptYXBfZGJsKC54ID0gYygxOjEwKSwgLmYgPSBmdW5jdGlvbih4KSB4XjIrMSkKYGBgCgpBIHBhcnRpciBkZSB1biB2ZWN0b3IgZGUgc3RyaW5ncyBxdWVyZW1vcyBjb250YXIgbGEgY2FudGlkYWQgZGUgbGV0cmFzICJBIiBlbiBjYWRhIGVsZW1lbnRvLiBQYXJhIGVzbyBjb21iaW5hbW9zIGxhcyBmdW5jaW9uZXMgYHN0cl90b191cHBlcmAgeSBgc3RyX2NvdW50YAoKYGBge3J9Cm1hcF9kYmwoLnggPSBjKCJwYXBhcyBGUklUQVMiLCAiYmF0YXRhcyBIRVJWSURBUyIsICJib25pYXRvIEFMIEhPUk5PIiksCiAgICAgICAgLmYgPSBmdW5jdGlvbih4KSBzdHJfY291bnQoc3RyaW5nID0gc3RyX3RvX3VwcGVyKHgpLCBwYXR0ZXJuID0gIkEiKSkKYGBgCgojIyMjIEZ1bmNpb25lcyBsYW1iZGEKClNvbiB1bmEgZm9ybWEgYcO6biBtw6FzIGNvbmNpc2EgZGUgZGVjbGFyYXIgZnVuY2lvbmVzLCBhdW5xdWUgcHVlZGVuIHNlciBtw6FzIGxpbWl0YWRhcy4gTGFzIHZhcmlhYmxlcyBzZSBkZWNsYXJhbiBjb21vIC54CgpgYGB7cn0KIyBDYWxjdWxhbW9zIG90cmEgZnVuY2nDs24gY3VhZHLDoXRpY2EgcGFyYSBlbCB2ZWN0b3IKbWFwX2RibCgueCA9IGMoMToxMCksIC5mID0gIH4ueF4yIC0gLngpCmBgYAoKIyMjIE1hcDogTXVsdGlwbGVzIGFyZ3VtZW50b3MKIApVc2Ftb3MgYG1hcDJgIGN1YW5kbyBxdWVyZW1vcyBhcGxpY2FyIHVuYSBmdW5jacOzbiBzb2JyZSBkb3MgbGlzdGFzIG8gdmVjdG9yZXM6CgotIG1hcDIoLngsIC55LCAuZiwgLi4uKQotIG1hcDIoSU5QVVRfVU5PLCBJTlBVVF9ET1MsIEZVTkNUSU9OX0FfQVBMSUNBUiwgT1RST1NfT1BDSU9OQUxFUykKClZlYW1vcyB1biBlamVtcGxvIHBhcmEgZ2VuZXJhciBvYnNlcnZhY2lvbmVzIGRlIGRpc3RyaWJ1Y2lvbmVzIG5vcm1hbGVzIGEgcGFydGlyIGRlIGxvcyB2ZWN0b3JlcyBkZSBtdSB5IHNpZ21hIChlc3RlIGVzIGVsIGVqZW1wbG8gZGVsIGxpYnJvICpSIGZvciBEYXRhIFNjaWVuY2UqKQoKTGEgZnVuY2lvbiBgcm5vcm1gIHRvbWEgbG9zIHBhcsOhbWV0cm9zIG4gKGNhbnRpZGFkIGRlIG9ic2VydmFjaW9uZXMpLCBtdSB5IHNpZ21hCgpgYGB7cn0KIyBWZWN0b3IgZGUgbXUKbXUgPSBjKDAsIDMsIC01LCAyLjEpCiMgVmVjdG9yIGRlIHNpZ21hCnNpZ21hID0gYygxLCAwLjUsIDUsIDAuMDEpCgojIEdlbmVyYW1vcyAxMCBvYnNlcnZhY2lvbmVzIGEgcGFydGlyIGRlIG51ZXN0cm9zIHZlY3RvcmVzCm1hcDIoLnggPSBtdSwgLnkgPSBzaWdtYSwgLmY9IHJub3JtLCBuID0gMTApCmBgYAoKQWhvcmEgdmVhbW9zIGNvbiB1biBlamVtcGxvIHBhcmEgY3JlYXIgdW5hIGxpc3RhIGRlIGNvbXByYXMKCmBgYHtyfQojIFZlY3RvcmVzCmtpbG9zID0gYygxMCwgMSwgNiwgOCwgMykKdmVyZHVyYXMgPSAgYygicGFwYSIsICJiYXRhdGEiLCAiemFwYWxsbyIsICJib25pYXRvIiwgInphbmFob3JpYSIpCgptYXAyX2NocigueCA9IHZlcmR1cmFzLCAueSA9a2lsb3MsIC5mID0gZnVuY3Rpb24oeCx5KSBzdHJfYyhzdHJfdG9fdGl0bGUoeCkseSwgc2VwPSI6ICIpKQpgYGAKICAKVXNhbW9zIGBwbWFwYCBjdWFuZG8gcXVlcmVtb3MgYXBsaWNhciB1bmEgZnVuY2nDs24gc29icmUgdW5hIGxpc3RhIGRlIGFyZ3VtZW50b3M6CgotIHBtYXAoLmwsIC5mLCAuLi4pCi0gcG1hcChWRUNUT1JfT19MSVNUX0RFX0lOUFVUUywgRlVOQ1RJT05fQV9BUExJQ0FSLCBPVFJPU19PUENJT05BTEVTKQoKVm9sdmFtb3MgYWwgZWplbXBsbyBwYXJhIGdlbmVyYXIgb2JzZXJ2YWNpb25lcyBkZSBkaXN0cmlidWNpb25lcyBub3JtYWxlcyBhIHBhcnRpciBkZSBsb3MgdmVjdG9yZXMgZGUgbXUgeSBzaWdtYSwgcGVybyBhaG9yYSBpbmNvcnBvcmFtb3MgbGEgY2FudGlkYWQgZGUgb2JzZXJ2YWNpb25lcyBjb21vIHVuIGFyZ3VtZW50byBhZGljaW9uYWwgKGVzdGUgZWplbXBsbyB0YW1iacOpbiBlcyBkZWwgbGlicm8gKlIgZm9yIERhdGEgU2NpZW5jZSopCgpgYGB7cn0KIyBWZWN0b3IgZGUgbXUKbXUgPSBjKDAsIDMsIC01LCAyLjEpCiMgVmVjdG9yIGRlIHNpZ21hCnNpZ21hID0gYygxLCAwLjUsIDUsIDAuMDEpCiMgVmVjdG9yIGRlIGNhbnRpZGFkIGRlIG9ic2VydmFjaW9uZXMgCm4gPSBjKDE6NCkKIyBMaXN0YSBkZSBhcmd1bWVudG9zCmFyZ3VtZW50b3MgPC0gbGlzdChuLCBtdSwgc2lnbWEpCgojIEdlbmVyYW1vcyBsYXMgb2JzZXJ2YWNpb25lcyBhIHBhcnRpciBkZSBudWVzdHJhIGxpc3RhIGRlIHBhcsOhbWV0cm9zCnBtYXAoLmwgPSBhcmd1bWVudG9zLCAuZiA9IHJub3JtKQpgYGAKCiMjIFBVUlJSOiBEYXRhZnJhbWVzIHkgbW9kZWxvcwoKIyMjIERhdGFmcmFtZXMKCkxhcyBmdW5jaW9uZXMgZGUgUFVSUlIgc2UgcHVlZGVuIHV0aWxpemFyIHBhcmEgcmVhbGl6YXIgb3BlcmFjaW9uZXMgc29icmUgZGF0YWZyYW1lcy4gTGEgc2ludGF4aXMgcXVlIHZhbW9zIGEgdXRpbGl6YXIgZXM6CgpgbWFwKGRhdGFmcmFtZSwgZnVuY2lvbilgCgpEZSBlc3RhIG1hbmVyYSB2YW1vcyBhIGVzdGFyIGFwbGljYW5kbyBsYSBmdW5jacOzbiBzb2JyZSB0b2RhcyBsYXMgY29sdW1uYXMgZGVsIGRhdGFmcmFtZQoKYGBge3J9CmVuY3Vlc3RhX3N1ZWxkb3NfbGltcGlhID0gcmVhZF9jc3YoIn4vRnVlbnRlcy9lbmN1ZXN0YV9zdWVsZG9zX2l0X2xpbXBpYS5jc3YiKQpgYGAKCkNvbWVuY2Vtb3MgYW5hbGl6YW5kbyBsYSBjYW50aWRhZCBkZSB2YWxvcmVzIGRpc3RpbnRvcyBwYXJhIGNhZGEgY29sdW1uYS4gUGFyYSBlbGxvIHVzYW1vcyBsYSBmdW5jacOzbiBgbl9kaXN0aW5jdGAKCmBgYHtyfQptYXAoZW5jdWVzdGFfc3VlbGRvc19saW1waWEsIG5fZGlzdGluY3QpICU+JQogIHN0cigpICMgQWdyZWdhbW9zIHN0ciBwYXJhIHF1ZSBsYSBzYWxpZGEgbHV6Y2EgbWVqb3IKYGBgCgpBaG9yYSBjYWxjdWxhbW9zIGVsIHByb21lZGlvIHNvYnJlIGxhcyBjb2x1bW5hcyBudW3DqXJpY2FzCgpgYGB7cn0KZW5jdWVzdGFfc3VlbGRvc19saW1waWEgJT4lIAogIHNlbGVjdF9pZihpcy5udW1lcmljKSAlPiUgCiAgbWFwKG1lYW4pICU+JSAKICBzdHIoKQpgYGAKCkNhbGN1bGFtb3MgbGEgbWVkaWFuYSBzb2JyZSBsYXMgY29sdW1uYXMgbnVtw6lyaWNhcywgc2FiaWVuZG8gcXVlIGVsIHJlc3VsdGFkbyBkZSBsYSBmdW5jacOzbiBlcyB1biBuw7ptZXJvIHBvZGVtb3MgdXNhciBsYSBmdW5jacOzbiBgbWFwX2RibGAKCmBgYHtyfQplbmN1ZXN0YV9zdWVsZG9zX2xpbXBpYSAlPiUgCiAgc2VsZWN0X2lmKGlzLm51bWVyaWMpICU+JSAKICBtYXBfZGJsKG1lZGlhbikKYGBgCgojIyMgTW9kZWxvcwoKCgpgYGB7cn0KbW9kZWxvc19wb3JfcGVyZmlsID0gZW5jdWVzdGFfc3VlbGRvc19saW1waWEgJT4lIAogICAgICAgICAgICAgICAgICAgICAgICBzcGxpdCguJHBlcmZpbCkgJT4lIAogICAgICAgICAgICAgICAgICAgICAgICBtYXAofmxtKHNhbGFyaW9fbmV0byB+IGVkYWQsIGRhdGEgPSAuKSkKCmBgYAoKRWwgcmVzdWx0YWRvIGRlIGVzdG8gZXMgdW5hIGxpc3RhIGNvbiBsb3MgbW9kZWxvcwoKCmBgYHtyfQptb2RlbG9zX3Bvcl9wZXJmaWwgJT4lIG1hcChicm9vbTo6dGlkeSkKYGBgCgpgYGB7cn0KbW9kZWxvc19wb3JfcGVyZmlsICU+JSBtYXAoc3VtbWFyeSkgJT4lIG1hcF9kYmwoInIuc3F1YXJlZCIpCmBgYAoKIyMgRWplbXBsbzogSXRlcmFuZG8gZW4gbGEgRVBICgpMbyBwcmltZXJvIHF1ZSBuZWNlc2l0YW1vcyBlcyBkZWZpbmlyIHVuIHZlY3RvciBvIGxpc3RhIHNvYnJlIGVsIHF1ZSBpdGVyYXIuIAoKUG9yIGVqZW1wbG8sIHBvZGVtb3MgYXJtYXIgdW4gdmVjdG9yIGNvbiBsb3MgcGF0aCBhIGxhcyBiYXNlcyBpbmRpdmlkdWFsZXMsIGNvbiBlbCBjb21hbmRvIGBmczo6ZGlyX2xzYC4gU2UgbGUgZXNwZWNpZmljYSBlbCBfX3BhdGhfXyBkb25kZSBidXNjYXIgbG9zIGFyY2hpdm9zIHkgZW4gZXN0ZSBjYXNvIHVuYSBleHByZXNpb24gcmVndWxhciBfX3JlZ2V4cF9fIHBhcmEgcXVlIGRldnVlbHZhIGFxdWVsbG9zIGFyY2hpdm9zIHF1ZSBjb2luY2lkZW4gY29uIGxhIG1pc21hLgoKYGBge3J9CiMgQnVzY2Ftb3MgZW4gZWwgcGF0aCBhcXVlbGxvcyBhcXVlbGxvcyBhcmNoaXZvcyBxdWUgbWF0Y2hlYW4gYSBsYSBleHByZXNpb24gcmVndWxhcgpiYXNlc19pbmRpdmlkdWFsZXNfcGF0aCA8LSBkaXJfbHMocGF0aCA9ICcuLi9GdWVudGVzLycsIHJlZ2V4cD0gJ2luZGl2aWR1YWwnKQpiYXNlc19pbmRpdmlkdWFsZXNfcGF0aApgYGAKCkx1ZWdvLCBjb21vIGVuIGxhIGZ1bmNpw7NuIHF1ZSB1c2Ftb3MgcGFyYSBsZWVyIGxhcyBiYXNlcyBkZWZpbmltb3MgbXVjaG9zIHBhcmFtZXRyb3MsIG5vcyBwb2RlbW9zIGFybWFyIHVuYSBmdW5jacOzbiBfd3JhcHBlcl8gcXVlIHPDs2xvIG5lY2VzaXRlIHVuIHBhcsOhbWV0cm8sIHkgcXVlIHNpbXBsaWZpcXVlIGxhIGVzY3JpdHVyYSBkZWwgbWFwLgoKYGBge3IgbWVzc2FnZT1GQUxTRSwgd2FybmluZz1GQUxTRX0KIyBMZWVyIGxhIGJhc2UgZGUgRVBIIHRvbWFuZG8gY29tbyBhcmd1bWVudG8gZWwgZmlsZV9wYXRoCmxlZXJfYmFzZV9lcGggPC0gZnVuY3Rpb24ocGF0aCkgewogICMgTGVjdHVyYSBkZSBhcmNoaXZvCiAgcmVhZC50YWJsZShwYXRoLHNlcD0iOyIsIGRlYz0iLCIsIGhlYWRlciA9IFRSVUUsIGZpbGwgPSBUUlVFKSAlPiUKICAgICMgU2VsZWNjaW9uIGRlIHZhcmlhYmxlcyByZWxldmFudGVzCiAgICBzZWxlY3QoQU5PNCxUUklNRVNUUkUsUkVHSU9OLFAyMSxDSDA0LCBDSDA2KQp9CgojIExlZXIgYSB1biBkYXRhZnJhbWUgbGFzIHRhYmxhcyBlc3BlY2lmaWNhZGFzIGVuIGVsIHZlY3RvciBkZSBiYXNlcyBpbmRpdmlkdWFsZXMKYmFzZXNfZGYgPC0gdGliYmxlKGJhc2VzX2luZGl2aWR1YWxlc19wYXRoKSAlPiUKICBtdXRhdGUoYmFzZSA9IG1hcCgueCA9IGJhc2VzX2luZGl2aWR1YWxlc19wYXRoLCAuZiA9IGxlZXJfYmFzZV9lcGgpKQoKYGBgCgpgYGB7cn0KYmFzZXNfZGYKYGBgCgpFbCByZXN1bHRhZG8gZXMgdW4gZGF0YWZyYW1lIGRvbmRlIGxhIGNvbHVtbmEgX19iYXNlX18gdGllbmUgZW4gY2FkYSBmaWxhIG90cm8gZGF0YWZyYW1lICBjb24gbGEgYmFzZSBkZSBsYSBFUEggZGUgZXNlIHBlcsOtb2RvLiBFc3RvIGVzIGxvIHF1ZSBsbGFtYW1vcyB1biBfbmVzdGVkIERGXyBvIGRhdGFmcmFtZSBhbmlkYWRvLgoKU2kgcXVlcmVtb3MgYWJyaXIgKCJkZXNhbmlkYXIiKSBlc3RhcyBkYXRhZnJhbWVzIGFuaWRhZG9zIHVzYW1vcyBlbCBjb21hbmRvIGB1bm5lc3QoKWAKCmBgYHtyIG1lc3NhZ2U9RkFMU0UsIHdhcm5pbmc9RkFMU0V9CiMgRGVzYW5pZGFtb3MgZWwgZGF0YWZyYW1lCmJhc2VzX2RmIDwtIGJhc2VzX2RmICU+JSB1bm5lc3QoKQpiYXNlc19kZgpgYGAKCj4gwr9RdcOpIHBhc2Egc2kgbG9zIERGIHF1ZSB0ZW5lbW9zIG5lc3RlYWRvcyBubyB0aWVuZW4gbGEgbWlzbWEgY2FudGlkYWQgZGUgY29sdW1uYXM/CgpFc3RvIG1pc21vIGxvIHBvZGVtb3MgdXNhciBwYXJhIGZyYWdtZW50YXIgZWwgZGF0YXNldCBwb3IgYWxndW5hIHZhcmlhYmxlLCBjb24gbGEgZnVuY2lvbiBgZ3JvdXBfYnkoKWAKCgpgYGB7cn0KYmFzZXNfZGYgJT4lIAogICMgQWdydXBhciBwb3IgcmVnaW9uCiAgZ3JvdXBfYnkoUkVHSU9OKSAlPiUgCiAgIyBBbmlkYXIKICBuZXN0KCkKYGBgCgpBc8OtLCBwYXJhIGNhZGEgcmVnacOzbiB0ZW5lbW9zIHVuIERGLgoKPiDCvyBEZSBxdcOpIHNpcnZlIHRvZG8gZXN0bz8KCk5vIHRvZG8gZW4gbGEgdmlkYSBlcyB1biBEYXRhZnJhbWUuIEhheSBlc3R1Y3R1cmFzIGRlIGRhdG9zIHF1ZSBubyBzZSBwdWVkZW4gbm9ybWFsaXphciBhIGZpbGFzIHkgY29sdW1uYXMuIEVuIGVzb3MgY2Fzb3MgcmVjdXJyw61hbW9zIHRyYWRpY2lvbmFsbWVudGUgYSBsb3MgbG9vcHMuIENvbiBNQVAgcG9kZW1vcyB0ZW5lciBsb3MgZWxlbWVudG9zIGFncnVwYWRvcyBlbiB1biBzw7NsbyBvYmpldG8geSBhw7puIGNvbnNlcnZhciBzdXMgZm9ybWFzIGRpZmVyZW50ZXMuCgojIyBFamVtcGxvLiBSZWdyZXNpw7NuIGxpbmVhbAoKU2kgYmllbiBubyBub3MgdmFtb3MgYSBtZXRlciBlbiBlbCBkZXRhbGxlIGRlbCBtb2RlbG8gbGluZWFsIGVuIGVzdGUgZW5jdWVudHJvLCBlcyDDunRpbCB1c2FybG8gY29tbyBlamVtcGxvIGRlIGxvIHF1ZSBwb2RlbW9zIGhhY2VyIGNvbiBNQVAuCgpQbGFudGVhbW9zIGVsIG1vZGVsbyAKJCQKUDIxID0gXGJldGFfMCArIFxiZXRhXzEqQ0gwNCArIFxiZXRhXzIqQ0gwNgokJAoKRXMgdW4gbW9kZWxvIHF1ZSBleHBsaWNhIGVsIGluZ3Jlc28gKFAyMSkgZW4gZnVuY2lvbiBkZWwgc2V4byAoQ0gwNCkgeSBlZGFkIChDSDA2KQoKYGBge3J9CiMgQ2FsY3VsYW1vcyB1bmEgcmVncmVzaW9uIGxpbmVhbCBzb2JyZSBlbCBkYXRhc2V0IHF1ZSB0aWVuZSB0b2RhcyBsYXMgb2JzZXJ2YWNpb25lcyBkZSBFUEgKbG1maXQgPC0gbG0oUDIxfmZhY3RvcihDSDA0KStDSDA2LGRhdGEgPSBiYXNlc19kZikKCiMgUmVzdW1lbiBkZWwgbW9kZWxvCnN1bW1hcnkobG1maXQpCmBgYAoKKGFsIGZpbmFsIGRlIGxhIGNsYXNlIHBvZGVtb3MgY2hhcmxhciBzb2JyZSBsb3MgcmVzdWx0YWRvcykKCkRlIGZvcm1hIFRpZHksIGxhIGxpYnJlcsOtYSBgYnJvb21gIG5vcyBkYSBsb3MgcmVzdWx0YWRvcyBzb2JyZSBsb3MgY29lZmljaWVudGVzIGVuIHVuIERGLgoKYGBge3J9CmJyb29tOjp0aWR5KGxtZml0KQpgYGAKIAogU2kgbG8gcXVlcmVtb3MgaGFjZXIgcG9yIHJlZ2lvbgogCiMjIyBMb29wZWFuZG8KCmBgYHtyfQoKcmVzdWx0YWRvcyA8LSB0aWJibGUoKQoKZm9yIChyZWdpb24gaW4gdW5pcXVlKGJhc2VzX2RmJFJFR0lPTikpIHsKICAjIENyZWFtb3MgdW4gZGF0YXNldCBwb3IgcmVnaW9uCiAgZGF0YSA8LSBiYXNlc19kZiAlPiUgCiAgICBmaWx0ZXIoUkVHSU9OPT1yZWdpb24pCiAgIyBDYWxjdWxhciBlbCBtb2RlbG8gbGluZWFsCiAgbG1maXQgPC0gbG0oUDIxfmZhY3RvcihDSDA0KStDSDA2LGRhdGEgPSBkYXRhKQogICMgR3VhcmRhciBsb3MgcmVzdWx0YWRvcyBkZSBsb3MgY29lZmljaWVudGVzIAogIGxtdGlkeSA8LSBicm9vbTo6dGlkeShsbWZpdCkKICAjIEFzaWduYW1vcyBsYSB2YXJpYWJsZSByZWdpb24KICBsbXRpZHkkcmVnaW9uIDwtIHJlZ2lvbgogICMgVW5pbW9zIGxvcyBkYXRhZnJhbWVzCiAgcmVzdWx0YWRvcyA8LSBiaW5kX3Jvd3MocmVzdWx0YWRvcyxsbXRpZHkpCgp9CgpyZXN1bHRhZG9zCmBgYAoKIyMgVXNhbmRvIE1BUAoKUHJpbWVybyBtZSBhcm1vIHVuYSBmdW5jaW9uIHF1ZSBtZSBzaW1wbGlmaWNhIGVsIGNvZGlnby4gTGEgZnVuY2lvbiBub3MgZGV2dWVsdmUgbGEgaW5mb3JtYWNpb24gZGUgbG9zIGNvZWZpY2llbnRlcyBkZWwgbW9kZWxvIGxpbmVhbCBjYWxjdWxhZG8gc29icmUgZWwgZGF0YWZyYW1lIF9fcG9yY2lvbl9fCgpgYGB7cn0KZnVuPC1mdW5jdGlvbihwb3JjaW9uLGdydXBvKSB7ICBicm9vbTo6dGlkeShsbShQMjF+ZmFjdG9yKENIMDQpK0NIMDYsZGF0YSA9IHBvcmNpb24pKX0KYGBgCgpgYGB7cn0KYmFzZXNfZGZfbG0gPC0gYmFzZXNfZGYgJT4lIAogICMgQWdydXBhbW9zIHBvciByZWdpb24KICBncm91cF9ieShSRUdJT04pICU+JQogICMgQW5pZGFtb3MKICBuZXN0KCkgJT4lIAogICMgQ3JlYW1vcyB1bmEgY29sdW1uYSBxdWUgdGVuZ2EgZWwgZGF0YWZyYW1lIGNvbW8gcmVzdWx0YWRvIGRlIGxhIGZ1bmNpb24KICBtdXRhdGUobG0gPSBtYXAoZGF0YSxmdW4pKQoKYmFzZXNfZGZfbG0KCiMgRGVzYW5pZGFtb3MgcG9yIGxhIHZhcmlhYmxlIGxtCmJhc2VzX2RmX2xtICU+JSAKICB1bm5lc3QobG0pCmBgYAoKTyBpbmNsdXNvIG3DoXMgZmFjaWwsIHV0aWxpemFuZG8gYGdyb3VwX21vZGlmeWAgKHF1ZSBlcyB1biBhdGFqbyBxdWUgc29sbyBhY2VwdGEgREYpCgpgYGB7cn0KYmFzZXNfZGYgJT4lIAogIGdyb3VwX2J5KFJFR0lPTikgJT4lIAogIGdyb3VwX21vZGlmeShmdW4pCmBgYAoKUGVybyBNQVAgc2lydmUgcGFyYSBvcGVyYXIgY29uIGN1YWxxdWllciBvYmpldG8gZGUgUi4KClBvciBlamVtcGxvIHBvZGVtb3MgZ3VhcmRhciBlbCBfX29iamV0b19fIGBTMzpsbWAgcXVlIGVzIGxhIHJlZ3Jlc2lvbiBsaW5lYWwgZW50cmVuYWRhLiBFc2Ugb2JqZXRvIG5vIGVzIG5pIHVuIHZlY3RvciwgbmkgdW5hIGxpc3RhLCBuaSB1biBERi4gTm8gZXMgdW5hIGVzdHJ1Y3R1cmEgZGUgZGF0b3MsIHNpbm8gcXVlIGVzIGFsZ28gZGlzdGludG8sIGNvbiBfcHJvcGllZGFkZXNfIGNvbW8gYHByZWRpY3QoKWAgcGFyYSBwcmVkZWNpciwgZWwgYHN1bW1hcnkoKWAgcXVlIHZpbW9zLCBldGMuCgpgYGB7cn0KIyBMYSBmdW5jaW9uIGNhbGN1bGEgZWwgbW9kZWxvIGxpbmVhbCBzb2JyZSBjYWRhIHBvcmNpb24gZGUgZGF0b3MKZnVuPC1mdW5jdGlvbihwb3JjaW9uLGdydXBvKSB7ICBsbShQMjF+ZmFjdG9yKENIMDQpK0NIMDYsZGF0YSA9IHBvcmNpb24pfQoKYmFzZXNfZGYgJT4lCiAgIyBBZ3J1cGFyIHBvciByZWdpb24KICBncm91cF9ieShSRUdJT04pICU+JQogICMgQW5pZGFyCiAgbmVzdCgpICU+JQogICMgQ2FsY3VsYXIgZWwgbW9kZWxvIGxpbmVhbAogIG11dGF0ZShsbSA9IG1hcChkYXRhLGZ1bikpCmBgYAoKCiMjIFdhbGsKCkxhcyBmdW5jaW9uZXMgYFdhbGtgIFRpZW5lbiBsYSBtaXNtYSBmb3JtYSBxdWUgbG9zIGBtYXBgLCBwZXJvIHNlIHVzYW4gY3VhbmRvIGxvIHF1ZSBxdWVyZW1vcyBpdGVyYXIgbm8gZ2VuZXJhIHVuYSBzYWxpZGEsIHNpbm8gcXVlIG5vcyBpbnRlcmVzYW4gbG9zIGVmZWN0b3Mgc2VjdW5kYXJpb3MgcXVlIGdlbmVyYW4uCgpgYGB7cn0KbWFwMigueCA9IEFCQ18xMjMkTGV0cmFzLC55ID0gQUJDXzEyMyROdW0sLmYgPSBmdW5jaW9uX3BydWViYSlbMTozXQpgYGAKCmBgYHtyfQp3YWxrMigueCA9IEFCQ18xMjMkTGV0cmFzLC55ID0gQUJDXzEyMyROdW0sLmYgPSBmdW5jaW9uX3BydWViYSkKYGBgCgpOb3RlbW9zIHF1ZSBgd2FsazJgIG5vIGRldm9sdmnDsyB1biByZXN1bHRhZG8KCmBgYHtyfQojIGZ1bmNpb24gcGFyYSBpbXByaW1pcgppbXByaW1pcl9zYWxpZGEgPC0gZnVuY3Rpb24oeCx5KXsKICBwcmludChmdW5jaW9uX3BydWViYSh4LHkpKQp9CgojIE1hcAptYXAyKEFCQ18xMjMkTGV0cmFzLEFCQ18xMjMkTnVtLGltcHJpbWlyX3NhbGlkYSkKYGBgCgpgYGB7cn0KIyBXYWxrCndhbGsyKEFCQ18xMjMkTGV0cmFzLEFCQ18xMjMkTnVtLGltcHJpbWlyX3NhbGlkYSkKCmBgYAoKRXNvIHF1ZSB2ZW1vcyBlcyBlbCBlZmVjdG8gc2VjdW5kYXJpbyBkZW50cm8gZGUgbGEgZnVuY2nDs24gKGltcHJpbWlyKQoKIyMgRGlzY3VzacOzbi4KCj4gwr9DdcOhbmRvIHVzYXIgZXN0YXMgaGVycmFtaWVudGFzPwoKQSBsbyBsYXJnbyBkZWwgY3Vyc28gdmltb3MgZGlmZXJlbnRlcyB0w6ljbmljYXMgcGFyYSBtYW5pcHVsYWNpw7NuIGRlIGRhdG9zLiBFbiBwYXJ0aWN1bGFyLCBsYSBsaWJyZXLDrWEgZHBseXIgbm9zIHBlcm1pdMOtYSBmw6FjaWxtZW50ZSBtb2RpZmljYXIgeSBjcmVhciBudWV2YXMgdmFyaWFibGVzLCBhZ3J1cGFuZG8uIMK/Q3VhbmRvIHVzYW1vcyBgZHBseXJgIHkgY3VhbmRvIHVzYW1vcyBgcHVycnJgPwoKLSBTaSB0cmFiYWphbW9zIHNvYnJlIHVuIERGIHNpbXBsZSwgc2luIHZhcmlhYmxlcyBhbmlkYWRhcyAobG8gcXVlIGNvbm9jw61hbW9zIGhhc3RhIGhveSkgcG9kZW1vcyB1c2FyIGBkcGx5cmAKLSBTaSBxdWVyZW1vcyB0cmFiYWphciBjb24gREYgYW5pZGFkb3MsIGNvbiBjb3NhcyBxdWUgbm8gc29uIERGLCBvIHNpIGVsIHJlc3VsdGFkbyBkZSBsYSBvcGVyYWNpw7NuIHF1ZSB2YW1vcyBhIHJlYWxpemFyIGEgbml2ZWwgYXJjaGl2byBlcyBhbGdvIGRpc3RpbnRvIGEgdW4gdmFsb3Igw7puaWNvLCBub3MgY29udmllbmUgdXNhciBgbWFwYCB5IGBwdXJycmAKCi0gTGFzIGZ1bmNpb25lcyBgd2Fsa2Agc29uIMO6dGlsZXMgcG9yIGVqZW1wbG8gcGFyYSBlc2NyaWJpciBhcmNoaXZvcyBlbiBkaXNjbyBkZSBmb3JtYSBpdGVyYXRpdmEuIEFsZ28gcXVlIG5vIGdlbmVyYSB1bmEgc2FsaWRhCgo=</div>
+<div id="rmd-source-code">LS0tDQp0aXRsZTogIlRpZHl2ZXJzZTogUFVSUlIiDQphdXRob3I6ICJKdWFuIEJhcnJpb2xhIHkgU29mw61hIFBlcmluaSINCmRhdGU6ICIxNyBkZSBPY3R1YnJlIGRlIDIwMjAiDQpvdXRwdXQ6DQogIGh0bWxfbm90ZWJvb2s6DQogICAgdGhlbWU6IHNwYWNlbGFiDQogICAgdG9jOiB5ZXMNCiAgICB0b2NfZmxvYXQ6IHllcw0KICAgIGRmX3ByaW50OiBwYWdlZA0KLS0tDQoNCkxpYnJlcmlhcyBxdWUgc2UgdXRpbGl6YW4gZW4gZXN0YSBjbGFzZToNCg0KYGBge3IgbWVzc2FnZT1GQUxTRSwgd2FybmluZz1GQUxTRX0NCmxpYnJhcnkodGlkeXZlcnNlKQ0KbGlicmFyeShvcGVueGxzeCkNCmxpYnJhcnkoZ2d0aGVtZXMpDQpsaWJyYXJ5KGZzKQ0KYGBgDQoNCkJhc2FkbyBlbiBsb3MgW3R1dG9yaWFsZXMgZGUgUFVSUlJdKGh0dHBzOi8vamVubnliYy5naXRodWIuaW8vcHVycnItdHV0b3JpYWwvaW5kZXguaHRtbCkgZGUgSmVubnkgQnJ5YW4geSBlbCBjYXDDrXR1bG8gW0l0ZXJhdGlvbl0oaHR0cHM6Ly9yNGRzLmhhZC5jby5uei9pdGVyYXRpb24uaHRtbCkgZGVsIGxpYnJvIFIgZm9yIERhdGEgU2NpZW5jZSBkZSBHYXJyZXR0IEdyb2xlbXVuZCB5IEhhZGxleSBXaWNraGFtDQoNCiMgUFVSUlINCg0KW1BVUlJSXShodHRwczovL3B1cnJyLnRpZHl2ZXJzZS5vcmcvKSBlcyB1bmEgbGlicmVyw61hIGVuIFIgcXVlIGNvbnRpZW5lIGZ1bmNpb25lcyB5IG3DqXRvZG9zIGRlIHByb2dyYW1hY2nDs24gZnVuY2lvbmFsIGRlbnRybyBkZWwgZW50b3JubyBkZSB0aWR5dmVyc2UuDQoNCiMjIE1BUA0KDQpNQVAgZXMgdW5hICoqZnVuY2nDs24qKiBwYXJhIGFwbGljYXIgdW5hIGZ1bmNpw7NuIGEgY2FkYSBlbGVtZW50byBkZSB1bmEgZXN0cnVjdHVyYSBkZSBkYXRvcyBjb21vIHVuYSBsaXN0YSBvIHZlY3Rvci4gRWwgZnVuY2lvbmFtaWVudG8gZGUgbWFwIGNvbnNpc3RlIGVuIHJlY29ycmVyICgibG9vcGVhciIpIGxhIGVzdHJ1Y3R1cmEgYXBsaWNhbmRvIGxhIGZ1bmNpw7NuIGEgY2FkYSBlbGVtZW50byB5IGd1YXJkYW5kbyBsb3MgcmVzdWx0YWRvcy4gRGUgZXN0YSBtYW5lcmEgcG9kZW1vcyByZWVtcGxhemFyIGxvcyBsb29wcyBwb3IgdW5hIGZvcm1hIG3DoXMgbGVnaWJsZSB5IGNsYXJhIGRlIGPDs2RpZ28uDQoNCkxhIGZ1bmNpw7NuIGBtYXBgIHRvbWEgY29tbyBhcmd1bWVudG9zOg0KIA0KICogLng6IHVuIHZlY3RvciBvIGxpc3RhIGlucHV0DQogDQogKiAuZjogdW5hIGZ1bmNpw7NuIHBhcmEgYXBsaWNhcg0KIA0KbWFwKFZFQ1RPUl9PX0xJU1RfSU5QVVQsIEZVTkNUSU9OX0FfQVBMSUNBUiwgT1RST1NfT1BDSU9OQUxFUykNCg0KVmVhbW9zIHVuIGVqZW1wbG8gY29uIHVuIHZlY3RvciBudW3DqXJpY28NCg0KYGBge3J9DQojIEFwbGljYW1vcyBsYSBmdW5jacOzbiBsb2cxMCBzb2JyZSB1biB2ZWN0b3INCm1hcCgueCA9IGMoMTAsMTAwLDEwMDApLCAuZj1sb2cxMCkNCmBgYA0KDQojIyMgTWFwOiB0aXBvcyBlc3BlY8OtZmljb3MNCg0KVmVhbW9zIHF1ZSBlbCByZXN1bHRhZG8gZGUgbWFwIGVzIHVuYSBsaXN0YS4gU2kgc2FiZW1vcyBjdcOhbCBlcyBlbCB0aXBvIGRlIGRhdG8gZGUgbnVlc3Ryb3MgcmVzdWx0YWRvcyBwb2RlbW9zIHVzYXIgdmFyaWFjaW9uZXMgZGUgbWFwIHF1ZSBleHBsaWNpdGFuIGVsIHRpcG8gZGUgZGF0byB5IGRldnVlbHZlbiBsb3MgcmVzdWx0YWRvcyBlbiB1biB2ZWN0b3IuIEFsZ3VuYXMgZGUgZWxsYXMgc29uOg0KDQogICogbWFwX2xnbCgpIGRldnVlbHZlIHVuIHZlY3RvciBkZSBib29sZWFub3MNCiANCiAgKiBtYXBfZGJsKCkgZGV2dWVsdmUgdW4gdmVjdG9yIG51bcOpcmljbw0KDQogICogbWFwX2NocigpIGRldnVlbHZlIHVuIHZlY3RvciBkZSBzdHJpbmdzIA0KDQpWb2x2YW1vcyBhIHZlciBudWVzdHJvIGVqZW1wbG8gdXNhbmRvIGBtYXBfZGJsYA0KDQpgYGB7cn0NCm1hcF9kYmwoLnggPSBjKDEwLDEwMCwxMDAwKSwgLmY9bG9nMTApDQpgYGANCg0KIyMjIE1hcDogZnVuY2lvbmVzDQoNClNlIHB1ZWRlbiBhcGxpY2FyIGZ1bmNpb25lcyBkZSBSIGJhc2UgbyBkZSBsYXMgbGlicmVyw61hcyBjb21vIGFzw60gdGFtYmnDqW4gZnVuY2lvbmVzIGRlZmluaWRhcyBwb3IgZWwgdXN1YXJpby4gTXVjaGFzIHZlY2VzIG5vIGVzIG5lY2VzYXJpbyBkZWZpbmlyIHVuYSBmdW5jacOzbiBkZSBhbnRlbWFubywgc2lubyBxdWUgcG9kZW1vcyB1c2FyICoqZnVuY2lvbmVzIGFuw7NuaW1hcyoqIG8gKipmdW5jaW9uZXMgbGFtYmRhKiouDQoNCiMjIyMgRnVuY2lvbmVzIGFuw7NuaW1hcw0KDQpMYSBmdW5jacOzbiBzZSBkZWZpbmUgZW4gdW5hIMO6bmljYSBsaW5lYS4gDQoNCioqRWplbXBsbyBudW3DqXJpY28qKg0KDQpQb3IgZWplbXBsbywgY2FsY3VsYW1vcyB1bmEgZnVuY2nDs24gY3VhZHLDoXRpY2EgcGFyYSB1biB2ZWN0b3IgbnVtw6lyaWNvIHF1ZSB2YSBkZWwgMSBhbCAxMC4NCg0KYGBge3J9DQojIENhbGN1bGFtb3MgdW5hIGZ1bmNpw7NuIGN1YWRyw6F0aWNhIHBhcmEgZWwgdmVjdG9yDQptYXBfZGJsKC54ID0gYygxOjEwKSwgLmYgPSBmdW5jdGlvbih4KSB4XjIrMSkNCmBgYA0KDQoqKkVqZW1wbG8gY29uIHN0cmluZ3MqKg0KDQpBIHBhcnRpciBkZSB1biB2ZWN0b3IgZGUgc3RyaW5ncyBxdWVyZW1vcyBjb250YXIgbGEgY2FudGlkYWQgZGUgbGV0cmFzICJBIiBlbiBjYWRhIGVsZW1lbnRvLiBQYXJhIGVzbyBjb21iaW5hbW9zIGxhcyBmdW5jaW9uZXMgYHN0cl90b191cHBlcmAgeSBgc3RyX2NvdW50YC4NCg0KYGBge3J9DQptYXBfZGJsKC54ID0gYygicGFwYXMgRlJJVEFTIiwgImJhdGF0YXMgSEVSVklEQVMiLCAiYm9uaWF0byBBTCBIT1JOTyIpLA0KICAgICAgICAjIGNvbnZpZXJ0aW1vcyB0b2RhcyBhIG1hecO6c2N1bGFzIHkgY29udGFtb3MgbGEgY2FudGlkYWQgZGUgIkEiDQogICAgICAgIC5mID0gZnVuY3Rpb24oeCkgc3RyX2NvdW50KHN0cmluZyA9IHN0cl90b191cHBlcih4KSwgcGF0dGVybiA9ICJBIikpDQpgYGANCg0KIyMjIyBGdW5jaW9uZXMgbGFtYmRhDQoNClNvbiB1bmEgZm9ybWEgYcO6biBtw6FzIGNvbmNpc2EgZGUgZGVjbGFyYXIgZnVuY2lvbmVzLCBhdW5xdWUgcHVlZGVuIHNlciBtw6FzIGxpbWl0YWRhcy4gTGFzIHZhcmlhYmxlcyBzZSBkZWNsYXJhbiBjb21vIC54DQoNCmBgYHtyfQ0KIyBDYWxjdWxhbW9zIG90cmEgZnVuY2nDs24gY3VhZHLDoXRpY2EgcGFyYSBlbCB2ZWN0b3INCm1hcF9kYmwoLnggPSBjKDE6MTApLCAuZiA9ICB+LnheMiAtIC54KQ0KYGBgDQoNCiMjIyBNYXA6IE3Dumx0aXBsZXMgYXJndW1lbnRvcw0KIA0KVXNhbW9zIGBtYXAyYCBjdWFuZG8gcXVlcmVtb3MgYXBsaWNhciB1bmEgZnVuY2nDs24gc29icmUgZG9zIGxpc3RhcyBvIHZlY3RvcmVzOg0KDQotIG1hcDIoLngsIC55LCAuZiwgLi4uKQ0KLSBtYXAyKElOUFVUX1VOTywgSU5QVVRfRE9TLCBGVU5DVElPTl9BX0FQTElDQVIsIE9UUk9TX09QQ0lPTkFMRVMpDQoNCioqRWplbXBsbyBudW3DqXJpY28qKg0KDQpWZWFtb3MgdW4gZWplbXBsbyBwYXJhIGdlbmVyYXIgb2JzZXJ2YWNpb25lcyBkZSBkaXN0cmlidWNpb25lcyBub3JtYWxlcyBhIHBhcnRpciBkZSBsb3MgdmVjdG9yZXMgZGUgbXUgeSBzaWdtYSAoZXN0ZSBlcyBlbCBlamVtcGxvIGRlbCBsaWJybyAqUiBmb3IgRGF0YSBTY2llbmNlKikuDQoNCkxhIGZ1bmNpb24gYHJub3JtYCBzaXJ2ZSBwYXJhIGdlbmVyYXIgbXVlc3RyYXMgYWxlYXRvcmlhcyBkZSBkaXN0cmlidWNpw7NuIG5vcm1hbCBjb24gbWVkaWEgaWd1YWwgYSBtdSB5IGRlc3ZpYWNpw7NuIGVzdMOhbmRhciBpZ3VhbCBhIHNpZ21hLCBkb25kZSBuIGluZGljYSBsYSBjYW50aWRhZCBkZSBvYnNlcnZhY2lvbmVzIGEgZ2VuZXJhci4gDQoNCmBgYHtyfQ0KIyBWZWN0b3IgZGUgbXUgPSBtZWRpYXMNCm11ID0gYygwLCAzLCAtNSwgMi4xKQ0KIyBWZWN0b3IgZGUgc2lnbWEgPSBkZXN2w61vcyBlc3TDoW5kYXINCnNpZ21hID0gYygxLCAwLjUsIDUsIDAuMDEpDQojIEdlbmVyYW1vcyAxMCBvYnNlcnZhY2lvbmVzIGEgcGFydGlyIGRlIG51ZXN0cm9zIHZlY3RvcmVzDQptYXAyKC54ID0gbXUsIC55ID0gc2lnbWEsIC5mPSBybm9ybSwgbiA9IDEwKQ0KYGBgDQoNCioqRWplbXBsbyBjb24gc3RyaW5ncyoqDQoNCkFob3JhIHZlYW1vcyBjb24gdW4gZWplbXBsbyBwYXJhIGNyZWFyIHVuYSBsaXN0YSBkZSBjb21wcmFzLg0KDQpgYGB7cn0NCiMgVmVjdG9yZXMNCmtpbG9zID0gYygxMCwgMSwgNiwgOCwgMykNCnZlcmR1cmFzID0gIGMoInBhcGEiLCAiYmF0YXRhIiwgInphcGFsbG8iLCAiYm9uaWF0byIsICJ6YW5haG9yaWEiKQ0KIyBjb25jYXRlbmFtb3MgbGFzIHBhbGFicmFzIChjb24gbm9tYnJlcyBlbiBtYXnDunNjdWxhKSB5IHZhbG9yZXMNCm1hcDJfY2hyKC54ID0gdmVyZHVyYXMsIC55ID1raWxvcywgLmYgPSBmdW5jdGlvbih4LHkpIHN0cl9jKHN0cl90b190aXRsZSh4KSx5LCBzZXA9IjogIikpDQpgYGANCiAgDQogIA0KVXNhbW9zIGBwbWFwYCBjdWFuZG8gcXVlcmVtb3MgYXBsaWNhciB1bmEgZnVuY2nDs24gc29icmUgdW5hIGxpc3RhIGRlIGFyZ3VtZW50b3M6DQoNCi0gcG1hcCgubCwgLmYsIC4uLikNCi0gcG1hcChWRUNUT1JfT19MSVNUX0RFX0lOUFVUUywgRlVOQ1RJT05fQV9BUExJQ0FSLCBPVFJPU19PUENJT05BTEVTKQ0KDQpWb2x2YW1vcyBhbCBlamVtcGxvIHBhcmEgZ2VuZXJhciBvYnNlcnZhY2lvbmVzIGRlIGRpc3RyaWJ1Y2lvbmVzIG5vcm1hbGVzIGEgcGFydGlyIGRlIGxvcyB2ZWN0b3JlcyBkZSBtdSB5IHNpZ21hLCBwZXJvIGFob3JhIGluY29ycG9yYW1vcyBsYSBjYW50aWRhZCBkZSBvYnNlcnZhY2lvbmVzIGNvbW8gdW4gYXJndW1lbnRvIGFkaWNpb25hbCAoZXN0ZSBlamVtcGxvIHRhbWJpw6luIGVzIGRlbCBsaWJybyAqUiBmb3IgRGF0YSBTY2llbmNlKikuDQoNCmBgYHtyfQ0KIyBWZWN0b3IgZGUgbXUNCm11ID0gYygwLCAzLCAtNSwgMi4xKQ0KIyBWZWN0b3IgZGUgc2lnbWENCnNpZ21hID0gYygxLCAwLjUsIDUsIDAuMDEpDQojIFZlY3RvciBkZSBjYW50aWRhZCBkZSBvYnNlcnZhY2lvbmVzIA0KbiA9IGMoMTo0KQ0KIyBMaXN0YSBkZSBhcmd1bWVudG9zDQphcmd1bWVudG9zIDwtIGxpc3QobiwgbXUsIHNpZ21hKQ0KIyBHZW5lcmFtb3MgbGFzIG9ic2VydmFjaW9uZXMgYSBwYXJ0aXIgZGUgbnVlc3RyYSBsaXN0YSBkZSBwYXLDoW1ldHJvcw0KcG1hcCgubCA9IGFyZ3VtZW50b3MsIC5mID0gcm5vcm0pDQpgYGANCg0KIyMgUFVSUlI6IERhdGFmcmFtZXMgeSBtb2RlbG9zDQoNCiMjIyBEYXRhZnJhbWVzDQoNCkxhcyBmdW5jaW9uZXMgZGUgUFVSUlIgc2UgcHVlZGVuIHV0aWxpemFyIHBhcmEgcmVhbGl6YXIgb3BlcmFjaW9uZXMgc29icmUgZGF0YWZyYW1lcy4gTGEgc2ludGF4aXMgcXVlIHZhbW9zIGEgdXRpbGl6YXIgZXM6DQoNCmBtYXAoZGF0YWZyYW1lLCBmdW5jacOzbilgDQoNCkRlIGVzdGEgbWFuZXJhIHZhbW9zIGEgZXN0YXIgYXBsaWNhbmRvIGxhIGZ1bmNpw7NuIHNvYnJlIHRvZGFzIGxhcyBjb2x1bW5hcyBkZWwgZGF0YWZyYW1lLiBWZWFtb3MgdW4gZWplbXBsbyB1c2FuZG8gbnVlc3RyYSBlbmN1ZXN0YSBkZSBzdWVsZG9zIGRlbCBzZWN0b3IgSVQgbGltcGlhLiANCg0KYGBge3J9DQojIGNhcmdhbW9zIGVsIGRhdGFzZXQNCmVuY3Vlc3RhX3N1ZWxkb3NfbGltcGlhID0gcmVhZF9jc3YoIi4uL0Z1ZW50ZXMvZW5jdWVzdGFfZHNfZmluYWwuY3N2IikNCmVuY3Vlc3RhX3N1ZWxkb3NfbGltcGlhIDwtIGVuY3Vlc3RhX3N1ZWxkb3NfbGltcGlhICU+JQ0KICAjIGNyZWFtb3MgdmFyaWFibGUgcGVyZmlsIEJJL0RBIHZzIERTL0RJDQogIG11dGF0ZShwZXJmaWwgPSBjYXNlX3doZW4odHJhYmFqb19kZSA9PSAiQkkgQW5hbHlzdCAvIERhdGEgQW5hbHlzdCIgfiAiQkkvREEiLCBUUlVFIH4gIkRTL0RFIikpDQpgYGANCg0KQ29tZW5jZW1vcyBhbmFsaXphbmRvIGxhIGNhbnRpZGFkIGRlIHZhbG9yZXMgZGlzdGludG9zIHBhcmEgY2FkYSBjb2x1bW5hLiBQYXJhIGVsbG8gdXNhbW9zIGxhIGZ1bmNpw7NuIGBuX2Rpc3RpbmN0YC4NCg0KYGBge3J9DQptYXAoZW5jdWVzdGFfc3VlbGRvc19saW1waWEsIG5fZGlzdGluY3QpDQpgYGANCg0KVXNhbmRvIGxhIGZ1bmNpw7NuIGBzdHIoKWAgc2UgcHVlZGUgY29uc3VsdGFyIGRlIGZvcm1hIGNvbXBhY3RhIGxhIGVzdHJ1Y3R1cmEgaW50ZXJuYSBkZSB1biBvYmpldG8gUi4gRXMgZXNwZWNpYWxtZW50ZSBhZGVjdWFkbyBwYXJhIG1vc3RyYXIgZGUgZm9ybWEgY29tcGFjdGEgZWwgY29udGVuaWRvIChhYnJldmlhZG8pIGRlIGxpc3Rhcy4gDQoNCmBgYHtyfQ0KbWFwKGVuY3Vlc3RhX3N1ZWxkb3NfbGltcGlhLCBuX2Rpc3RpbmN0KSAlPiUNCiAgc3RyKCkgIyBBZ3JlZ2Ftb3Mgc3RyIHBhcmEgcXVlIGxhIHNhbGlkYSBsdXpjYSBtZWpvcg0KYGBgDQoNCkFob3JhIGNhbGN1bGFtb3MgZWwgcHJvbWVkaW8gc29icmUgbGFzIGNvbHVtbmFzIG51bcOpcmljYXMuDQoNCmBgYHtyfQ0KZW5jdWVzdGFfc3VlbGRvc19saW1waWEgJT4lIA0KICBzZWxlY3RfaWYoaXMubnVtZXJpYykgJT4lIA0KICBtYXAobWVhbikgJT4lIA0KICBzdHIoKQ0KYGBgDQoNCkNhbGN1bGFtb3MgbGEgbWVkaWFuYSBzb2JyZSBsYXMgY29sdW1uYXMgbnVtw6lyaWNhcy4gU2FiaWVuZG8gcXVlIGVsIHJlc3VsdGFkbyBkZSBsYSBmdW5jacOzbiBlcyB1biBuw7ptZXJvIHBvZGVtb3MgdXNhciBkaXJlY3RhbWVudGUgbGEgZnVuY2nDs24gYG1hcF9kYmxgLg0KDQpgYGB7cn0NCiMgdXNhbmRvIG1hcF9kYmwgDQplbmN1ZXN0YV9zdWVsZG9zX2xpbXBpYSAlPiUgDQogIHNlbGVjdF9pZihpcy5udW1lcmljKSAlPiUgDQogIG1hcF9kYmwobWVkaWFuKQ0KYGBgDQoNClJlY29yZGVtb3MgcXVlIGVzdGEgZnVuY2nDs24gZGV2dWVsdmUgdW4gdmVjdG9yIG51bcOpcmljbyBubyB1bmEgbGlzdGEgY29tbyBlbiBlbCBjYXNvIGFudGVyaW9yLCBwb3IgZXNvIG5vIHVzYW1vcyBsYSBmdW5jacOzbiBgc3RyKClgIHBhcmEgdmVyIGVsIHJlc3VsdGFkbyBlbiBmb3JtYSBjb21wYWN0YS4NCg0KIyMjIE1vZGVsb3MNCg0KUG9kZW1vcyB1c2FyIGxhIGZ1bmNpw7NuIG1hcCBwYXJhIGNhbGN1bGFyIGRpc3RpbnRvcyBtb2RlbG9zIG1vZGVsb3MuIFBvciBlamVtcGxvLCBjYWxjdWxlbW9zIHVuIG1vZGVsbyBkaXN0aW50byBzZWfDum4gZWwgcGVyZmlsIChEQSB5IERTKS4NCg0KYGBge3J9DQptb2RlbG9zX3Bvcl9wZXJmaWwgPSBlbmN1ZXN0YV9zdWVsZG9zX2xpbXBpYSAlPiUgDQogICAgICAgICAgICAgICAgICAgICAgICAjIHNlcGFyYW1vcyBlbCBkYXRhc2V0IHNlZ8O6biBwZXJmaWwNCiAgICAgICAgICAgICAgICAgICAgICAgIHNwbGl0KC4kcGVyZmlsKSAlPiUgDQogICAgICAgICAgICAgICAgICAgICAgICAjIGNyZWFtb3MgdW4gbW9kZWxvIHBhcmEgY2FkYSBwZXJmaWwgIA0KICAgICAgICAgICAgICAgICAgICAgICAgbWFwKH5sbShzYWxhcmlvX25ldG8gfiBlZGFkLCBkYXRhID0gLikpDQpgYGANCg0KRWwgcmVzdWx0YWRvIGRlIGVzdG8gZXMgdW5hIGxpc3RhIGNvbiBsb3MgZG9zIG1vZGVsb3MuIEFuYWxpY2Vtb3MgbG9zIGVsZW1lbnRvcyBkZSBjYWRhIHVubyB1dGlsaXphbmRvIGxhIGZ1bmNpw7NuIHRpZHkoKSBkZSBsYSBsaWJyZXLDrWEgYnJvb20uIA0KDQpgYGB7cn0NCm1vZGVsb3NfcG9yX3BlcmZpbCAlPiUgDQogIG1hcChicm9vbTo6dGlkeSkNCmBgYA0KRXZhbHVlbW9zIGFob3JhIGxhIGNhcGFjaWRhZCBleHBsaWNhdGl2YSBkZSBsb3MgbW9kZWxvcy4gUGFyYSBlbGxvLCBjb21wYXJhbW9zIGVsICRSXjIkIGRlIGNhZGEgdW5vIChlbiBlc3RlIGNhc28gY29tbyBzb24gbW9kZWxvcyBzaW1wbGVzIHBvZGVtb3MgdXRpbGl6YXIgZXN0YSBtw6l0cmljYSkuIA0KDQpgYGB7cn0NCm1vZGVsb3NfcG9yX3BlcmZpbCAlPiUgDQogIG1hcChicm9vbTo6Z2xhbmNlKSAlPiUgDQogIG1hcF9kYmwoInIuc3F1YXJlZCIpDQpgYGANCg0KTWllbnRyYXMgZWwgbW9kZWxvIGRlIGVkYWQgcGFyYSBsb3MgQkkvREEgbG9ncmEgZXhwbGljYXIgZWwgMTUuNiUgZGUgbGEgdmFyaWFiaWxpZGFkIGRlbCBzdWVsZG8gbmV0bywgZWwgbW9kZWxvIGRlIGVkYWQgcGFyYSBsb3MgRFMvREUgbG9ncmEgY2FwdGFyIHVuIHBvcmNlbmFqZSBtZW5vciAoMTIsOSUpLiANCg0KIyMgRWplbXBsbzogSXRlcmFuZG8gZW4gbGEgRVBIDQoNCkxvIHByaW1lcm8gcXVlIG5lY2VzaXRhbW9zIGVzIGRlZmluaXIgdW4gdmVjdG9yIG8gbGlzdGEgc29icmUgZWwgcXVlIGl0ZXJhci4gDQoNClBvciBlamVtcGxvLCBwb2RlbW9zIGFybWFyIHVuIHZlY3RvciBjb24gbG9zIHBhdGggYSBsYXMgYmFzZXMgaW5kaXZpZHVhbGVzLCBjb24gZWwgY29tYW5kbyBgZnM6OmRpcl9sc2AuIFNlIGxlIGVzcGVjaWZpY2EgZWwgX19wYXRoX18gZG9uZGUgYnVzY2FyIGxvcyBhcmNoaXZvcyB5IGVuIGVzdGUgY2FzbyB1bmEgZXhwcmVzaW9uIHJlZ3VsYXIgX19yZWdleHBfXyBwYXJhIHF1ZSBkZXZ1ZWx2YSBhcXVlbGxvcyBhcmNoaXZvcyBxdWUgY29pbmNpZGVuIGNvbiBsYSBtaXNtYS4NCg0KYGBge3J9DQojIEJ1c2NhbW9zIGVuIGVsIHBhdGggYXF1ZWxsb3MgYXF1ZWxsb3MgYXJjaGl2b3MgcXVlIG1hdGNoZWFuIGEgbGEgZXhwcmVzaW9uIHJlZ3VsYXINCmJhc2VzX2luZGl2aWR1YWxlc19wYXRoIDwtIGRpcl9scyhwYXRoID0gJy4uL0Z1ZW50ZXMvJywgcmVnZXhwPSAnaW5kaXZpZHVhbCcpDQpiYXNlc19pbmRpdmlkdWFsZXNfcGF0aA0KYGBgDQoNCkx1ZWdvLCBjb21vIGVuIGxhIGZ1bmNpw7NuIHF1ZSB1c2Ftb3MgcGFyYSBsZWVyIGxhcyBiYXNlcyBkZWZpbmltb3MgbXVjaG9zIHBhcmFtZXRyb3MsIG5vcyBwb2RlbW9zIGFybWFyIHVuYSBmdW5jacOzbiBfd3JhcHBlcl8gcXVlIHPDs2xvIG5lY2VzaXRlIHVuIHBhcsOhbWV0cm8sIHkgcXVlIHNpbXBsaWZpcXVlIGxhIGVzY3JpdHVyYSBkZWwgbWFwLg0KDQpgYGB7ciBtZXNzYWdlPUZBTFNFLCB3YXJuaW5nPUZBTFNFfQ0KIyBMZWVyIGxhIGJhc2UgZGUgRVBIIHRvbWFuZG8gY29tbyBhcmd1bWVudG8gZWwgZmlsZV9wYXRoDQpsZWVyX2Jhc2VfZXBoIDwtIGZ1bmN0aW9uKHBhdGgpIHsNCiAgIyBMZWN0dXJhIGRlIGFyY2hpdm8NCiAgcmVhZC50YWJsZShwYXRoLHNlcD0iOyIsIGRlYz0iLCIsIGhlYWRlciA9IFRSVUUsIGZpbGwgPSBUUlVFKSAlPiUNCiAgICAjIFNlbGVjY2lvbiBkZSB2YXJpYWJsZXMgcmVsZXZhbnRlcw0KICAgIHNlbGVjdChBTk80LFRSSU1FU1RSRSxSRUdJT04sUDIxLENIMDQsIENIMDYpDQp9DQoNCiMgTGVlciBhIHVuIGRhdGFmcmFtZSBsYXMgdGFibGFzIGVzcGVjaWZpY2FkYXMgZW4gZWwgdmVjdG9yIGRlIGJhc2VzIGluZGl2aWR1YWxlcw0KYmFzZXNfZGYgPC0gdGliYmxlKGJhc2VzX2luZGl2aWR1YWxlc19wYXRoKSAlPiUNCiAgbXV0YXRlKGJhc2UgPSBtYXAoLnggPSBiYXNlc19pbmRpdmlkdWFsZXNfcGF0aCwgLmYgPSBsZWVyX2Jhc2VfZXBoKSkNCg0KYGBgDQoNCmBgYHtyfQ0KYmFzZXNfZGYNCmBgYA0KDQpFbCByZXN1bHRhZG8gZXMgdW4gZGF0YWZyYW1lIGRvbmRlIGxhIGNvbHVtbmEgX19iYXNlX18gdGllbmUgZW4gY2FkYSBmaWxhIG90cm8gZGF0YWZyYW1lICBjb24gbGEgYmFzZSBkZSBsYSBFUEggZGUgZXNlIHBlcsOtb2RvLiBFc3RvIGVzIGxvIHF1ZSBsbGFtYW1vcyB1biBfbmVzdGVkIERGXyBvIGRhdGFmcmFtZSBhbmlkYWRvLg0KDQpTaSBxdWVyZW1vcyBhYnJpciAoImRlc2FuaWRhciIpIGVzdGFzIGRhdGFmcmFtZXMgYW5pZGFkb3MgdXNhbW9zIGVsIGNvbWFuZG8gYHVubmVzdCgpYA0KDQpgYGB7ciBtZXNzYWdlPUZBTFNFLCB3YXJuaW5nPUZBTFNFfQ0KIyBEZXNhbmlkYW1vcyBlbCBkYXRhZnJhbWUNCmJhc2VzX2RmIDwtIGJhc2VzX2RmICU+JSB1bm5lc3QoKQ0KYmFzZXNfZGYNCmBgYA0KDQo+IMK/UXXDqSBwYXNhIHNpIGxvcyBERiBxdWUgdGVuZW1vcyBuZXN0ZWFkb3Mgbm8gdGllbmVuIGxhIG1pc21hIGNhbnRpZGFkIGRlIGNvbHVtbmFzPw0KDQpFc3RvIG1pc21vIGxvIHBvZGVtb3MgdXNhciBwYXJhIGZyYWdtZW50YXIgZWwgZGF0YXNldCBwb3IgYWxndW5hIHZhcmlhYmxlLCBjb24gbGEgZnVuY2lvbiBgZ3JvdXBfYnkoKWANCg0KDQpgYGB7cn0NCmJhc2VzX2RmICU+JSANCiAgIyBBZ3J1cGFyIHBvciByZWdpb24NCiAgZ3JvdXBfYnkoUkVHSU9OKSAlPiUgDQogICMgQW5pZGFyDQogIG5lc3QoKQ0KYGBgDQoNCkFzw60sIHBhcmEgY2FkYSByZWdpw7NuIHRlbmVtb3MgdW4gREYuDQoNCj4gwr8gRGUgcXXDqSBzaXJ2ZSB0b2RvIGVzdG8/DQoNCk5vIHRvZG8gZW4gbGEgdmlkYSBlcyB1biBEYXRhZnJhbWUuIEhheSBlc3R1Y3R1cmFzIGRlIGRhdG9zIHF1ZSBubyBzZSBwdWVkZW4gbm9ybWFsaXphciBhIGZpbGFzIHkgY29sdW1uYXMuIEVuIGVzb3MgY2Fzb3MgcmVjdXJyw61hbW9zIHRyYWRpY2lvbmFsbWVudGUgYSBsb3MgbG9vcHMuIENvbiBNQVAgcG9kZW1vcyB0ZW5lciBsb3MgZWxlbWVudG9zIGFncnVwYWRvcyBlbiB1biBzw7NsbyBvYmpldG8geSBhw7puIGNvbnNlcnZhciBzdXMgZm9ybWFzIGRpZmVyZW50ZXMuDQoNCiMjIEVqZW1wbG8uIFJlZ3Jlc2nDs24gbGluZWFsDQoNClNpIGJpZW4gbm8gbm9zIHZhbW9zIGEgbWV0ZXIgZW4gZWwgZGV0YWxsZSBkZWwgbW9kZWxvIGxpbmVhbCBlbiBlc3RlIGVuY3VlbnRybywgZXMgw7p0aWwgdXNhcmxvIGNvbW8gZWplbXBsbyBkZSBsbyBxdWUgcG9kZW1vcyBoYWNlciBjb24gTUFQLg0KDQpQbGFudGVhbW9zIGVsIG1vZGVsbyANCiQkDQpQMjEgPSBcYmV0YV8wICsgXGJldGFfMSpDSDA0ICsgXGJldGFfMipDSDA2DQokJA0KDQpFcyB1biBtb2RlbG8gcXVlIGV4cGxpY2EgZWwgaW5ncmVzbyAoUDIxKSBlbiBmdW5jaW9uIGRlbCBzZXhvIChDSDA0KSB5IGVkYWQgKENIMDYpDQoNCmBgYHtyfQ0KIyBDYWxjdWxhbW9zIHVuYSByZWdyZXNpb24gbGluZWFsIHNvYnJlIGVsIGRhdGFzZXQgcXVlIHRpZW5lIHRvZGFzIGxhcyBvYnNlcnZhY2lvbmVzIGRlIEVQSA0KbG1maXQgPC0gbG0oUDIxfmZhY3RvcihDSDA0KStDSDA2LGRhdGEgPSBiYXNlc19kZikNCg0KIyBSZXN1bWVuIGRlbCBtb2RlbG8NCnN1bW1hcnkobG1maXQpDQpgYGANCg0KKGFsIGZpbmFsIGRlIGxhIGNsYXNlIHBvZGVtb3MgY2hhcmxhciBzb2JyZSBsb3MgcmVzdWx0YWRvcykNCg0KRGUgZm9ybWEgVGlkeSwgbGEgbGlicmVyw61hIGBicm9vbWAgbm9zIGRhIGxvcyByZXN1bHRhZG9zIHNvYnJlIGxvcyBjb2VmaWNpZW50ZXMgZW4gdW4gREYuDQoNCmBgYHtyfQ0KYnJvb206OnRpZHkobG1maXQpDQpgYGANCiANCiBTaSBsbyBxdWVyZW1vcyBoYWNlciBwb3IgcmVnaW9uDQogDQojIyMgTG9vcGVhbmRvDQoNCmBgYHtyfQ0KDQpyZXN1bHRhZG9zIDwtIHRpYmJsZSgpDQoNCmZvciAocmVnaW9uIGluIHVuaXF1ZShiYXNlc19kZiRSRUdJT04pKSB7DQogICMgQ3JlYW1vcyB1biBkYXRhc2V0IHBvciByZWdpb24NCiAgZGF0YSA8LSBiYXNlc19kZiAlPiUgDQogICAgZmlsdGVyKFJFR0lPTj09cmVnaW9uKQ0KICAjIENhbGN1bGFyIGVsIG1vZGVsbyBsaW5lYWwNCiAgbG1maXQgPC0gbG0oUDIxfmZhY3RvcihDSDA0KStDSDA2LGRhdGEgPSBkYXRhKQ0KICAjIEd1YXJkYXIgbG9zIHJlc3VsdGFkb3MgZGUgbG9zIGNvZWZpY2llbnRlcyANCiAgbG10aWR5IDwtIGJyb29tOjp0aWR5KGxtZml0KQ0KICAjIEFzaWduYW1vcyBsYSB2YXJpYWJsZSByZWdpb24NCiAgbG10aWR5JHJlZ2lvbiA8LSByZWdpb24NCiAgIyBVbmltb3MgbG9zIGRhdGFmcmFtZXMNCiAgcmVzdWx0YWRvcyA8LSBiaW5kX3Jvd3MocmVzdWx0YWRvcyxsbXRpZHkpDQoNCn0NCg0KcmVzdWx0YWRvcw0KYGBgDQoNCiMjIFVzYW5kbyBNQVANCg0KUHJpbWVybyBtZSBhcm1vIHVuYSBmdW5jaW9uIHF1ZSBtZSBzaW1wbGlmaWNhIGVsIGNvZGlnby4gTGEgZnVuY2lvbiBub3MgZGV2dWVsdmUgbGEgaW5mb3JtYWNpb24gZGUgbG9zIGNvZWZpY2llbnRlcyBkZWwgbW9kZWxvIGxpbmVhbCBjYWxjdWxhZG8gc29icmUgZWwgZGF0YWZyYW1lIF9fcG9yY2lvbl9fDQoNCmBgYHtyfQ0KZnVuPC1mdW5jdGlvbihwb3JjaW9uLGdydXBvKSB7ICBicm9vbTo6dGlkeShsbShQMjF+ZmFjdG9yKENIMDQpK0NIMDYsZGF0YSA9IHBvcmNpb24pKX0NCmBgYA0KDQpgYGB7cn0NCmJhc2VzX2RmX2xtIDwtIGJhc2VzX2RmICU+JSANCiAgIyBBZ3J1cGFtb3MgcG9yIHJlZ2lvbg0KICBncm91cF9ieShSRUdJT04pICU+JQ0KICAjIEFuaWRhbW9zDQogIG5lc3QoKSAlPiUgDQogICMgQ3JlYW1vcyB1bmEgY29sdW1uYSBxdWUgdGVuZ2EgZWwgZGF0YWZyYW1lIGNvbW8gcmVzdWx0YWRvIGRlIGxhIGZ1bmNpb24NCiAgbXV0YXRlKGxtID0gbWFwKGRhdGEsZnVuKSkNCg0KYmFzZXNfZGZfbG0NCg0KIyBEZXNhbmlkYW1vcyBwb3IgbGEgdmFyaWFibGUgbG0NCmJhc2VzX2RmX2xtICU+JSANCiAgdW5uZXN0KGxtKQ0KYGBgDQoNCk8gaW5jbHVzbyBtw6FzIGZhY2lsLCB1dGlsaXphbmRvIGBncm91cF9tb2RpZnlgIChxdWUgZXMgdW4gYXRham8gcXVlIHNvbG8gYWNlcHRhIERGKQ0KDQpgYGB7cn0NCmJhc2VzX2RmICU+JSANCiAgZ3JvdXBfYnkoUkVHSU9OKSAlPiUgDQogIGdyb3VwX21vZGlmeShmdW4pDQpgYGANCg0KUGVybyBNQVAgc2lydmUgcGFyYSBvcGVyYXIgY29uIGN1YWxxdWllciBvYmpldG8gZGUgUi4NCg0KUG9yIGVqZW1wbG8gcG9kZW1vcyBndWFyZGFyIGVsIF9fb2JqZXRvX18gYFMzOmxtYCBxdWUgZXMgbGEgcmVncmVzaW9uIGxpbmVhbCBlbnRyZW5hZGEuIEVzZSBvYmpldG8gbm8gZXMgbmkgdW4gdmVjdG9yLCBuaSB1bmEgbGlzdGEsIG5pIHVuIERGLiBObyBlcyB1bmEgZXN0cnVjdHVyYSBkZSBkYXRvcywgc2lubyBxdWUgZXMgYWxnbyBkaXN0aW50bywgY29uIF9wcm9waWVkYWRlc18gY29tbyBgcHJlZGljdCgpYCBwYXJhIHByZWRlY2lyLCBlbCBgc3VtbWFyeSgpYCBxdWUgdmltb3MsIGV0Yy4NCg0KYGBge3J9DQojIExhIGZ1bmNpb24gY2FsY3VsYSBlbCBtb2RlbG8gbGluZWFsIHNvYnJlIGNhZGEgcG9yY2lvbiBkZSBkYXRvcw0KZnVuPC1mdW5jdGlvbihwb3JjaW9uLGdydXBvKSB7ICBsbShQMjF+ZmFjdG9yKENIMDQpK0NIMDYsZGF0YSA9IHBvcmNpb24pfQ0KDQpiYXNlc19kZiAlPiUNCiAgIyBBZ3J1cGFyIHBvciByZWdpb24NCiAgZ3JvdXBfYnkoUkVHSU9OKSAlPiUNCiAgIyBBbmlkYXINCiAgbmVzdCgpICU+JQ0KICAjIENhbGN1bGFyIGVsIG1vZGVsbyBsaW5lYWwNCiAgbXV0YXRlKGxtID0gbWFwKGRhdGEsZnVuKSkNCmBgYA0KDQoNCiMjIFdhbGsNCg0KTGFzIGZ1bmNpb25lcyBgV2Fsa2AgVGllbmVuIGxhIG1pc21hIGZvcm1hIHF1ZSBsb3MgYG1hcGAsIHBlcm8gc2UgdXNhbiBjdWFuZG8gbG8gcXVlIHF1ZXJlbW9zIGl0ZXJhciBubyBnZW5lcmEgdW5hIHNhbGlkYSwgc2lubyBxdWUgbm9zIGludGVyZXNhbiBsb3MgZWZlY3RvcyBzZWN1bmRhcmlvcyBxdWUgZ2VuZXJhbi4NCg0KYGBge3J9DQptYXAyKC54ID0gQUJDXzEyMyRMZXRyYXMsLnkgPSBBQkNfMTIzJE51bSwuZiA9IGZ1bmNpb25fcHJ1ZWJhKVsxOjNdDQpgYGANCg0KYGBge3J9DQp3YWxrMigueCA9IEFCQ18xMjMkTGV0cmFzLC55ID0gQUJDXzEyMyROdW0sLmYgPSBmdW5jaW9uX3BydWViYSkNCmBgYA0KDQpOb3RlbW9zIHF1ZSBgd2FsazJgIG5vIGRldm9sdmnDsyB1biByZXN1bHRhZG8NCg0KYGBge3J9DQojIGZ1bmNpb24gcGFyYSBpbXByaW1pcg0KaW1wcmltaXJfc2FsaWRhIDwtIGZ1bmN0aW9uKHgseSl7DQogIHByaW50KGZ1bmNpb25fcHJ1ZWJhKHgseSkpDQp9DQoNCiMgTWFwDQptYXAyKEFCQ18xMjMkTGV0cmFzLEFCQ18xMjMkTnVtLGltcHJpbWlyX3NhbGlkYSkNCmBgYA0KDQpgYGB7cn0NCiMgV2Fsaw0Kd2FsazIoQUJDXzEyMyRMZXRyYXMsQUJDXzEyMyROdW0saW1wcmltaXJfc2FsaWRhKQ0KDQpgYGANCg0KRXNvIHF1ZSB2ZW1vcyBlcyBlbCBlZmVjdG8gc2VjdW5kYXJpbyBkZW50cm8gZGUgbGEgZnVuY2nDs24gKGltcHJpbWlyKQ0KDQojIyBEaXNjdXNpw7NuLg0KDQo+IMK/Q3XDoW5kbyB1c2FyIGVzdGFzIGhlcnJhbWllbnRhcz8NCg0KQSBsbyBsYXJnbyBkZWwgY3Vyc28gdmltb3MgZGlmZXJlbnRlcyB0w6ljbmljYXMgcGFyYSBtYW5pcHVsYWNpw7NuIGRlIGRhdG9zLiBFbiBwYXJ0aWN1bGFyLCBsYSBsaWJyZXLDrWEgZHBseXIgbm9zIHBlcm1pdMOtYSBmw6FjaWxtZW50ZSBtb2RpZmljYXIgeSBjcmVhciBudWV2YXMgdmFyaWFibGVzLCBhZ3J1cGFuZG8uIMK/Q3VhbmRvIHVzYW1vcyBgZHBseXJgIHkgY3VhbmRvIHVzYW1vcyBgcHVycnJgPw0KDQotIFNpIHRyYWJhamFtb3Mgc29icmUgdW4gREYgc2ltcGxlLCBzaW4gdmFyaWFibGVzIGFuaWRhZGFzIChsbyBxdWUgY29ub2PDrWFtb3MgaGFzdGEgaG95KSBwb2RlbW9zIHVzYXIgYGRwbHlyYA0KLSBTaSBxdWVyZW1vcyB0cmFiYWphciBjb24gREYgYW5pZGFkb3MsIGNvbiBjb3NhcyBxdWUgbm8gc29uIERGLCBvIHNpIGVsIHJlc3VsdGFkbyBkZSBsYSBvcGVyYWNpw7NuIHF1ZSB2YW1vcyBhIHJlYWxpemFyIGEgbml2ZWwgYXJjaGl2byBlcyBhbGdvIGRpc3RpbnRvIGEgdW4gdmFsb3Igw7puaWNvLCBub3MgY29udmllbmUgdXNhciBgbWFwYCB5IGBwdXJycmANCg0KLSBMYXMgZnVuY2lvbmVzIGB3YWxrYCBzb24gw7p0aWxlcyBwb3IgZWplbXBsbyBwYXJhIGVzY3JpYmlyIGFyY2hpdm9zIGVuIGRpc2NvIGRlIGZvcm1hIGl0ZXJhdGl2YS4gQWxnbyBxdWUgbm8gZ2VuZXJhIHVuYSBzYWxpZGENCg0K</div>
 
 
 </div>
