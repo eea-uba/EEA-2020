@@ -315,9 +315,9 @@ lasso.mod=glmnet(x=nba_mtx, # Matriz de regresores
                  alpha=1, # Indicador del tipo de regularizacion
                  standardize = F) # Que esta haciendo este parametro?
                  
-lasso_coef = lasso.mod %>% tidy()
+lasso_coef = lasso.mod %>% tidy() %>% arrange(step)
 
-lasso_coef
+lasso_coef 
 ```
 
 ### Gráficos de analisis
@@ -377,7 +377,7 @@ lasso.mod=glmnet(x=nba_mtx, # Matriz de regresores
                  alpha=1, # Indicador del tipo de regularizacion
                  standardize = TRUE) # Estandarizamos
                  
-lasso_coef = lasso.mod %>% tidy()
+lasso_coef = lasso.mod %>% tidy() %>% arrange(step)
 
 lasso_coef
 ```
@@ -586,7 +586,7 @@ elastic.mod=glmnet(x=nba_mtx, # Matriz de regresores
                  standardize = TRUE)
 
 # Coeficientes del modelo                 
-elastic_coef= elastic.mod %>% tidy()
+elastic_coef= elastic.mod %>% tidy() %>% arrange(step)
 
 elastic_coef 
 ```
