@@ -1,11 +1,12 @@
 ---
 title: "Regularización: Lasso, Ridge y Elastic Net"
+author: "Juan Manuel Barriola y Sofia Perini"
+date: "14 de Noviembre de 2020"
 output: 
   html_notebook: 
     toc: yes
     toc_float: yes
-author: "Juan Manuel Barriola y Diego Kozlowski"
-date: 22-11-2018
+
 ---
   
 ```{r, echo=TRUE, message=FALSE}
@@ -22,79 +23,37 @@ library(caret)
 set.seed(1992)
 ```
 
-Las técnicas de **regularización** son útiles para trabajar con conjuntos con **gran cantidad de variables**, las cuales pueden introducir variabilidad en las estimaciones de los parámetros. El problema que vamos a tratar de resolver es **predecir** el **salario** de un **jugador de la NBA** en base a ciertos predictores.
+Las técnicas de **regularización** son útiles para trabajar con conjuntos con **gran cantidad de variables**, las cuales pueden introducir variabilidad en las estimaciones de los parámetros. El problema que vamos a tratar de resolver es **predecir** el **salario** de un **jugador de la NBA** para la temporada 2019-2020 en base a sus estadísticas de juego durante la temporada 2018-2019.
 
 # Conjuntos de datos
 
-Vamos a utilizar dos conjuntos de datos provenientes de Kaggle:
-  
-1) **stats** cuenta con las estadísticas de los jugadores (https://www.kaggle.com/koki25ando/salary)
+Los datos provienen de la página (Basketball Reference)[https://www.basketball-reference.com] y fueron previamente trabajados por nosotros para obtener el formato actual.
 
-2) **salary** cuenta con los salarios de los jugadores (https://www.kaggle.com/drgilermo/nba-players-stats)
+Las variables del set son:
 
-Year: Season     
 
-Player: name   
 
-Pos: Position   
+**Player**: nombre, **Pos**: Posición, **Age**: Edad, **G**: Partidos, **GS**: Partidos que comenzó como titular ,
+**MP**: Minutos jugados, **PER**: Player Efficiency Rating, **TS%**: True Shooting % : medida de eficiencia del jugador al lanzar 
+**3PAr**: 3-Point Attempt Rate, **FTr**:Free Throw Rate, **ORB%**: Offensive Rebound Percentage, **DRB%**: Defensive Rebound Percentage, **TRB%**: Total Rebound Percentage, **AST%**: Assist Percentage, **STL%**: Steal Percentage, **BLK%**: Block Percentage, **TOV%**: Turnover Percentage, **USG%**: Usage Percentage, **OWS**: Offensive Win Shares, **DWS**: Defensive Win Shares, **WS**: Win Shares
 
-Age: Age
+*WS/48*: Win Shares Per 48 Minutes
 
-Tm: Team
+*OBPM*: Offensive Box Plus/Minus
 
-G: Games
+*DBPM*: Defensive Box Plus/Minus
 
-GS: Games Started
+*BPM*: Box Plus/Minus : comparaciones contra el "jugador promedio" de la NBA
 
-MP: Minutes Played
+*VORP*: Value Over Replacement: Medida vinculada al BPM
 
-PER: Player Efficiency Rating
+*FG*: Field Goals
 
-TS%: True Shooting % : medida de eficiencia del jugador al lanzar 
+*FGA*: Field Goal Attempts
 
-3PAr: 3-Point Attempt Rate
+*FG%*: Field Goal Percentage
 
-FTr:Free Throw Rate
-
-ORB%: Offensive Rebound Percentage
-
-DRB%: Defensive Rebound Percentage
-
-TRB%: Total Rebound Percentage
-
-AST%: Assist Percentage
-
-STL%: Steal Percentage
-
-BLK%: Block Percentage
-
-TOV%: Turnover Percentage
-
-USG%: Usage Percentage
-
-OWS: Offensive Win Shares
-
-DWS: Defensive Win Shares
-
-WS: Win Shares
-
-WS/48: Win Shares Per 48 Minutes
-
-OBPM: Offensive Box Plus/Minus
-
-DBPM: Defensive Box Plus/Minus
-
-BPM: Box Plus/Minus : comparaciones contra el "jugador promedio" de la NBA
-
-VORP: Value Over Replacement: Medida vinculada al BPM
-
-FG: Field Goals
-
-FGA: Field Goal Attempts
-
-FG%: Field Goal Percentage
-
-3P: 3-Point Field Goals
+*3P*: 3-Point Field Goals
 
 3PA: 3-Point Field Goal Attempts
 
@@ -136,7 +95,8 @@ PTS:Points
 # Los datos de salario son para la temporada 2017-2018
 nba = read_csv(" nba_player_stats_salary_2019_2020.csv") %>% 
   rename(salary = mean_salary_2019_2020) %>% 
-  mutate(Pos = str_remove(string = Pos, pattern = "\\-.*"))
+  mutate(Pos = str_remove(string = Pos, pattern = "\\-.*")) %>% 
+  mutate_all(~replace(., is.na(.), 0))
 glimpse(nba)
 ```
 
@@ -145,10 +105,6 @@ Vemos que `salarios` contiene el nombre, equipo y salario en dolares de los juga
 `Estadisticas` es una tabla que contiene 51 variables, de las cuales 46 contienen información de muchas estadísticas de la temporada 2017-2018.
 
 Hacemos el join por jugador y equipo. Un jugador puede ser cambiado/vendido durante la temporada. De esta manera mantenemos a los jugadores con las estadisticas correspondientes al equipo con quien acordaron el salario.
-
-```{r}
-nba = nba %>% drop_na()
-```
 
 
 # Analisis Exploratorio
