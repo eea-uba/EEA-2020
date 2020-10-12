@@ -1,7 +1,7 @@
 ---
 title: "Regresión Lineal Múltiple II"
 author: "Juan Barriola y Sofía Perini"
-date: "10 de Octubre de 2020"
+date: "17 de Octubre de 2020"
 output:
   html_notebook:
     theme: spacelab
@@ -38,36 +38,41 @@ library(gridExtra)
 
 #### Levantamos Dataset y seleccionamos variables de interés
 
-```{r}
+La limpieza consistió en: eliminar los outliers de acuerdo a los criterios de la clase 3, descartar los sueldos dolarizados, eliminar los registros inconsistentes con la edad laboral, aquellas inconsistencias en las variables sueldo bruto y neto, como también aquellos errores de carga en los años de experiencia y las inconsistencias en relación con los años en la empresa actual, quedando como resultado un dataset de 159 observaciones, con el que trabajaremos a continuación (98 DA y 61 DS).
+
+Seleccionamos variables de interés y armamos nuevas variables. 
+
+```{r, warning=F, message=F}
 encuesta <- read_csv("../Fuentes/encuesta_RLM_limpia.csv")
 df <- encuesta %>%
-  select(me_identifico, edad, donde_estas_trabajando, anos_de_experiencia, anos_en_la_empresa_actual, anos_en_el_puesto_actual, gente_a_cargo, trabajo_de, nivel_de_estudios_alcanzado, estado, salario_bruto, salario_neto) 
-# agrego columna de nivel educativo alcanzado (agrupa nivel de estudios y estado)
-df <- df %>% 
-  mutate(nivel_educativo = case_when(nivel_de_estudios_alcanzado %in% c("Posgrado", "Posdoctorado", "Doctorado") ~ "Posgrado", 
+  select(me_identifico, edad, donde_estas_trabajando, anos_de_experiencia, anos_en_la_empresa_actual, anos_en_el_puesto_actual, gente_a_cargo, trabajo_de, nivel_de_estudios_alcanzado, estado, salario_bruto, salario_neto) %>%
+  # creamos la variable perfil
+  mutate(perfil = factor(case_when(trabajo_de == "BI Analyst / Data Analyst" ~ "DA", trabajo_de == "Data Scientist / Data Engineer" ~ "DS")), 
+  # y la variable nivel educativo alcanzado (agrupa nivel de estudios y estado)
+         nivel_educativo = case_when(nivel_de_estudios_alcanzado %in% c("Posgrado", "Posdoctorado", "Doctorado") ~ "Posgrado", 
                                      TRUE ~ nivel_de_estudios_alcanzado), nivel_edu_alcanzado = paste(nivel_educativo, sep = " ", estado))
 df
 ```
-
 ### Partición del dataset en train y test
 
-En este caso para evaluar los modelos vamos a realizar una partición entre dataset de entrenamiento (70%) y testeo (30%) usando la función resample_partition del paquete modelr.
+En este caso para evaluar los modelos vamos a realizar una partición entre dataset de entrenamiento (70%) y testeo (30%) usando la función inicial_split del paquete tidymodels.
 
 ```{r}
 # fijamos semilla
 set.seed(44)
-# Partición Train y Test
-train_test <- df %>% 
-  modelr::resample_partition(c(train = 0.7, test = 0.3))
+# Partición Train y Test, indicando proporción
+df_split <- initial_split(df, prop = 0.7)
 # armamos dataframe de testeo y entrenamiento
-df_train <- train_test$train %>% as_tibble()
-df_test <- train_test$test %>% as_tibble()
+df_train <- training(df_split)
+df_test <- testing(df_split)
 # vemos el contenido
 df_train %>%
-  glimpse() # 111 filas
+  glimpse() # 112 filas
 df_test %>%
-  glimpse() # 48 filas
+  glimpse() # 47 filas
 ```
+
+#### Ajuste
 
 Habíamos realizado tres modelos distintos para tratar de explicar el salario neto: 
 
@@ -76,6 +81,10 @@ Habíamos realizado tres modelos distintos para tratar de explicar el salario ne
 * Modelo **Años de experiencia y Género**
 
 * Modelo **Años de experiencia y Nivel Educativo Alcanzado**
+
+Agregamos uno adicional: 
+
+* **Modelo Varias**: Años de Experiencia, Género y Gente a cargo
 
 Volvemos a realizar estos modelos utilizando el dataset de entrenamiento:
 
@@ -149,7 +158,7 @@ ggplot(tidy_meed, aes(estimate, term, xmin = conf.low, xmax = conf.high, height 
   labs(y = "Coeficientes β", x = "Estimación")
 ```
 
-Tal como se había observado en la clase 5, vemos que hay algunos IC que contienen al 0 y otros que no. Es decir, que algunos niveles de la variable nivel educativo alcanzado resultan estadísticamente significativos y otros no.  
+Tal como se había observado en la clase 6, vemos que hay algunos IC que contienen al 0 y otros que no. Es decir, que algunos niveles de la variable nivel educativo alcanzado resultan estadísticamente significativos y otros no.  
 **Modelo Varias**
 
 ```{r}
@@ -165,7 +174,7 @@ ggplot(tidy_varias, aes(estimate, term, xmin = conf.low, xmax = conf.high, heigh
   labs(y = "Coeficientes β", x = "Estimación")
 ```
 
-Podemos calcular las variables resumen para todos los modelos juntos, usando la función map_df de la librerìa purrr para poder mostrar las salidas todas en un mismo dataframe. 
+Podemos calcular las variables resumen para todos los modelos juntos, usando la función map_df de la librería purrr para poder mostrar las salidas todas en un mismo dataframe. 
 
 ```{r}
 # armamos lista con todos los modelos
@@ -186,7 +195,7 @@ $$ R^2_{a,p} = 1 − \frac{(\frac{SSRes_p}{n − p})}{(\frac{SSTot}{n − 1})} =
 Como $(SSTot/n−1)$ está fijo en un conjunto de datos dado (sólo depende de las
 Y observadas), el $R_a^2$ aumenta si y sólo si la $SSRes_p$ disminuye.
 
-Veamos qué pasa con los ajustes qué hicimos. 
+Veamos qué pasa con los ajustes que hicimos. 
 
 ```{r}
 # calculamos las métricas para todos los modelos
@@ -195,19 +204,25 @@ purrr::map_df(models, broom::glance, .id = "model") %>%
   arrange(desc(adj.r.squared))
 ```
 
+### Selección del mejor modelo
+
 ¿Cuál es el modelo que mejor explica la variabildad del conjunto?
 
 Como no todos los modelos tienen igual número de variables, debemos compararlos a través del $R_a^2$, ya que sino podemos incurrir en un error. Por ejemplo, en el caso de modelo_exp_edu el $R^2$ es el mayor de todos pero cuando analizamos el $R_a^2$ es el menor. Esto significa que el $R^2$  de ese modelo solo se incrementó por la cantidad de variables dummies del modelo, no por ser un mejor modelo.
 
-En este caso el mejor modelo resulta ser modelo_exp_sex: que explica el salario neto en función de los años de experiencia y el género. 
+En este caso el **mejor modelo** resulta ser modelo_exp_sex: que explica el salario neto en función de los años de experiencia y el género. 
 
-### Diagnóstico de Modelos
+## Diagnóstico de Modelos
 
 El diagnóstico del modelo consiste en utilizar técnicas para validar el cumplimiento (o no) de los supuestos del modelo lineal. Recordemos que estos supuestos se puede resumir en:
 
 $ε_i ∼ N(0,σ^2)$ independientes entre sí.
 
-Los errores tienen distribución normal con media cero y varianza constante y son independientes entre sí. Los errores son inobservables, por lo tanto tendremos que trabajar con su correlato empírico: los residuos en las técnicas de diagnóstico.
+Los errores tienen distribución normal con media cero y varianza constante y son independientes entre sí. Los errores son inobservables, por lo tanto, tendremos que trabajar con su correlato empírico: los residuos en las técnicas de diagnóstico.
+
+Vamos a efectuar el diagnóstico de los mejores dos modelos. 
+
+**Diagnóstico para el Modelo Años de experiencia y Género**
 
 ```{r}
 plot(modelo_exp_sex)
@@ -223,15 +238,18 @@ plot(modelo_exp_sex)
 df_train[40,]
 ```
 
-* *Diagnóstico del modelo*: El modelo creado no cumple con los supuestos del modelo lineal. Parecen existir dos problemas: la existencia de heterocedasticidad (varianza no constante) y la presencia de observaciones de alto leverage. 
+* *Diagnóstico del modelo*: El modelo creado no cumple con los supuestos del modelo lineal. Parecen existir problemas de heterocedasticidad (varianza no constante), falta de normalidad y presencia de observaciones de alto leverage.
 
-Veamos la versión tidy de estos gráficos. 
+Veamos la versión tidy de estos gráficos. Para ello creamos un dataframe con la información de los distintos modelos creados. 
 
 ```{r}
 # calculamos valores predichos para todos los modelos
 au_modelos = purrr::map_df(models, broom::augment, .id = "model")
+# observamos lo que ocurre con las variables que no se incluyen en el modelo
 au_modelos %>%
-  head()
+  head(5)
+au_modelos %>%
+  tail(5)
 ```
 
 Al contar con esta información como dataframe, podemos realizar los gráficos de diagnóstico con ggplot. Vamos a ver dos ejemplos con los mejores modelos, pero se podría hacer para todos el mismo ejercicio. 
@@ -269,6 +287,20 @@ g4 = ggplot(au_modelos %>% filter(model == "modelo_exp_sex"),
 grid.arrange(g1, g2, g3, g4, nrow = 2)
 ```
 
+También podemos identificar cuál es el dato con alto leverage.
+
+```{r}
+au_modelos %>% filter(model == "modelo_exp_sex") %>%
+  filter(.hat>0.075)
+```
+
+**Diagnóstico para el Modelo Varias: experiencia, género y gente a cargo**
+
+```{r}
+plot(modelo_varias)
+```
+Calculamos los mismos gráficos con ggplot. 
+
 ```{r}
 # Modelo varias
 g1 = ggplot(au_modelos %>% filter(model ==  "modelo_varias"), 
@@ -302,7 +334,43 @@ g4 = ggplot(au_modelos %>% filter(model == "modelo_varias"),
 grid.arrange(g1, g2, g3, g4, nrow = 2)
 ```
 
-1) medidas de evaluación  de R cuadrado ajustado
-2) medidas de predicción
-3) una discusión más general de explicación VS predicción
+* *Residuos vs valores predichos*: Parece existir cierta estructura en los datos: la varianza parece incrementarse con los valores predichos y luego se reduce (depende de la variable), por lo que no se satisface el supuesto de homocedasticidad.
+
+* *Normal QQ plot*: El extremo superior derecho no se ajusta a la distribución teórica, por lo que no parecen seguir una distribución normal.
+
+* *Residual vs leverage*: Existen un punto con un leverage bastante alto.
+
+Veamos cuál es ese punto. 
+
+```{r}
+au_modelos %>% filter(model == "modelo_varias") %>%
+  filter(.hat == max(.hat))
+```
+
+* *Diagnóstico del modelo*: El modelo creado no cumple con los supuestos del modelo lineal, dado que se detecta existencia de heterocedasticidad (varianza no constante), falta de normalidad y presencia de una observación de alto leverage.
+
+## Predicción usando el dataset de testing
+
+Vamos a emplear la función augment para predecir el sueldo neto sobre el dataset de testeo. Cuando se proporciona newdata, solo devuelve las columnas .fitted y .resid. 
+
+```{r}
+# Agregamos la predicciones al dataset de testeo
+pred_exp_sex = augment(modelo_exp_sex, newdata=df_test) 
+pred_exp_sex
+pred_varias = augment(modelo_varias, newdata=df_test) 
+pred_varias
+```
+
+Se emplea como medida de error el MSE (mean square error).
+
+La raíz del error cuadrático medio rmse() es una métrica que está en las mismas unidades que los datos originales.
+
+```{r}
+# Supply truth and predictions as bare column names
+rmse(pred_exp_sex, salario_neto, .fitted)
+rmse(pred_varias, salario_neto, .fitted)
+```
+
+
+
 
