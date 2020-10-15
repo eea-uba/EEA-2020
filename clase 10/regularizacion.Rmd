@@ -1,11 +1,12 @@
 ---
 title: "Regularización: Lasso, Ridge y Elastic Net"
+author: "Juan Manuel Barriola y Sofia Perini"
+date: "14 de Noviembre de 2020"
 output: 
   html_notebook: 
     toc: yes
     toc_float: yes
-author: "Juan Manuel Barriola y Diego Kozlowski"
-date: 22-11-2018
+
 ---
   
 ```{r, echo=TRUE, message=FALSE}
@@ -22,79 +23,37 @@ library(caret)
 set.seed(1992)
 ```
 
-Las técnicas de **regularización** son útiles para trabajar con conjuntos con **gran cantidad de variables**, las cuales pueden introducir variabilidad en las estimaciones de los parámetros. El problema que vamos a tratar de resolver es **predecir** el **salario** de un **jugador de la NBA** en base a ciertos predictores.
+Las técnicas de **regularización** son útiles para trabajar con conjuntos con **gran cantidad de variables**, las cuales pueden introducir variabilidad en las estimaciones de los parámetros. El problema que vamos a tratar de resolver es **predecir** el **salario** de un **jugador de la NBA** para la temporada 2019-2020 en base a sus estadísticas de juego durante la temporada 2018-2019.
 
 # Conjuntos de datos
 
-Vamos a utilizar dos conjuntos de datos provenientes de Kaggle:
-  
-1) **stats** cuenta con las estadísticas de los jugadores (https://www.kaggle.com/koki25ando/salary)
+Los datos provienen de la página (Basketball Reference)[https://www.basketball-reference.com] y fueron previamente trabajados por nosotros para obtener el formato actual.
 
-2) **salary** cuenta con los salarios de los jugadores (https://www.kaggle.com/drgilermo/nba-players-stats)
+Las variables del set son:
 
-Year: Season     
 
-Player: name   
 
-Pos: Position   
+**Player**: nombre, **Pos**: Posición, **Age**: Edad, **G**: Partidos, **GS**: Partidos que comenzó como titular ,
+**MP**: Minutos jugados, **PER**: Player Efficiency Rating, **TS%**: True Shooting % : medida de eficiencia del jugador al lanzar 
+**3PAr**: 3-Point Attempt Rate, **FTr**:Free Throw Rate, **ORB%**: Offensive Rebound Percentage, **DRB%**: Defensive Rebound Percentage, **TRB%**: Total Rebound Percentage, **AST%**: Assist Percentage, **STL%**: Steal Percentage, **BLK%**: Block Percentage, **TOV%**: Turnover Percentage, **USG%**: Usage Percentage, **OWS**: Offensive Win Shares, **DWS**: Defensive Win Shares, **WS**: Win Shares
 
-Age: Age
+*WS/48*: Win Shares Per 48 Minutes
 
-Tm: Team
+*OBPM*: Offensive Box Plus/Minus
 
-G: Games
+*DBPM*: Defensive Box Plus/Minus
 
-GS: Games Started
+*BPM*: Box Plus/Minus : comparaciones contra el "jugador promedio" de la NBA
 
-MP: Minutes Played
+*VORP*: Value Over Replacement: Medida vinculada al BPM
 
-PER: Player Efficiency Rating
+*FG*: Field Goals
 
-TS%: True Shooting % : medida de eficiencia del jugador al lanzar 
+*FGA*: Field Goal Attempts
 
-3PAr: 3-Point Attempt Rate
+*FG%*: Field Goal Percentage
 
-FTr:Free Throw Rate
-
-ORB%: Offensive Rebound Percentage
-
-DRB%: Defensive Rebound Percentage
-
-TRB%: Total Rebound Percentage
-
-AST%: Assist Percentage
-
-STL%: Steal Percentage
-
-BLK%: Block Percentage
-
-TOV%: Turnover Percentage
-
-USG%: Usage Percentage
-
-OWS: Offensive Win Shares
-
-DWS: Defensive Win Shares
-
-WS: Win Shares
-
-WS/48: Win Shares Per 48 Minutes
-
-OBPM: Offensive Box Plus/Minus
-
-DBPM: Defensive Box Plus/Minus
-
-BPM: Box Plus/Minus : comparaciones contra el "jugador promedio" de la NBA
-
-VORP: Value Over Replacement: Medida vinculada al BPM
-
-FG: Field Goals
-
-FGA: Field Goal Attempts
-
-FG%: Field Goal Percentage
-
-3P: 3-Point Field Goals
+*3P*: 3-Point Field Goals
 
 3PA: 3-Point Field Goal Attempts
 
@@ -134,11 +93,11 @@ PTS:Points
 
 ```{r}
 # Los datos de salario son para la temporada 2017-2018
-salarios <- read.csv("NBA_season1718_salary.csv", stringsAsFactors = F) %>% rename(salary=season17_18)
-# Filtramos las estadisticas para quedarnos con la temporada 2017
-estadisticas <- read.csv("Seasons_Stats.csv", stringsAsFactors = F) %>% filter(Year>= 2017) %>% select(-c(blanl, blank2))
-head(salarios)
-colnames(estadisticas)
+nba = read_csv(" nba_player_stats_salary_2019_2020.csv") %>% 
+  rename(salary = mean_salary_2019_2020) %>% 
+  mutate(Pos = str_remove(string = Pos, pattern = "\\-.*")) %>% 
+  mutate_all(~replace(., is.na(.), 0))
+glimpse(nba)
 ```
 
 Vemos que `salarios` contiene el nombre, equipo y salario en dolares de los jugadores. 
@@ -147,12 +106,6 @@ Vemos que `salarios` contiene el nombre, equipo y salario en dolares de los juga
 
 Hacemos el join por jugador y equipo. Un jugador puede ser cambiado/vendido durante la temporada. De esta manera mantenemos a los jugadores con las estadisticas correspondientes al equipo con quien acordaron el salario.
 
-```{r}
-# Join
-nba <- inner_join(salarios, estadisticas, by=c('Player', 'Tm')) %>%
-  select(-c(X.x, X.y, Year)) %>% 
-  drop_na() # Eliminamos los NA
-```
 
 # Analisis Exploratorio
 
@@ -161,7 +114,7 @@ nba <- inner_join(salarios, estadisticas, by=c('Player', 'Tm')) %>%
 ```{r}
 ggplot(nba, aes(Pos, salary, fill=Pos)) +
   geom_boxplot() +
-  geom_text(aes(label=ifelse(salary>28700000,as.character(Player),'')),hjust=-0.1,vjust=0) +
+  geom_text(aes(label=ifelse(salary>30500000,as.character(Player),'')),hjust=-0.1,vjust=0) +
   theme_bw() +
   labs(title= "Boxplots: salarios y posicion de juego", x="Posicion", y="Salario")
 ```
@@ -293,7 +246,7 @@ Realizamos una partición entre dataset de entrenamiento y testeo usando la func
 ```{r}
 train_test <- nba %>% resample_partition(c(train=0.7,test=0.3))
 
-nba <- train_test$train %>% as_tibble()
+train <- train_test$train %>% as_tibble()
 test <- train_test$test %>% as_tibble()
 ```
 
@@ -308,9 +261,9 @@ En este caso vamos a trabajar con $\alpha=1$.
 
 ```{r}
 # Vector con los salarios
-nba_salary = nba$salary
+nba_salary = train$salary
 # Matriz con los regresores
-nba_mtx = model.matrix(salary~., data = nba)
+nba_mtx = model.matrix(salary~., data = train)
 
 # Modelo Lasso
 lasso.mod=glmnet(x=nba_mtx, # Matriz de regresores
@@ -318,9 +271,9 @@ lasso.mod=glmnet(x=nba_mtx, # Matriz de regresores
                  alpha=1, # Indicador del tipo de regularizacion
                  standardize = F) # Que esta haciendo este parametro?
                  
-lasso_coef = lasso.mod %>% tidy()
+lasso_coef = lasso.mod %>% tidy() %>% arrange(step)
 
-lasso_coef
+lasso_coef 
 ```
 
 ### Gráficos de analisis
@@ -380,7 +333,7 @@ lasso.mod=glmnet(x=nba_mtx, # Matriz de regresores
                  alpha=1, # Indicador del tipo de regularizacion
                  standardize = TRUE) # Estandarizamos
                  
-lasso_coef = lasso.mod %>% tidy()
+lasso_coef = lasso.mod %>% tidy() %>% arrange(step)
 
 lasso_coef
 ```
@@ -589,7 +542,7 @@ elastic.mod=glmnet(x=nba_mtx, # Matriz de regresores
                  standardize = TRUE)
 
 # Coeficientes del modelo                 
-elastic_coef= elastic.mod %>% tidy()
+elastic_coef= elastic.mod %>% tidy() %>% arrange(step)
 
 elastic_coef 
 ```
