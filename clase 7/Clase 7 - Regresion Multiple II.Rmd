@@ -55,7 +55,7 @@ df
 ```
 ### Partición del dataset en train y test
 
-En este caso para evaluar los modelos vamos a realizar una partición entre dataset de entrenamiento (70%) y testeo (30%) usando la función `initial_split` del paquete tidymodels.
+En este caso para evaluar los modelos vamos a realizar una partición entre dataset de entrenamiento (70%) y testeo (30%) usando la función `initial_split` del paquete [rsample](https://rsample.tidymodels.org/) de tidymodels.
 
 ```{r}
 # fijamos semilla
@@ -67,9 +67,9 @@ df_train <- training(df_split)
 df_test <- testing(df_split)
 # vemos el contenido
 df_train %>%
-  glimpse() # 112 filas
+  dim_desc() # 112 filas
 df_test %>%
-  glimpse() # 47 filas
+  dim_desc() # 47 filas
 ```
 
 #### Ajuste
@@ -193,7 +193,7 @@ El $R^2$ permite medir el porcentaje de variabilidad del fenómeno que el modelo
 Sin importar la relevancia de la/s variables regresoras, el $R^2$ aumenta al agregar una variable adicional al modelo, aunque no se incremente la capacidad explicativa. Es decir, que podríamos utilizarlo para comparar modelos con igual número de variables, pero en casos de modelos con distinto número no serían comparables. En estos casos conviene comparar modelos por medio del $R^2$ ajustado que incluyen justamente el número de variables en el modelo. 
 
 $$ R^2_{a,p} = 1 − \frac{(\frac{SSRes_p}{n − p})}{(\frac{SSTot}{n − 1})} = 1 - (\frac{n-1}{n-p})(\frac{SSRes_p}{SSTot}) $$
-Como $(SSTot/n−1)$ está fijo en un conjunto de datos dado (sólo depende de las Y observadas), el $R_a^2$ aumenta si y sólo si la $SSRes_p$ disminuye.
+Como $SSTot/(n−1)$ está fijo en un conjunto de datos dado (sólo depende de las Y observadas), el $R_a^2$ aumenta si y sólo si la $SSRes_p/(n-p)$ disminuye.
 
 Veamos qué pasa con los ajustes que hicimos. 
 
@@ -222,7 +222,7 @@ $ε_i ∼ N(0,σ^2)$ independientes entre sí.
 
 Los errores tienen distribución normal con media cero y varianza constante y son independientes entre sí. Los errores son inobservables, por lo tanto, tendremos que trabajar con su correlato empírico: los residuos en las técnicas de diagnóstico.
 
-Vamos a efectuar el diagnóstico de los mejores dos modelos. 
+Vamos a efectuar el diagnóstico de los mejores dos modelos según el R-cuadrado ajustado. 
 
 **Diagnóstico para el Modelo Años de experiencia y Género**
 
@@ -347,25 +347,27 @@ au_modelos %>% filter(model == "modelo_varias") %>%
 
 * *Diagnóstico del modelo*: El modelo creado no cumple con los supuestos del modelo lineal, dado que se detecta existencia de heterocedasticidad (varianza no constante), falta de normalidad y presencia de una observación de alto leverage.
 
-## Predicción usando el dataset de testing
+## Evaluación en el dataset de testing
 
-Si vamos a utilizar un modelo para predecir nuevos datos nos interesa observar el error del modelo el dataset de **training** y en el dataset de **testing** 
+### Predicción y métrica de error
 
-Vamos a emplear la función `augment` para predecir el sueldo neto sobre el dataset de testeo. Cuando se proporciona newdata, solo devuelve las columnas .fitted y .resid. 
+Si vamos a utilizar un modelo para predecir nuevos datos nos interesa observar el error del modelo en el dataset de **training** y en el dataset de **testing** 
+
+En los problemas de regresión, se suele emplear el RMSE (root mean square error) como medida del error de predicción. Una de sus ventajas es que es una métrica que está en las mismas unidades que los datos originales.
+
+$RMSE = \sqrt{\frac{\sum(\hat{y_i}-y_i)^2}{n}}$
+
+Primero vamos a emplear la función `augment` para predecir el sueldo neto sobre el dataset de testeo. Cuando se proporciona newdata, solo devuelve las columnas .fitted y .resid. 
 
 Observemos el resultado para el modelo **Años de experiencia y Género**
 
 ```{r}
 # Agregamos la predicciones al dataset de testeo
 pred_exp_sex = augment(modelo_exp_sex, newdata=df_test) 
-pred_exp_sex
+pred_exp_sex %>% select(me_identifico, edad, salario_neto, .fitted, .resid)
 ```
 
-En los problemas de regresión, se suele emplear el RMSE (root mean square error) como medida del error de predicción. Una de sus ventajas es que es una métrica que está en las mismas unidades que los datos originales.
-
-$RMSE = \sqrt{\frac{\sum(\hat{y_i}-y_i)^2}{n}}$
-
-Vamos a utilizar la función `rmse` de la librería [**yardstick**](https://yardstick.tidymodels.org/) de **tidymodels**. Los parámetros de la función son:
+Para calcular el RMSE, vamos a utilizar la función `rmse` de la librería [**yardstick**](https://yardstick.tidymodels.org/) de **tidymodels**. Los parámetros de la función son:
 
   * data: dataframe con las columnas truth y estimate
   * truth: nombre de la columna con el valor de verdad
@@ -377,21 +379,29 @@ rmse(data = pred_exp_sex, truth = salario_neto, estimate = .fitted)
 
 ### Comparación entre training y testing
 
-Podemos obtener los valores del RMSE en el dataset de **training** para los cuatro modelos evaluados
+Podemos obtener los valores del RMSE en el dataset de **training** para los cuatro modelos evaluados usando `map`
 
 ```{r}
 # Aplicamos la función augment a los 4 modelos
 lista_predicciones_training = map(.x = models, .f = augment) 
 ```
 
-Esto crea una lista de 4 dataframes con los valores predichos. Luego podemos aplicar la función para calcular el RMSE de los cuatro modelos en el set de **training**
+Creamos una lista de 4 dataframes con los valores predichos. Luego podemos aplicar la función para calcular el RMSE de los cuatro modelos en el set de **training**
 
 ```{r}
 # Obtenemos el RMSE para los 4 modelos
 map_dfr(.x = lista_predicciones_training, .f = rmse, truth = salario_neto, estimate = .fitted, .id="modelo") %>% arrange(.estimate)
 ```
 
-El modelo que obtiene el menor RMSE es el modelo **Años de experiencia y Nivel Educativo**. Veamos que sucede cuando obtenemos el RMSE de los modelos en el set de **testing** 
+El modelo que obtiene el menor RMSE es el modelo **Años de experiencia y Nivel Educativo**. 
+
+¿Qué resultado obtuvimos al observar el R-cuadrado ajustado?
+
+```{r}
+df_evaluacion_train
+```
+
+Veamos que sucede cuando obtenemos el RMSE de los modelos en el set de **testing** 
 
 ```{r}
 # Aplicamos la función augment a los 4 modelos con el set de testing
@@ -400,4 +410,4 @@ lista_predicciones_testing = map(.x = models, .f = augment, newdata = df_test)
 map_dfr(.x = lista_predicciones_testing, .f = rmse, truth = salario_neto, estimate = .fitted, .id="modelo") %>% arrange(.estimate)
 ```
 
-Ahora, el modelo que tiene el menor RMSE es el modelo **Años de experiencia y Género**
+Ahora, el modelo que tiene el menor RMSE es el modelo **Años de experiencia y Género**. ¿Cuál modelo elegirían para predecir nuevas observaciones?
