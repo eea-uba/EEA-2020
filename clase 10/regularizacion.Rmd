@@ -2,24 +2,20 @@
 title: "Regularización: Lasso, Ridge y Elastic Net"
 author: "Juan Manuel Barriola y Sofia Perini"
 date: "14 de Noviembre de 2020"
-output: 
-  html_notebook: 
+output:
+  html_notebook:
+    theme: spacelab
     toc: yes
     toc_float: yes
-
+    toc_depth: 3
 ---
   
-```{r, echo=TRUE, message=FALSE}
+```{r, echo=TRUE, message=FALSE, include=FALSE}
 library(tidyverse)
-library(broom)
-library(ISLR)
+library(tidymodels)
 library(GGally)
-library(modelr)
 library(cowplot)
 library(glmnet)
-library(rlang)
-library(purrr)
-library(caret)
 set.seed(1992)
 ```
 
@@ -27,113 +23,56 @@ Las técnicas de **regularización** son útiles para trabajar con conjuntos con
 
 # Conjuntos de datos
 
-Los datos provienen de la página (Basketball Reference)[https://www.basketball-reference.com] y fueron previamente trabajados por nosotros para obtener el formato actual.
+Los datos provienen de la página [Basketball Reference](https://www.basketball-reference.com) y fueron previamente trabajados por nosotros para obtener el formato actual.
 
 Las variables del set son:
 
+```{r, message=FALSE}
+diccionario = read_csv("diccionario_terminos.csv")
+diccionario
+```
 
-
-**Player**: nombre, **Pos**: Posición, **Age**: Edad, **G**: Partidos, **GS**: Partidos que comenzó como titular ,
-**MP**: Minutos jugados, **PER**: Player Efficiency Rating, **TS%**: True Shooting % : medida de eficiencia del jugador al lanzar 
-**3PAr**: 3-Point Attempt Rate, **FTr**:Free Throw Rate, **ORB%**: Offensive Rebound Percentage, **DRB%**: Defensive Rebound Percentage, **TRB%**: Total Rebound Percentage, **AST%**: Assist Percentage, **STL%**: Steal Percentage, **BLK%**: Block Percentage, **TOV%**: Turnover Percentage, **USG%**: Usage Percentage, **OWS**: Offensive Win Shares, **DWS**: Defensive Win Shares, **WS**: Win Shares
-
-*WS/48*: Win Shares Per 48 Minutes
-
-*OBPM*: Offensive Box Plus/Minus
-
-*DBPM*: Defensive Box Plus/Minus
-
-*BPM*: Box Plus/Minus : comparaciones contra el "jugador promedio" de la NBA
-
-*VORP*: Value Over Replacement: Medida vinculada al BPM
-
-*FG*: Field Goals
-
-*FGA*: Field Goal Attempts
-
-*FG%*: Field Goal Percentage
-
-*3P*: 3-Point Field Goals
-
-3PA: 3-Point Field Goal Attempts
-
-3P%: 3-Point Field Goal Percentage
-
-2P: 2-Point Field Goals
-
-2PA: 2-Point Field Goal Attempts
-
-2P%: 2-Point Field Goal Percentage
-
-eFG%: Effective Field Goal Percentage
-
-FT: Free Throws
-
-FTA: Free Throw Attempts
-
-FT%: Free Throw Percentage
-
-ORB: Offensive Rebounds
-
-DRB: Defensive Rebounds
-
-TRB: Total Rebounds
-
-AST: Assists
-
-STL: Steals
-
-BLK: Blocks
-
-TOV: Turnovers
-
-PF: Personal Fouls
-
-PTS:Points
+En el glosario de [Basketball Reference](https://www.basketball-reference.com/about/glossary.html) pueden encontrar una descripción más exhaustiva de cada una de estas métricas
 
 ```{r}
-# Los datos de salario son para la temporada 2017-2018
+# Los datos de salario son para la temporada 2019-2020
 nba = read_csv(" nba_player_stats_salary_2019_2020.csv") %>% 
   rename(salary = mean_salary_2019_2020) %>% 
   mutate(Pos = str_remove(string = Pos, pattern = "\\-.*")) %>% 
   mutate_all(~replace(., is.na(.), 0))
+
 glimpse(nba)
 ```
-
-Vemos que `salarios` contiene el nombre, equipo y salario en dolares de los jugadores. 
-
-`Estadisticas` es una tabla que contiene 51 variables, de las cuales 46 contienen información de muchas estadísticas de la temporada 2017-2018.
-
-Hacemos el join por jugador y equipo. Un jugador puede ser cambiado/vendido durante la temporada. De esta manera mantenemos a los jugadores con las estadisticas correspondientes al equipo con quien acordaron el salario.
 
 
 # Analisis Exploratorio
 
-### Gráfico de la relacion entre la posición y el salario
+## Gráfico de la relacion entre la posición y el salario
 
 ```{r}
+top_players = c("James Harden", "Stephen Curry", "Blake Griffin", "Chris Paul", "LeBron James", "Klay Thompson", "Jimmy Butler", "Gordon Hayward", "Kyle Lowry")
 ggplot(nba, aes(Pos, salary, fill=Pos)) +
   geom_boxplot() +
-  geom_text(aes(label=ifelse(salary>30500000,as.character(Player),'')),hjust=-0.1,vjust=0) +
+  geom_text(aes(label=ifelse((salary>30500000) & Player %in% top_players,as.character(Player),'')),hjust=1.1,vjust=0, size=3) +
   theme_bw() +
   labs(title= "Boxplots: salarios y posicion de juego", x="Posicion", y="Salario")
 ```
 
-Observamos que la distribución varía un poco entre posiciones y hay algunos jugaroes que son outliers.
+Observamos que la distribución varía un poco entre posiciones y hay varios jugadores que son outliers según el criterio de Tukey
 
-
-### Correlagrama
+## Correlagrama
 
 Realizamos el correlograma entre todas las variables cuantitativas
 
 ```{r}
-ggcorr(nba, layout.exp = 2) + labs(title='Correlograma variables cuantitativas')
+nba %>% select_if(is.numeric) %>% 
+ggcorr(., layout.exp = 2) + labs(title='Correlograma variables cuantitativas')
 
 ```
 
 Observamos que existen relaciones de diversa magnitud y signo entre todas las variables
 
-### GGpairs (algunas variables)
+## GGpairs (algunas variables)
 
 Seleccionamos algunas variables y vemos sus relaciones usando `ggpairs`.
 
@@ -161,14 +100,16 @@ modelo_lineal = nba %>% lm(formula = salary~., data = .)
 #Coeficientes
 lineal_coef= modelo_lineal %>% tidy(conf.int=TRUE)
 
-ggplot(lineal_coef, aes(term, estimate))+
+lineal_coef %>% filter(!is.na(estimate)) %>% 
+  ggplot(., aes(term, estimate))+
   geom_point()+
   geom_pointrange(aes(ymin = conf.low, ymax = conf.high))+
   labs(title = "Coeficientes de la regresion lineal", x="", y="Estimacion e Int. Confianza") +
   theme_bw() +
   theme(axis.text.x = element_text(angle=90))
 
-ggplot(lineal_coef, aes(reorder(term, -p.value), p.value, fill=p.value))+
+lineal_coef %>% filter(!is.na(estimate)) %>% 
+  ggplot(., aes(reorder(term, -p.value), p.value, fill=p.value))+
   geom_bar(stat = 'identity', aes(fill=p.value))+
   geom_hline(yintercept = 0.05) +
   labs(title = "P-valor de los regresores", x="", y="P-valor") +
@@ -182,7 +123,15 @@ Notamos que
 
 * Hay ciertas coeficientes estimados que presentan una gran variabilidad pero la escala de las variables puede ocultarnos la verdadera variabilidad de los estimadores
 
-* Sólo tres variables tienen coeficientes significativos: **G**, **GS** y **Age**
+* Sólo tres variables tienen coeficientes significativos: **TOV%**, **G** y **Age**
+
+* Existen cuatro variables cuyo coeficiente estimado es NA: **2P**, **2PA**, **PTS** y **TRB**
+
+```{r}
+lineal_coef %>% filter(is.na(estimate))
+```
+
+Cuando una variable se puede expresar como una combinación lineal de otra, el modelo lineal de R devuelve los valores de los coeficientes estimados como *NA*
 
 Para evitar los problemas que puede introducir la escala, reescalamos las variables con el comando `scale`
 
@@ -193,14 +142,16 @@ nba_scaled = nba %>% mutate_at(vars(-Pos), scale)
 modelo_lineal_scal = nba_scaled %>% lm(formula = salary~., data = .)
 lineal_coef_scal = modelo_lineal_scal %>% tidy(conf.int=TRUE)
 
-ggplot(lineal_coef_scal, aes(term, estimate))+
+lineal_coef_scal %>% filter(!is.na(estimate)) %>% 
+  ggplot(., aes(term, estimate))+
   geom_point()+
   geom_pointrange(aes(ymin = conf.low, ymax = conf.high))+
   labs(title = "Coeficientes de la regresion lineal", subtitle="Variables escaladas", x="", y="Estimacion e Int. Confianza") +
   theme_bw() +
   theme(axis.text.x = element_text(angle=90))
 
-ggplot(lineal_coef_scal, aes(reorder(term, -p.value), p.value, fill=p.value))+
+lineal_coef_scal %>% filter(!is.na(estimate)) %>%
+  ggplot(., aes(reorder(term, -p.value), p.value, fill=p.value))+
   geom_bar(stat = 'identity', aes(fill=p.value))+
   geom_hline(yintercept = 0.05) +
   labs(title = "P-valor de los regresores",subtitle="Variables escaladas", x="", y="P-valor") +
@@ -213,19 +164,24 @@ ggplot(lineal_coef_scal, aes(reorder(term, -p.value), p.value, fill=p.value))+
 Ahora observamos que 
 
 * Los coeficientes cambian de valor
-* Las mismas tres variables tienen coeficientes significativos: **G**, **GS** y **Age**
+* Las mismas tres variables tienen coeficientes significativos: **TOV%**, **G** y **Age**
+* Las mismas cuatro variables tienen coeficiente estimado NA: **2P**, **2PA**, **PTS** y **TRB**
+
+
+```{r}
+lineal_coef_scal %>% filter(is.na(estimate))
+```
 
 ## Evaluacion de los modelos
 
 Obtemos la evaluacion de ambos modelos ¿Cómo esperan que sean los valores de diagnóstico para ambos modelos?
 
 ```{r}
-modelo_lineal = modelo_lineal %>% glance() %>% select(r.squared, adj.r.squared, p.value) 
-modelo_lineal_scal = modelo_lineal_scal %>% glance() %>% select(r.squared, adj.r.squared, p.value)
-bind_rows(modelo_lineal, modelo_lineal_scal) %>% mutate(modelo= c('lineal', 'lineal_escalado'))
+modelos_lineales = list(lineal = modelo_lineal, lineal_escalado = modelo_lineal_scal)
+map_dfr(.x = modelos_lineales, .f = glance, .id="modelo") %>% select(modelo, r.squared, adj.r.squared, p.value)
 ```
 
-La alta cantidad de variables y la existencia de una alta correlación entre varias de ellas ocasionas que los coeficientes estimados tengan alta varianza y que muchos de ellos no sean significativos en términos estadísticos. Las técnicas de **regularización** pueden ayudarnos a mejorar esta situación.
+La alta cantidad de variables y la existencia de una alta correlación entre varias de ellas ocasionan que los coeficientes estimados tengan alta varianza y que muchos de ellos no sean significativos en términos estadísticos. Las técnicas de **regularización** pueden ayudarnos a mejorar esta situación.
 
 # Regularizacion
 
@@ -239,15 +195,15 @@ Con el parámetro $\alpha$ indicamos con que tipo de modelo deseamos trabajar:
   
   * Elastic Net:  $0<\alpha<1$
   
-### Partición Train y Testing
+## Partición Train y Testing
 
-Realizamos una partición entre dataset de entrenamiento y testeo usando la función `resample_partition` del paquete **modelr**
+Realizamos una partición entre dataset de entrenamiento y testeo usando la función `initial_split` del paquete **rsample**
   
 ```{r}
-train_test <- nba %>% resample_partition(c(train=0.7,test=0.3))
+train_test <- nba %>% initial_split(prop = 0.7)
 
-train <- train_test$train %>% as_tibble()
-test <- train_test$test %>% as_tibble()
+train <- training(train_test)
+test <- testing(train_test)
 ```
 
 
@@ -295,11 +251,17 @@ plot(lasso.mod)
 Podemos realizar los graficos para los valores de lambda en ggplot.
 
 ```{r}
-g1=lasso_coef  %>% ggplot(., aes(log(lambda), estimate, group=term, color=term)) + geom_line() + theme_bw()  + theme(legend.position = 'none') +
+g1=lasso_coef  %>% ggplot(., aes(log(lambda), estimate, group=term, color=term)) +
+  geom_line() +
+  theme_bw()  +
+  theme(legend.position = 'none') +
   labs(title="Lasso con Intercepto",  y="Coeficientes")
 
 g2=lasso_coef %>% filter(term!='(Intercept)') %>% 
-  ggplot(., aes(log(lambda), estimate, group=term, color=term)) + geom_line() + theme_bw()  + theme(legend.position = 'none') +
+  ggplot(., aes(log(lambda), estimate, group=term, color=term)) +
+  geom_line() +
+  theme_bw()  +
+  theme(legend.position = 'none') +
   labs(title="Lasso sin Intercepto", y="Coeficientes")
 
 plot_grid(g1,g2)
@@ -308,8 +270,15 @@ plot_grid(g1,g2)
 Veamos un poco mejor aquellas variables que sobreviven para mayores valores de lambda ¿Qué tienen en común todas estas variables?
 
 ```{r}
-lasso_coef %>% filter(term %in% c("G", "GS", "MP", "FGA", "X2PA", "TRB", "PF", "PTS")) %>% 
-  ggplot(., aes(log(lambda), estimate, group=term, color=term)) + geom_line(size=1) + theme_bw() +
+# Seleccionamos los terminos que sobreviven para valores altos de lambda
+terminos_sobrevientes = lasso_coef %>% filter(log(lambda)>16.5, term != "(Intercept)") %>%
+  select(term) %>% distinct() %>% pull()
+# Graficamos
+lasso_coef %>% filter(term %in% terminos_sobrevientes) %>% 
+  ggplot(., aes(log(lambda), estimate, group=term, color=term)) +
+  geom_line(size=1) +
+  geom_hline(yintercept = 0, linetype='dashed') +
+  theme_bw() +
   labs(title="Lasso sin Intercepto", y="Coeficientes", subtitle= "\"Mejores\" variables") +
   scale_color_brewer(palette = 'Set1')
 ```
@@ -320,7 +289,7 @@ Vemos que las variables que "sobreviven" para mayores valores de lambda son las 
 
 Existen dos maneras de poder estandarizar las variables en `glmnet`.
 
-1) Setear `standardize = TRUE`. Con esto se estandariza las regresoras, los coeficientes estimados estan en la escala original de la variable
+1) Setear `standardize = TRUE`. Con esto se estandariza las regresoras y los coeficientes estimados estan en la escala original de la variable
 
 2) Pasar los conjuntos de datos estandarizados. 
 
@@ -353,15 +322,39 @@ plot(lasso.mod)
 ```
 
 ```{r}
-g1=lasso_coef  %>% ggplot(., aes(log(lambda), estimate, group=term, color=term)) + geom_line() + theme_bw()  + theme(legend.position = 'none') +
+g1=lasso_coef  %>% ggplot(., aes(log(lambda), estimate, group=term, color=term)) +
+  geom_line() +
+  theme_bw()  +
+  theme(legend.position = 'none') +
   labs(title="Lasso con Intercepto",  y="Coeficientes")
 
 g2=lasso_coef %>% filter(term!='(Intercept)') %>% 
-  ggplot(., aes(log(lambda), estimate, group=term, color=term)) + geom_line() + theme_bw()  + theme(legend.position = 'none') +
+  ggplot(., aes(log(lambda), estimate, group=term, color=term)) +
+  geom_line() +
+  theme_bw()  +
+  theme(legend.position = 'none') +
   labs(title="Lasso sin Intercepto", y="Coeficientes")
 
 plot_grid(g1,g2)
 ```
+
+Veamos ahora cuáles variables sobreviven para mayores valores de lambda
+
+```{r}
+# Seleccionamos los terminos que sobreviven para valores altos de lambda
+terminos_sobrevientes = lasso_coef %>% filter(log(lambda)>13.1, term != "(Intercept)") %>%
+  select(term) %>% distinct() %>% pull()
+# Graficamos
+lasso_coef %>% filter(term %in% terminos_sobrevientes) %>% 
+  ggplot(., aes(log(lambda), estimate, group=term, color=term)) +
+  geom_line(size=1) +
+  geom_hline(yintercept = 0, linetype='dashed') +
+  theme_bw() +
+  labs(title="Lasso sin Intercepto", y="Coeficientes", subtitle= "\"Mejores\" variables") +
+  scale_color_brewer(palette = 'Set1')
+```
+
+Observamos que ahora tenemos otro set de "mejores" variables
 
 ¿Podemos decidir cuál es el valor óptimo de lambda?
 
@@ -385,36 +378,43 @@ Nuevo parametro
 
 **Salida Base**
 ```{r}
-lasso_cv=cv.glmnet(x=nba_mtx,y=nba_salary,alpha=1, standardize = T)
-lasso_cv
+lasso_cv = cv.glmnet(x=nba_mtx,y=nba_salary,alpha=1, standardize = T)
+summary(lasso_cv)
 ```
 
 Brinda muchisima informacion: 
 
-  * lambda
+  * *lambda*: valor de lambda
   
-  * cvm (Cross-validation mean): es la media del MSE (error) 
+  * *cvm* (Cross-validation mean): es la media del MSE (error) 
 
-  * cvsd (Cross-validation Standard Error): desvio estandar del MSE (error)
+  * *cvsd* (Cross-validation Standard Error): desvio estandar del MSE (error)
   
-  * cvup y cvlo: Limite superior e inferior
+  * *cvup* y *cvlo*: Limite superior e inferior
   
-  * nzero: Coeficientes distintos de cero
+  * *nzero*: Coeficientes distintos de cero
   
-  * lambda.min: lambda para el cual el MSE (error) es minimo
+  * *lambda.min*: lambda para el cual el MSE (error) es minimo
   
-  * lambda.1se: lambda que se encuentra a 1 desvío estandar de lambda.min
+  * *lambda.1se*: lambda que se encuentra a 1 desvío estandar de lambda.min
 
 En glm.fit tenemos la cantidad de variables, el valor de lambda y el porcentaje de deviance explicada por el modelo
+
+Si imprimimos el objeto tenemos:
+
+```{r}
+lasso_cv
+```
+
 
 **Grafico Base**
 ```{r}
 plot(lasso_cv)
 ```
 
-El gráfico nos muestra la media del MSE con su limite superior e inferior y la cantidad de varaibles que sobreviven para cada valor de lambda.
+El gráfico nos muestra la media del MSE con su limite superior e inferior y la cantidad de variables que sobreviven para cada valor de lambda.
 
-**Modelr**
+**Broom**
 
 Obtenemos la información del objeto **lasso_cv** con las funciones `tidy` y `glance`
 
@@ -447,7 +447,7 @@ lasso_opt %>% glance()
 
 ```
 
-Han quedado 7 variables, todas con coeficientes positivos y el modelo explica el 63.76% de la deviance.
+Han quedado 15 variables, todas con coeficientes positivos y el modelo explica el 63.76% de la deviance.
 
 ## Ridge
 
@@ -525,7 +525,7 @@ ridge_opt = glmnet(x=nba_mtx, # Matriz de regresores
 # Salida estandar
 ridge_opt
 # Tidy
-ridge_opt %>% tidy()
+ridge_opt %>% tidy() %>% mutate(estimate = round(estimate, 4))
 ```
 
 ## Elastic Net
@@ -542,7 +542,7 @@ elastic.mod=glmnet(x=nba_mtx, # Matriz de regresores
                  standardize = TRUE)
 
 # Coeficientes del modelo                 
-elastic_coef= elastic.mod %>% tidy() %>% arrange(step)
+elastic_coef= elastic.mod %>% tidy() %>% mutate(estimate = round(estimate, 4)) %>% arrange(step)  
 
 elastic_coef 
 ```
@@ -599,7 +599,7 @@ elastic_opt = glmnet(x=nba_mtx, # Matriz de regresores
 # Salida estandar
 elastic_opt
 # Tidy
-elastic_opt %>% tidy()
+elastic_opt %>%  tidy()  %>% mutate(estimate = round(estimate, 4))
 ```
 
 ## Breve comparacion entre modelos
@@ -636,4 +636,73 @@ plot_grid(ridge_dev, lasso_dev, elastic_dev)
 
 ## Testing
 
-Con los modelos optimos que encontramos pueden probar cual es el MSE y RMSE en los datasets de training y testing, para decidir cual es el modelo que minimiza el error en las predicciones.
+Con los modelos optimos que encontramos pueden probar cual es el RMSE en los datasets de training y testing, para decidir cual es el modelo que minimiza el error en las predicciones.
+
+```{r}
+# Definimos una función augment que funcione con glmnet
+augment_glmnet = function(df,y, model) {
+  # Matriz con los regresores
+  formula = as.formula(str_c(y, "~.")) 
+  data_matrix = model.matrix(formula, data = df)
+  predictions = predict(model, data_matrix)
+  pred_colname = str_c("predicted",y, sep="_")
+  df[pred_colname] = predictions
+  return(df)
+}
+```
+
+Vamos a agregar dos modelos para comparar: el salario promedio del set de entrenamiento y el modelo lineal múltiple clásico
+
+```{r}
+# Salario promedio del set de entrenamiento
+salario_promedio = mean(train$salary)
+# Modelo lineal
+modelo_lineal = lm(salary~., data = train)
+```
+
+Realizamos las predicciones ambos modelos
+
+```{r}
+# Salario promedio
+prediccion_modelo_nulo = tibble(salary = train$salary, predicted_salary = salario_promedio)
+# Predicciones del modelo lineal 
+prediccion_modelo_lineal = augment(modelo_lineal) %>% mutate(predicted_salary = .fitted) %>% select(salary, predicted_salary)
+```
+
+Realizamos las predicciones de los modelos de glmnet
+
+```{r}
+# Lista de modelos
+modelos_glmnet = list(lasso=lasso_opt, ridge=ridge_opt, elastic=elastic_opt)
+# Predicciones de los modelos glmnet
+lista_predicciones_training = map(.x = modelos_glmnet, .f = augment_glmnet, df=train, y="salary")
+# Agregamos las otras predicciones a la lista 
+lista_predicciones_training = lista_predicciones_training %>% prepend(list(nulo=prediccion_modelo_nulo, lineal = prediccion_modelo_lineal))
+```
+
+Obtenemos el RMSE para el set de **entrenamiento**
+
+```{r}
+map_dfr(.x = lista_predicciones_training, .f = rmse, truth="salary", estimate="predicted_salary", .id="modelo")
+```
+
+¿Cuál es el modelo que realiza la mejor predicción? ¿Qué esperan que suceda con el RMSE en el set de **evaluación**?
+
+Obtenemos el RMSE para los modelos en el set de **evaluación**
+
+```{r, warning=FALSE}
+# Predicción del promedio
+prediccion_modelo_nulo = tibble(salary = test$salary, predicted_salary = salario_promedio)
+# Predicción modelo lineal 
+prediccion_modelo_lineal = augment(modelo_lineal, newdata = test) %>% mutate(predicted_salary = .fitted)
+# Predicciones glmnet
+lista_predicciones_test = map(.x = modelos_glmnet, .f = augment_glmnet, df=test, y="salary")
+# Lista completa de predicciones
+lista_predicciones_test = lista_predicciones_test %>% prepend(list(nulo=prediccion_modelo_nulo, lineal = prediccion_modelo_lineal))
+# RMSE en el set de evaluación
+map_dfr(lista_predicciones_test, rmse, truth="salary", estimate="predicted_salary", .id="modelo")
+
+```
+
+¿Cuál es el modelo de mejor performance en el set de evaluación? ¿Qué sucedió con el modelo de regresión clásico?
+
