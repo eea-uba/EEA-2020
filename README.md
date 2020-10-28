@@ -74,11 +74,15 @@ Introducción a programación funcional con Tidyverse `PURRR`
 
 ### Clase 6: 10-10
 
+Interpretación de coeficientes en Regresión Lineal Múltiple, inclusión de variables categóricas y test de significatividad individual
+
 - [Regresión Lineal Múltiple: Parte I](clase 6/Clase 5 - Regresion Lineal Multiple.nb.html)
 
 ### Clase 7: 17-10
 
-- [Regresión Lineal Múltiple: Parte II]()
+Evaluación y diagnóstico del modelo. Explicación vs predicción
+
+- [Regresión Lineal Múltiple: Parte II](clase 7/Clase 7 - Regresion Multiple II.nb.html)
 
 ### Clase 8: 24-10
 
