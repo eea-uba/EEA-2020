@@ -1,21 +1,29 @@
 ---
-title: "Regresion Logistica"
-output: 
-  html_notebook: 
+title: "Regresión Logística"
+author: "Juan Barriola y Sofía Perini"
+date: "7 de Noviembre de 2020"
+output:
+  html_notebook:
+    theme: spacelab
     toc: yes
     toc_float: yes
-author: "Juan Manuel Barriola y Diego Kozlowski"
-date: 16-11-2019
+    df_print: paged
 ---
+<style type="text/css">
+div.main-container {
+  max-width: 1600px;
+  margin-left: auto;
+  margin-right: auto;
+}
+</style>
 
-# Primera parte
+# Cargamos las librerías que vamos a utilizar
 
 ```{r, echo=TRUE, message=FALSE, warning=FALSE}
 library(tidyverse)
-library(broom)
+library(tidymodels)
 library(ISLR)
 library(GGally)
-library(modelr)
 library(pROC)
 library(cowplot)
 library(OneR)
@@ -24,38 +32,57 @@ library(caret)
 set.seed(1992)
 ```
 
-La regresión logística es útil para problemas de predicción de clases. El problema que vamos a tratar de resolver es predecir si una persona va defaultear su deuda de tarjeta de crédito en base a ciertos predictores.
+La **regresión logística** es útil para problemas de predicción de clases. En este caso vamos a tratar de resolver el problema de predecir si una persona va defaultear su deuda de tarjeta de crédito en base a ciertos predictores.
 
-## Conjunto de datos
+## Levantamos el conjunto de datos
 
 Este conjunto de datos proviene de la librería [ISLR](http://www-bcf.usc.edu/%7Egareth/ISL/)  (Introduction to Statistical Learning Using R) de James, Witten, Hastie y Tibshirani.
 
 ```{r}
+# cargamos los datos y observamos su estructura
 default <- Default
 glimpse(default)
 ```
 
 Tiene 4 variables: 
 
-* **default**: La clase que queremos predecir
-* **student**: Binaria que indica si la persona es estudiante
-* **balance**: Balance promedio que le queda a la persona luego de sus pagos mensuales
-* **income**: Ingreso de la persona
+* **default**: La clase que queremos predecir.
+
+* **student**: Binaria que indica si la persona es estudiante.
+
+* **balance**: Balance promedio que le queda a la persona luego de sus pagos mensuales.
+
+* **income**: Ingreso de la persona.
 
 ## Exploratorias
 
-Analicemos la distribución de la clase
+Analicemos la distribución de la clase.
 
 ```{r}
-default %>% group_by(default) %>% summarise(numero_casos=n())
+default %>% 
+  group_by(default) %>% 
+  summarise(numero_casos=n())
 ```
 
 Vemos que estamos trabajando con un problema de clasificación con un claro desbalance de clase.
 
 Realizamos un gráfico exploratorio completo para ver el comportamiento y las relaciones entre las variables. El color rojo designa a quienes no defaultean y el azul a los que sí.
 
-```{r, warning=FALSE, message=FALSE}
-ggpairs(default,mapping = aes(colour= default)) + theme(axis.text.x = element_text(angle = 90, hjust = 1)) + theme_bw()
+```{r, message=FALSE, warning=FALSE, fig.width=8, fig.height=6}
+# graficamos con ggpairs coloreando por variable a predecir
+g <- ggpairs(default, 1:4,  title = "Correlograma de variables",
+        mapping = aes(colour= default)) + 
+  theme(axis.text.x = element_text(angle = 90, hjust = 1)) + 
+  theme_bw()
+# hacemos un loop para cambiar los colores del gráfico
+for(i in 1:g$nrow) {
+  for(j in 1:g$ncol){
+    g[i,j] <- g[i,j] + 
+      scale_fill_brewer(palette="Set1") +  
+      scale_color_brewer(palette="Set1")
+        }
+}
+g
 ```
 
 ¿Qué pueden decir de la relación entre balance y default?
@@ -71,13 +98,13 @@ Para modelizar va a ser necesario tener la variable default como numérica.
 Definimos la variable como {0,1} para los valores {"No","Yes"}
 
 ```{r}
-default <- default%>% mutate(default= case_when(default=="No"~0,
-                                                default=="Yes"~1))
+default <- default %>% 
+  mutate(default = case_when(default == "No" ~ 0,                                                default == "Yes" ~ 1))
+default
 ```
+## Planteo del Problema
 
-## Problema
-
-Queremos estimar $P(Default=Yes|X)=P(X)$ para cada individuo y partir de ello poder definir un punto de corte para predecir quienes son los que van a entrar en default.
+Queremos estimar $P(Default=Yes|X)=P(X)$ para cada individuo y a partir de ello poder definir un punto de corte para predecir quiénes son los que van a entrar en default.
 
 ### Regresión lineal
 
@@ -89,77 +116,93 @@ Veamos que tan bueno es el modelo lineal para esto, usando balance como predicto
 
 ```{r}
 test_mco <- default %>% 
-              lm(formula = default~balance, data = .) 
+              lm(formula = default ~ balance, data = .) 
 
 ```
 
 ```{r}
-tdy <- test_mco %>% tidy()
-tdy
+library(kableExtra)
+tdy <- test_mco %>% tidy() 
+tdy 
 test_mco %>% glance()
 ```
 
 Ambos estimadores son significativos y el test de significatividad global del modelo también es significativo.
-Veamos un gráfico de nuestro modelo
+
+Veamos un gráfico de nuestro modelo.
 
 ```{r, echo=FALSE}
 ggplot(default, aes(balance, default)) + 
   geom_point(aes(color=factor(default))) +
+  scale_color_brewer(palette = "Set1") + 
   geom_abline(intercept = tdy$estimate[1], slope = tdy$estimate[2], color='forestgreen', size=2) + 
-  labs(title="Modelo lineal simple", color='Clase') +
+  labs(title="Modelo Lineal Simple", color='Clase') +
   lims(y=c(-1,2))+
   theme_bw()
 ```
 
 Parece tener bastantes problemas para estimar la probabilidad de default de los individuos. Por ejemplo, vemos que hay varios individuos a los cuales les asigna una probabilidad negativa.
 
-### Regresión logística
+### Regresión Logística
 
-Para evitar estos problemas, usamos la **funcion logistica**
+Para evitar estos problemas, usamos la **funcion logistica**.
 
 $P(Y=1|X)= \frac{e^{\beta_0 + \sum\limits_{j=1}^p \beta_j X}}{1+e^{\beta_0 + \sum\limits_{j=1}^p \beta_j X}}$
 
 El lado derecho se llama **expit**
 
-Esta funcion acota el resultado entre 0 y 1, lo cual es mucho mas adecuado para modelar una probabilidad.
+Esta función acota el resultado entre 0 y 1, lo cual es mucho más adecuado para modelar una probabilidad.
 
-Luego de hacer algunas operaciones, podemos llegar a la expresion:
+Luego de hacer algunas operaciones, podemos llegar a la expresión:
 
 $\log {\frac{P(x)}{1-P(x)}}= \beta_0 + \sum\limits_{j=1}^p \beta_j X$
 
-El lado izquierdo es el logaritmo de los **odds** y se llama **logit**
+El lado izquierdo es el logaritmo de los **odds** y se llama **logit**.
 
 ## Partición Train y Testing
 
-Realizamos una partición entre dataset de entrenamiento (70%) y testeo (30%) usando la función `resample_partition` del paquete **modelr**
+Realizamos una partición entre dataset de entrenamiento (70%) y testeo (30%) usando la función `resample_partition` del paquete **modelr**.
+
+### Partición del dataset en train y test
+
+Realizamos una partición una partición entre dataset de entrenamiento (70%) y testeo (30%) usando la función `initial_split` del paquete [rsample](https://rsample.tidymodels.org/) de tidymodels.
 
 ```{r}
-train_test <- default %>% resample_partition(c(train=0.7,test=0.3))
-
-default <- train_test$train %>% as_tibble()
-test <- train_test$test %>% as_tibble()
+# fijamos semilla
+set.seed(44)
+# Partición Train y Test, indicando proporción
+train_test <- initial_split(default, prop = 0.7)
+# armamos dataframe de testeo y entrenamiento
+default <- training(train_test)
+test <- testing(train_test)
+# vemos el contenido
+default %>%
+  dim_desc() # 7000 filas
+test %>%
+  dim_desc() # 3000 filas
 ```
-
 
 ## Creación de fórmulas
 
-Para aplicar la regresion logistica primero usamos la funcion `formulas` del paquete **modelr** para crear un objeto que contiene todas las fórmulas que vamos a utilizar. En `.response` especificamos la variable respuesta de nuestras fórmulas y luego nombramos las fórmulas que queramos armar.
+Para aplicar la regresión logística primero usamos la funcion `formulas` del paquete **modelr** para crear un objeto que contiene todas las fórmulas que vamos a utilizar. En `.response` especificamos la variable respuesta de nuestras fórmulas y luego nombramos las fórmulas que queramos armar.
+
+Así, armaremos distintos modelos combinando distintas variables. 
 
 ```{r}
-logit_formulas <- formulas(.response = ~default, # único lado derecho de las formulas.
-                         bal= ~balance, 
-                         stud= ~student,  
-                         inc= ~income,  
-                         bal_stud=~balance+student, 
-                         bal_inc=~balance+income, 
-                         stud_inc=~student+income,  
-                         full= ~balance + income + student  
+logit_formulas <- formulas(.response = ~ default, # único lado derecho de las formulas.
+                         bal = ~ balance, 
+                         stud = ~ student,  
+                         inc = ~ income,  
+                         bal_stud = ~ balance + student, 
+                         bal_inc = ~ balance + income, 
+                         stud_inc = ~ student + income,  
+                         full = ~ balance + income + student  
                          )
 ```
 
 ## Creación de modelos
 
-Procedemos a crear los modelos a partir de estas fórmulas
+Procedemos a crear los modelos a partir de estas fórmulas.
 
 ```{r, warning=FALSE}
 models <- data_frame(logit_formulas) %>% # dataframe a partir del objeto formulas
@@ -168,13 +211,17 @@ models <- data_frame(logit_formulas) %>% # dataframe a partir del objeto formula
          mod = map(logit_formulas, ~glm(.,family = 'binomial', data = default))) # Que estamos haciendo acá? Que vamos a encontrar en la columna?
 ```
 
-La funcíón `glm()` nos permite crear un modelo lineal generalizado (Generalized Linear Model). Al igual que la función `lm()` toma como argumentos una **formula** y los **datos** pero también se debe especificar el argumento **family**: indicamos la distribución del error y la función link que vamos a utilizar en el modelo. Algunas familias son:
+La funcíón `glm()` nos permite crear un modelo lineal generalizado (Generalized Linear Model). Al igual que la función `lm()` toma como argumentos una **formula** y los **datos** pero también se debe especificar el argumento **family**: indicamos la distribución del error y la función link que vamos a utilizar en el modelo. 
+
+Algunas familias son:
 
 * Binomial: link=logit
+
 * Poisson: link=log
+
 * Gaussiana: link= identidad
 
-Como estamos trabajando con un fenómeno que suponemos tiene una distribución binomial, así lo especificamos en el parámetro **family**
+Como estamos trabajando con un fenómeno que suponemos tiene una distribución binomial, así lo especificamos en el parámetro **family**.
 
 ### Modelos simples
 
