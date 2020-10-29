@@ -51,7 +51,6 @@ Análisis exploratorios, limpieza de datos, análisis de outliers e interpretaci
 
 - [Dataset Encuesta Sueldos IT](Fuentes/encuesta_sueldos_sysarmy_1s2020.csv)
 
-
 ### Clase 4: 26-09
 
 Inferencia sobre los parámetros, test de significatividad global y R-cuadrado
@@ -90,23 +89,22 @@ Evaluación y diagnóstico del modelo. Explicación vs predicción
 
 ### Clase 9: 07-11
 
-- [Regresion Logistica](clase 9/logit.nb.html)
+- [Regresion Logistica]()
 
 ### Clase 10: 14-11
 
-- [Regularizacion: Ridge, Lasso y Elastic Net](clase 10/regularizacion.nb.html)
+- [Regularizacion: Ridge, Lasso y Elastic Net]()
 
 
 ### Clase 11: 28-11
 
-- [Prophet: implementacion de GAM para series de tiempo](clase 11/prophet_shopping.nb.html)
+- [Prophet: implementacion de GAM para series de tiempo]()
 
 
 ### Clase 12: 5-12
 
-- [Redes I: Fully Conected Neural Networks](clase 11/mnist101.nb.html)
-- [Redes II: Convolutional Neural Networks](clase 12/mnist102.nb.html)
-
+- [Redes I: Fully Conected Neural Networks]()
+- [Redes II: Convolutional Neural Networks]()
 
 
 ### [Ejercicios modelo lineal](ejercicios_modelo_lineal)
