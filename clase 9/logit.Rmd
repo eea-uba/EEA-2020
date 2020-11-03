@@ -22,6 +22,7 @@ div.main-container {
 ```{r, echo=TRUE, message=FALSE, warning=FALSE}
 library(tidyverse)
 library(tidymodels)
+library(modelr)
 library(ISLR)
 library(GGally)
 library(pROC)
@@ -99,9 +100,11 @@ Definimos la variable como {0,1} para los valores {"No","Yes"}
 
 ```{r}
 default <- default %>% 
-  mutate(default = case_when(default == "No" ~ 0,                                                default == "Yes" ~ 1))
+  mutate(default = case_when(default == "No" ~ 0,
+                             default == "Yes" ~ 1))
 default
 ```
+
 ## Planteo del Problema
 
 Queremos estimar $P(Default=Yes|X)=P(X)$ para cada individuo y a partir de ello poder definir un punto de corte para predecir quiénes son los que van a entrar en default.
@@ -117,13 +120,7 @@ Veamos que tan bueno es el modelo lineal para esto, usando balance como predicto
 ```{r}
 test_mco <- default %>% 
               lm(formula = default ~ balance, data = .) 
-
-```
-
-```{r}
-library(kableExtra)
-tdy <- test_mco %>% tidy() 
-tdy 
+test_mco %>% tidy() 
 test_mco %>% glance()
 ```
 
@@ -145,7 +142,7 @@ Parece tener bastantes problemas para estimar la probabilidad de default de los 
 
 ### Regresión Logística
 
-Para evitar estos problemas, usamos la **funcion logistica**.
+Para evitar estos problemas, usamos la **función logística**.
 
 $P(Y=1|X)= \frac{e^{\beta_0 + \sum\limits_{j=1}^p \beta_j X}}{1+e^{\beta_0 + \sum\limits_{j=1}^p \beta_j X}}$
 
@@ -158,10 +155,6 @@ Luego de hacer algunas operaciones, podemos llegar a la expresión:
 $\log {\frac{P(x)}{1-P(x)}}= \beta_0 + \sum\limits_{j=1}^p \beta_j X$
 
 El lado izquierdo es el logaritmo de los **odds** y se llama **logit**.
-
-## Partición Train y Testing
-
-Realizamos una partición entre dataset de entrenamiento (70%) y testeo (30%) usando la función `resample_partition` del paquete **modelr**.
 
 ### Partición del dataset en train y test
 
@@ -184,7 +177,7 @@ test %>%
 
 ## Creación de fórmulas
 
-Para aplicar la regresión logística primero usamos la funcion `formulas` del paquete **modelr** para crear un objeto que contiene todas las fórmulas que vamos a utilizar. En `.response` especificamos la variable respuesta de nuestras fórmulas y luego nombramos las fórmulas que queramos armar.
+Para aplicar la regresión logística primero usamos la función `formulas` del paquete **modelr** para crear un objeto que contiene todas las fórmulas que vamos a utilizar. En `.response` especificamos la variable respuesta de nuestras fórmulas y luego nombramos las fórmulas que queramos armar.
 
 Así, armaremos distintos modelos combinando distintas variables. 
 
@@ -198,6 +191,7 @@ logit_formulas <- formulas(.response = ~ default, # único lado derecho de las f
                          stud_inc = ~ student + income,  
                          full = ~ balance + income + student  
                          )
+logit_formulas # observamos el objeto formulas
 ```
 
 ## Creación de modelos
@@ -208,7 +202,8 @@ Procedemos a crear los modelos a partir de estas fórmulas.
 models <- data_frame(logit_formulas) %>% # dataframe a partir del objeto formulas
   mutate(models = names(logit_formulas), # columna con los nombres de las formulas
          expression = paste(logit_formulas), # columna con las expresiones de las formulas
-         mod = map(logit_formulas, ~glm(.,family = 'binomial', data = default))) # Que estamos haciendo acá? Que vamos a encontrar en la columna?
+         mod = map(logit_formulas, ~glm(., family = 'binomial', data = default))) # Que estamos haciendo acá? Que vamos a encontrar en la columna?
+models
 ```
 
 La funcíón `glm()` nos permite crear un modelo lineal generalizado (Generalized Linear Model). Al igual que la función `lm()` toma como argumentos una **formula** y los **datos** pero también se debe especificar el argumento **family**: indicamos la distribución del error y la función link que vamos a utilizar en el modelo. 
@@ -219,7 +214,7 @@ Algunas familias son:
 
 * Poisson: link=log
 
-* Gaussiana: link= identidad
+* Gaussiana: link=identidad
 
 Como estamos trabajando con un fenómeno que suponemos tiene una distribución binomial, así lo especificamos en el parámetro **family**.
 
@@ -230,13 +225,21 @@ Probamos los primeros tres modelos, aquellos que tienen un único predictor. Usa
 ```{r, warning=FALSE}
 models %>% 
   filter(models %in% c('bal','stud','inc')) %>%
-  mutate(tidy = map(mod,tidy)) %>%  # Qué realizamos en este paso? Que va a tener esta columna?
-  unnest(tidy, .drop = TRUE) %>% 
-  mutate(estimate=round(estimate,5),
+  mutate(tidy = map(mod, tidy))  # Qué realizamos en este paso? Que va a tener esta columna?
+```
+
+Para acceder a los elementos de la nueva columna _tidy_ debemos desanidarla. 
+
+```{r, warning=FALSE}
+models %>% 
+  filter(models %in% c('bal','stud','inc')) %>%
+  mutate(tidy = map(mod, tidy)) %>%  # Qué realizamos en este paso? Que va a tener esta columna?
+  unnest(tidy) %>% 
+  mutate(estimate=round(estimate,5), # redondeamos valores para facilitar lectura
          p.value=round(p.value,4))
 ```
 
-Observamos que todos los modelos tienen coeficientes significativos excepto el coeficiente asociado al **Ingreso**, el cual tien un p valor de 0.27.
+Observamos que todos los modelos tienen coeficientes significativos excepto el coeficiente asociado al **Ingreso** (income), el cual tiene un p-valor de 0.17.
 
 #### Interpretación de los coeficientes
 
@@ -244,11 +247,13 @@ Recordando la ecuación para modelar la probabilidad:
 
 $P(Y=1|X)= \frac{e^{\beta_0 + \sum\limits_{j=1}^p \beta_j X}}{1+e^{\beta_0 + \sum\limits_{j=1}^p \beta_j X}}$
 
-Se observa que ahora las variables ya no tienen una relación lineal con la probabilidad. Lo que se observa es que un coeficiente positivo indica que frente a aumentos de dicha variable la probabilidad aumenta mientras que un coeficiente negativo nos indica lo contrario. Para nuestro caso:
+Se observa que ahora las variables ya no tienen una relación lineal con la probabilidad. En este modelo un coeficiente positivo indica que frente a aumentos de dicha variable la probabilidad aumenta, mientras que un coeficiente negativo nos indica lo contrario. Para nuestro caso:
 
-* El coeficiente de 0.00548 de la variable **balance** indica que cuando el balance aumenta la **probabilidad de default aumenta**
-* El coeficiente de 0.41322 de la variable **student** indica que cuando una persona es estudiante su **probabilidad de default aumenta** respecto a una persona que no lo es
-* El coeficiente de -0.00001 de la variable income indica que cuando el ingreso aumenta **la probabilidad de default disminuye**
+* El coeficiente de 0.0056 de la variable **balance** indica que cuando el balance aumenta la **probabilidad de default aumenta**.
+
+* El coeficiente de 0.40886 de la variable **studentYes** indica que cuando una persona es estudiante su **probabilidad de default aumenta** respecto a una persona que no lo es.
+
+* El coeficiente de -0.00001 de la variable **income** indica que cuando el ingreso aumenta **la probabilidad de default disminuye**.
 
 Recomendamos leer el [capítulo de regresión logística](https://christophm.github.io/interpretable-ml-book/logistic.html) de *Interpretable Machine Learning: A Guide for Making Black Box Models Explainable* de Molnar Cristoph para una discusión más profunda de la interpretación de un modelo de regresión logística.
 
@@ -260,45 +265,42 @@ Ahora probamos con un modelo que utiliza las tres predictoras
 models %>% 
   filter(models == "full") %>%
   mutate(tidy = map(mod,tidy)) %>%
-  unnest(tidy, .drop = TRUE) %>% 
+  unnest(tidy) %>% 
   mutate(estimate=round(estimate,5),
          p.value=round(p.value,4))
 ```
 
-En el modelo con las tres variables los coeficientes de **student** e **income** ha cambiado de signo por lo cual su efecto sobre la probabilidad de default es inverso al que observamos en los modelos simples. También hay que agregar ahora que el efecto de la variable se observa al estar controlando por las dos covariables restantes.
+En el modelo con las tres variables los coeficientes de **studentYes** e **income** han cambiado de signo, por lo cual su efecto sobre la probabilidad de default es inverso al que observamos en los modelos simples. También hay que agregar ahora que el efecto de la variable se observa al estar controlando por las dos covariables restantes.
 
-Además se observa que el único coeficiente significativo es el asociado a la variable balance
+Asimismo, se observa que el coeficiente de income no resulta significativo tampoco en este modelo (p-valor>0.05). 
 
 ### Evaluación de todos los modelos
 
-Con `map()` agregamos la función `glance` para traernos información relevante para el diagnóstico del modelo.
-
-Con `unnest()` podemos ver la evaluación de cada modelo. Por último ordenamos las modelos por el deviance.
+Con `map()` agregamos la función `glance` para traer información relevante para la evaluación del modelo. Con `unnest()` accedemos a dicha información. Por último, agregamos una columna con el porcentaje de deviance explicado por cada modelo y ordenamos el dataset según su valor de deviance.
 
 ```{r, warning=FALSE}
 # Calcular las medidas de evaluación para cada modelo
 models <- models %>% 
   mutate(glance = map(mod,glance))
-
 # Obtener las medidas de evaluacion de interes
 models %>% 
-  unnest(glance, .drop = TRUE) %>%
-  # Calculo de la deviance explicada
+  unnest(glance) %>%
+  # Calculamos la deviance explicada
   mutate(perc_explained_dev = 1-deviance/null.deviance) %>% 
   select(-c(models, df.null, AIC, BIC)) %>% 
   arrange(deviance)
 ```
 
-El modelo que utiliza las 3 variables es el que minimiza el deviance. 
-Los 3 últimos modelos reducen muy poco el deviance respecto a la deviance nula.
+El modelo que utiliza las 3 variables es el que minimiza el deviance, aunque el modelo que excluye a la variable income (poco significativa) está muy cerca. Los 3 últimos modelos reducen muy poco el deviance respecto a la deviance nula.
 
-### Gráficos de evaluación
+### Gráficos de Evaluación
 
 Realizamos los gráficos para el modelo completo y uno de los modelos con mayor deviance (student+income).
 
 Comenzamos agregando las predicciones con `augment` con el parámetro `type="response"`. La función augment hereda el argumento type.predict de la función predict.
 
-  * Si `type.predict = 'link'` la predicción es en términos de la función link. en nuestro caso son el logaritmo de las odds, es decir, los valores que toma la expresión logit
+  * Si `type.predict = 'link'` la predicción es en términos de la función link. En nuestro caso son el logaritmo de las odds, es decir, los valores que toma la expresión logit.
+  
   * Si `type.predict = 'response'` la predicción son las probabilidades de que la observación pertenezca a la clase positiva. En nuestro caso, devuelve la probabilidad de la que persona defaultee.
 
 ```{r, warning=FALSE}
@@ -312,6 +314,8 @@ models$pred[1]$bal %>% arrange(.fitted) %>% head(10)
 #Observaciones con probabilidad más alta
 models$pred[1]$bal %>% arrange(desc(.fitted)) %>% head(10)
 ```
+
+Guardamos las predicciones para los modelos mencionados.
 
 ```{r}
 # Modelo completo
@@ -329,13 +333,13 @@ prediction_bad <- models %>%
 #### Violin plots
 
 ```{r}
-violin_full=ggplot(prediction_full, aes(x=default, y=.fitted, group=default,fill=factor(default))) + 
+violin_full = ggplot(prediction_full, aes(x=default, y=.fitted, group=default, fill=factor(default))) + 
   geom_violin() +
   theme_bw() +
   guides(fill=FALSE) +
   labs(title='Violin plot', subtitle='Modelo completo', y='Predicted probability')
 
-violin_bad=ggplot(prediction_bad, aes(x=default, y=.fitted, group=default, fill=factor(default))) + 
+violin_bad = ggplot(prediction_bad, aes(x=default, y=.fitted, group=default, fill=factor(default))) + 
   geom_violin() + 
   theme_bw() +
   guides(fill=FALSE) +
@@ -346,8 +350,10 @@ plot_grid(violin_bad, violin_full)
 
 En los gráficos de violin observamos:
 
-  * En el eje de abscisas la clase verdadera: Default o No Default
-  * En el eje de ordenadas la probabilidad predicha por nuestro modelo
+  * En el eje de abscisas la clase verdadera: Default o No Default.
+  
+  * En el eje de ordenadas la probabilidad predicha por nuestro modelo.
+  
   * El gráfico nos muestra la distribución de la cantidad de observaciones por su clase real y la probabilidad que le asigna nuestro modelo.
 
 ¿Cuál parece ser un punto de corte adecuado para cada modelo?
@@ -396,9 +402,12 @@ Hosmer_Lemeshow_plot(prediction_bad, '.fitted', 'default', 10, 1, color = "fireb
 
 En los gráficos de Hosmer-Lemeshow observamos:
 
-  * En el eje de abscisas la probabilidad predicha de default
-  * En el eje de ordenadas la frecuencia de clase, el cociente entre cantidad de individuos que están en default y el total de individuos
-  * La línea punteada designa la igualdad entre probabilidad predicha y frecuencia de clase
+  * En el eje de abscisas la probabilidad predicha de default.
+  
+  * En el eje de ordenadas la frecuencia de clase, el cociente entre cantidad de individuos que están en default y el total de individuos.
+  
+  * La línea punteada designa la igualdad entre probabilidad predicha y frecuencia de clase.
+  
   * Los círculos, que se construyen de la siguiente manera:
       * Se dividen a las observaciones en bins en base a la probabilidad predicha
       * Se calcula la frecuencia de clase para cada bin
@@ -419,7 +428,7 @@ roc_bad <- roc(response=prediction_bad$default, predictor=prediction_bad$.fitted
 
 ```
 
-Graficamos
+Graficamos ambas.
 
 ```{r}
 ggroc(list(full=roc_full, bad=roc_bad), size=1) + geom_abline(slope = 1, intercept = 1, linetype='dashed') + theme_bw() + labs(title='Curvas ROC', color='Modelo')
@@ -486,7 +495,7 @@ ggplot(logit_pred, aes(cutoff,estimate, group=term, color=term)) + geom_line(siz
 Seleccionamos el modelo completo, ya que es el que maximizaba el porcentaje de deviance explicada y en base a lo que vimos definimos un punto de corte en 0.25 (pueden probar otros)
 
 ```{r}
-sel_cutoff = 0.25
+sel_cutoff = 0.26
 # Creamos el modelo
 full_model <- glm(logit_formulas$full, family = 'binomial', data = default)
 # Agregamos la predicciones al dataset de testeo
