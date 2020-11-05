@@ -62,6 +62,8 @@ En este caso para evaluar los modelos vamos a realizar una partición entre data
 set.seed(44)
 # Partición Train y Test, indicando proporción
 df_split <- initial_split(df, prop = 0.7)
+class(df_split)
+View(df_split)
 # armamos dataframe de testeo y entrenamiento
 df_train <- training(df_split)
 df_test <- testing(df_split)
@@ -130,7 +132,7 @@ En este gráfico podemos observar los coeficientes estimados para este modelo co
 
 ```{r}
 # medidas de resumen tidy (incluido el intervalo de confianza)
-tidy_mes <- tidy(modelo_exp_sex, conf.int = TRUE)
+tidy_mes <- tidy(modelo_exp_sex, conf.int = TRUE) %>% arrange(p.value)
 tidy_mes
 # Plot de los Coeficientes
 ggplot(tidy_mes, aes(estimate, term, xmin = conf.low, xmax = conf.high, height = 0)) +
@@ -147,7 +149,7 @@ En este caso se observa que la variable años de experiencia resulta estadístic
 
 ```{r}
 # medidas de resumen tidy (incluido el intervalo de confianza)
-tidy_meed <- tidy(modelo_exp_edu, conf.int = TRUE)
+tidy_meed <- tidy(modelo_exp_edu, conf.int = TRUE) %>% arrange(p.value)
 tidy_meed
 # Plot de los Coeficientes
 ggplot(tidy_meed, aes(estimate, term, xmin = conf.low, xmax = conf.high, height = 0)) +
@@ -164,7 +166,7 @@ A diferencia de lo observado en la clase 6, vemos que todos los IC de los nivele
 
 ```{r}
 # medidas de resumen tidy (incluido el intervalo de confianza)
-tidy_varias <- tidy(modelo_varias, conf.int = TRUE)
+tidy_varias <- tidy(modelo_varias, conf.int = TRUE) %>% arrange(p.value)
 tidy_varias
 # Plot de los Coeficientes
 ggplot(tidy_varias, aes(estimate, term, xmin = conf.low, xmax = conf.high, height = 0)) +

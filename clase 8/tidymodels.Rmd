@@ -1,6 +1,6 @@
 ---
 title: "Tidy Models, una introducción^[basado en las notas de Edgar Ruiz https://rviews.rstudio.com/2019/06/19/a-gentle-intro-to-tidymodels/]"
-author: "Diego Kozlowski yJuan Manuel Barriola"
+author: "Diego Kozlowski y Juan Manuel Barriola"
 output: html_notebook
 ---
 
