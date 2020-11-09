@@ -4,8 +4,8 @@ output:
   html_notebook: 
     toc: yes
     toc_float: yes
-author: "Juan Manuel Barriola y Diego Kozlowski"
-date: 30-11-2019
+author: "Juan Manuel Barriola y Sofia Perini"
+date: "21 de Noviembre de 2020"
 ---
 
 <style type="text/css">
@@ -23,11 +23,19 @@ library(prophet)
 library(lubridate)
 ```
 
-# Problema
+# Prophet
 
-## Exploratorias
+Es un procedimiento para **pronosticar datos de series de tiempo basado en un modelo aditivo** donde las tendencias no lineales se ajustan a la estacionalidad anual, semanal y diaria, más los efectos de eventos especiales. Funciona mejor con series de tiempo que tienen fuertes efectos estacionales y varias temporadas de datos históricos. Es robusto ante datos faltantes y cambios de tendencia, y normalmente maneja bien valores atípicos.
 
-El dataset consiste en información real de 8 meses de visitantes de un local de ropa localizado en un shopping de gran tamaño
+[Prophet](https://facebook.github.io/prophet/) es un software de código abierto lanzado por Facebook.
+
+## Problema
+
+Queremos predecir el número de visitantes de un local de ropa en un determinado momento. 
+
+## Carga de datos
+
+El dataset consiste en información real de 8 meses de visitantes de un local de ropa localizado en un shopping de gran tamaño.
 
 ```{r}
 shopping <- read.csv('local-shopping_prophet.csv') %>% 
@@ -132,7 +140,7 @@ Hay muchos parametros para tener en cuenta. Veremos algunos:
 
 La funcion `prophet` crea el modelo, podemos pasarle o no el dataframe.
 
-La funcion `prophet.fit` aplica un modelo creado a un dataframe
+La funcion `prophet.fit` aplica un modelo creado a un dataframe.
 
 ```{r}
 # Llamamos solo al modelo
@@ -141,13 +149,13 @@ prophet_base=prophet()
 prophet_base = fit.prophet(m = prophet_base, prophet_df) 
 ```
 
-Notemos que el modelo automaticamente deshabilita la estacionalidad anual y diaria.
+Notemos que el modelo automáticamente deshabilita la estacionalidad anual y diaria.
 
 #### Gráfico del modelo
 
 Llamando a `plot` obtenemos el valor predicho del modelo y el valor original.
 
-Es dificil de notar pero el modelo realiza predicciones aun para los dias en los cuales no hay datos.
+Es difícil de notar pero el modelo realiza predicciones aun para los dias en los cuales no hay datos.
 
 ```{r}
 plot(prophet_base,fcst=predict(prophet_base, prophet_df)) +theme_bw()
@@ -155,7 +163,7 @@ plot(prophet_base,fcst=predict(prophet_base, prophet_df)) +theme_bw()
 
 #### Componentes del modelo
 
-La funcion `prophet_plot_components` nos devuelve los efectos de los componentes en nuestra variable a predecir
+La funcion `prophet_plot_components` nos devuelve los efectos de los componentes en nuestra variable a predecir.
 
 ```{r}
 prophet_plot_components(prophet_base, fcst=predict(prophet_base, prophet_df)) +theme_bw()
@@ -163,22 +171,22 @@ prophet_plot_components(prophet_base, fcst=predict(prophet_base, prophet_df)) +t
 
 En este caso tenemos la tendencia de los visitantes y la estacionalidad semanal. Esta última parece tener bastante sentido ya que nos muestra que hay mayor cantidad de visitantes durante el fin de semana.
 
-#### Diagnostico del modelo
+#### Diagnóstico del modelo
 
-La funcion `cross_validation` permite realizar pronosticos realizando un esquema de cross-validation temporal y, a partir de ellos, obtener ciertas metricas de performance.
+La funcion `cross_validation` permite realizar pronósticos realizando un esquema de cross-validation temporal y, a partir de ellos, obtener ciertas métricas de performance.
 
   * **horizon**: horizonte del pronostico. Cuánto tiempo deseo predecir
   
   * **period**: periodo entre fechas de analisis. Cuánto voy corriendo mi ventana
   
-   * **initial**: periodo inicial de entrenamiento
+   * **initial**: período inicial de entrenamiento
 
 ```{r}
 cv_base = cross_validation(prophet_base, initial = 45, period = 7, horizon = 15, units = 'days')
 cv_base
 ```
 
-La funcion `performance_metrics` computa varias metricas de performance a partir de un dataframe de cross validation de prophet
+La funcion `performance_metrics` computa varias métricas de performance a partir de un dataframe de cross validation de prophet. 
 
 ```{r}
 performance_metrics(cv_base, rolling_window = 0.5)

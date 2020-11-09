@@ -89,7 +89,7 @@ Evaluación y diagnóstico del modelo. Explicación vs predicción
 
 ### Clase 9: 07-11
 
-- [Regresion Logistica]()
+- [Regresion Logistica](clase 9/logit.nb.html)
 
 ### Clase 10: 14-11
 
