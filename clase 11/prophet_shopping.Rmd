@@ -23,17 +23,11 @@ library(prophet)
 library(lubridate)
 ```
 
-# Prophet
-
-Es un procedimiento para **pronosticar datos de series de tiempo basado en un modelo aditivo** donde las tendencias no lineales se ajustan a la estacionalidad anual, semanal y diaria, más los efectos de eventos especiales. Funciona mejor con series de tiempo que tienen fuertes efectos estacionales y varias temporadas de datos históricos. Es robusto ante datos faltantes y cambios de tendencia, y normalmente maneja bien valores atípicos.
-
-[Prophet](https://facebook.github.io/prophet/) es un software de código abierto lanzado por Facebook.
-
 ## Problema
 
-Queremos predecir el número de visitantes de un local de ropa en un determinado momento. 
+Queremos **predecir el número de visitantes de un local de ropa** en un determinado momento. 
 
-## Carga de datos
+### Carga de datos
 
 El dataset consiste en información real de 8 meses de visitantes de un local de ropa localizado en un shopping de gran tamaño.
 
@@ -47,6 +41,7 @@ glimpse(shopping)
 Se observa que la serie de tiempo presenta un comportamiento cíclico con algunos eventos atípicos:
 
 * Aumentos debidos a promociones y Navidad
+
 * Caídas por cierre del local o caídas del sistema de medición
 
 ```{r}
@@ -54,7 +49,7 @@ ggplot(shopping, aes(Dia, visitantes)) + geom_line() + theme_bw() + labs(title='
 ```
 
 ```{r}
- ggplot(shopping, aes(Dia, visitantes)) + geom_line() + geom_point(color='forestgreen') + theme_bw() + labs(title='Visitantes por dia')
+ggplot(shopping, aes(Dia, visitantes)) + geom_line() + geom_point(color='forestgreen') + theme_bw() + labs(title='Visitantes por dia')
 ```
 
 # Técnicas de suavizado
@@ -72,6 +67,16 @@ Si bien está suavizando, el resultado es bastante pobre ya que el modelo no est
 ## Distintas ventanas
 
 Ahora realizamos 4 modelos de LOESS modificando la ventana (**span**) para cada uno de ellos.
+
+Especificamos: 
+
+*formula*: fórmula que especifica la respuesta numérica y el predictor numérico. 
+
+*na.acción*: la acción que se realizará con valores NA en la respuesta o predictores.
+
+*model*: ¿Debería devolverse el dataframe del modelo? (T/F)
+
+*span*: el parámetro α que controla el grado de suavizado.
 
 ```{r, warning=FALSE}
 loess=stats::loess(visitantes~as.numeric(Dia), data = shopping, na.action = 'na.exclude', model = T, span=0.01)
@@ -101,7 +106,9 @@ Se nota que para un **span muy pequeño** nuestro modelo va a tener un problema 
 
 # Prophet
 
-Vamos a trabajar sobre la implementación de Prophet en R.
+Es un procedimiento para **pronosticar datos de series de tiempo basado en un modelo aditivo** donde las tendencias no lineales se ajustan a la estacionalidad anual, semanal y diaria, más los efectos de eventos especiales. Funciona mejor con series de tiempo que tienen fuertes efectos estacionales y varias temporadas de datos históricos. Es robusto ante datos faltantes y cambios de tendencia, y normalmente maneja bien valores atípicos.
+
+[Prophet](https://facebook.github.io/prophet/) es un software de código abierto lanzado por Facebook. En este caso, vamos a trabajar sobre la implementación de Prophet en R.
 
 ## Preparacion del dataset
 
@@ -109,7 +116,7 @@ Prophet requiere que le pasemos el dataset con:
 
   * **ds**: la variable temporal 
 
-  * **y**: la variable a predecir
+  * **y**: la variable a predecir 
 
 ```{r}
 # Eliminamos observaciones con menos de 250 visitantes (cuestion de negocio)
@@ -121,10 +128,9 @@ prophet_df = shopping %>% select(Dia, visitantes) %>% rename(., ds=Dia, y=visita
 ## Modelo
 
 Recordemos que el modelo subyacente es el propuesto por Harvey & Peters (1990): 
-
 $y(t)=g(t)+s(t)+h(t)+\epsilon_t$
 
-Hay muchos parametros para tener en cuenta. Veremos algunos:
+Hay muchos parámetros para tener en cuenta. Veremos algunos:
 
   * **df**: dataframe
   
@@ -132,19 +138,19 @@ Hay muchos parametros para tener en cuenta. Veremos algunos:
 
   * **yearly.seasonality**: hay estacionalidad anual?
   
-  * **yearly.seasonality**: hay estacionalidad diaria?
+  * **daily.seasonality**: hay estacionalidad diaria?
   
   *  **holidays**: dataframe con fechas de vacaciones/eventos especiales
 
 ### Modelo básico
 
-La funcion `prophet` crea el modelo, podemos pasarle o no el dataframe.
+La función `prophet` crea el modelo, podemos pasarle o no el dataframe.
 
-La funcion `prophet.fit` aplica un modelo creado a un dataframe.
+La función `prophet.fit` aplica un modelo creado a un dataframe.
 
 ```{r}
 # Llamamos solo al modelo
-prophet_base=prophet()
+prophet_base = prophet()
 # Le pasamos el dataset
 prophet_base = fit.prophet(m = prophet_base, prophet_df) 
 ```
@@ -175,9 +181,9 @@ En este caso tenemos la tendencia de los visitantes y la estacionalidad semanal.
 
 La funcion `cross_validation` permite realizar pronósticos realizando un esquema de cross-validation temporal y, a partir de ellos, obtener ciertas métricas de performance.
 
-  * **horizon**: horizonte del pronostico. Cuánto tiempo deseo predecir
+  * **horizon**: horizonte del pronóstico. Cuánto tiempo deseo predecir
   
-  * **period**: periodo entre fechas de analisis. Cuánto voy corriendo mi ventana
+  * **period**: período entre fechas de análisis. Cuánto voy corriendo mi ventana
   
    * **initial**: período inicial de entrenamiento
 
@@ -186,7 +192,7 @@ cv_base = cross_validation(prophet_base, initial = 45, period = 7, horizon = 15,
 cv_base
 ```
 
-La funcion `performance_metrics` computa varias métricas de performance a partir de un dataframe de cross validation de prophet. 
+La funcion `performance_metrics` computa varias métricas de performance a partir de un dataframe de cross validation de prophet. Definimos la proporción de datos que se utilizarán en cada ventana móvil para calcular las métricas (`rolling_window`).  
 
 ```{r}
 performance_metrics(cv_base, rolling_window = 0.5)
@@ -194,7 +200,7 @@ performance_metrics(cv_base, rolling_window = 0.5)
 
 ### Modelo con estacionalidad mensual
 
-La funcion `add_seasonality` nos permite agregar nuevas estacionalidades. Las estacionalidades se modelan utilizando series de Fourier que nosotros debemos definir.
+La función `add_seasonality` nos permite agregar nuevas estacionalidades. Las estacionalidades se modelan utilizando series de Fourier que nosotros debemos definir.
 
 Definimos:
 
@@ -214,9 +220,10 @@ prophet_mensual=add_seasonality(prophet_mensual, name='monthly', period=365/12, 
 # Le pasamos el dataset
 prophet_mensual = fit.prophet(m = prophet_mensual, prophet_df) 
 ```
+
 Notemos que sigue deshabilitando la estacionalidad anual y diaria.
 
-#### Grafico del modelo
+#### Gráfico del modelo
 
 ```{r}
 plot(prophet_mensual,fcst=predict(prophet_mensual, prophet_df)) +theme_bw()
@@ -224,15 +231,13 @@ plot(prophet_mensual,fcst=predict(prophet_mensual, prophet_df)) +theme_bw()
 
 #### Componentes del modelo
 
-La funcion `prophet_plot_components` nos devuelve los efectos de los componentes en nuestra variable a predecir
-
 ```{r}
 prophet_plot_components(prophet_mensual, fcst=predict(prophet_mensual, prophet_df)) +theme_bw()
 ```
 
 Notemos que la tendencia y estacionalidad semanal se mantiene y ahora se agrega la tendencia mensual que habíamos incorporado. Nos indica que el ciclo mensual se caracteriza por un crecimiento en la mitad de mes.
 
-#### Diagnostico del modelo
+#### Diagnóstico del modelo
 
 ```{r, message=FALSE, echo=FALSE, results='hide'}
 cv_mensual = cross_validation(prophet_mensual, initial = 45, period = 7, horizon = 15, units = 'days')
@@ -247,7 +252,7 @@ performance_metrics(cv_mensual, rolling_window = 0.5)
 
 ### Modelo completo 
 
-Como último paso vamos a agregar las ventas de navidad y ciertos dias de promociones como eventos especiales
+Como último paso vamos a agregar las ventas de navidad y ciertos dias de promociones como eventos especiales.
 
 #### Dataframe de eventos
 
@@ -282,9 +287,10 @@ prophet_full=add_seasonality(prophet_full, name='monthly', period=30.5, fourier.
 # Le pasamos el dataset
 prophet_full = fit.prophet(m = prophet_full, prophet_df) 
 ```
-Fijense que el modelo automaticamente deshabilita la estacionalidad anual y diaria.
 
-#### Grafico del modelo
+Fijense que el modelo automáticamente deshabilita la estacionalidad anual y diaria.
+
+#### Gráfico del modelo
 
 ```{r}
 plot(prophet_full,fcst=predict(prophet_full, prophet_df)) +theme_bw()
@@ -292,27 +298,25 @@ plot(prophet_full,fcst=predict(prophet_full, prophet_df)) +theme_bw()
 
 #### Componentes del modelo
 
-La funcion `prophet_plot_components` nos devuelve los efectos de los componentes en nuestra variable a predecir
-
 ```{r}
 prophet_plot_components(prophet_full, fcst=predict(prophet_full, prophet_df)) +theme_bw()
 ```
 
 La tendencia y estacionalidad semanal se mantienen aproximadamente igual. La estacionalidad mensual cambia bastante y se observa que existen tres picos en el ciclo mensual. Por su parte, los eventos se modelan como pequeños saltos o picos.
 
-#### Diagnostico del modelo
+#### Diagnóstico del modelo
 
 ```{r, message=FALSE, echo=FALSE, results='hide'}
 cv_full = cross_validation(prophet_full, initial = 45, period = 7, horizon = 15, units = 'days')
 cv_full
 ```
-
+Calculamos las métricas. 
 
 ```{r}
 performance_metrics(cv_full, rolling_window = 0.5)
 ```
 
-## Graficos interactivos
+## Gráficos interactivos
 
 Prophet también nos permite realizar gráficos interactivos que suelen ser muy útiles para presentar los resultados.
 
