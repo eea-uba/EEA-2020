@@ -89,11 +89,17 @@ Evaluación y diagnóstico del modelo. Explicación vs predicción
 
 ### Clase 9: 07-11
 
+Regresión Logística: modelo de clasificación. Interpretación de coeficientes, métricas y gráficos de evaluación del modelo y evaluación de performance. 
+
+Problema del desbalanceo de clases: comportamiento del modelo, estrategia de oversampling y su efecto en el modelo  
+
 - [Regresion Logistica](clase 9/logit.nb.html)
 
 ### Clase 10: 14-11
 
-- [Regularizacion: Ridge, Lasso y Elastic Net]()
+Regularización: modelos Ridge, Lasso y Elastic Net y trade off sesgo-varianza
+
+- [Regularizacion: Ridge, Lasso y Elastic Net](clase 10/regularizacion.html)
 
 
 ### Clase 11: 28-11

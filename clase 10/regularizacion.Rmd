@@ -1,13 +1,13 @@
 ---
-title: "Regularización: Lasso, Ridge y Elastic Net"
+title: 'Regularización: Lasso, Ridge y Elastic Net'
 author: "Juan Manuel Barriola y Sofia Perini"
 date: "14 de Noviembre de 2020"
 output:
-  html_notebook:
-    theme: spacelab
+  html_document:
+    df_print: paged
     toc: yes
+    toc_depth: '3'
     toc_float: yes
-    toc_depth: 3
 ---
 
 <style type="text/css">
