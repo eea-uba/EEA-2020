@@ -104,7 +104,7 @@ Regularización: modelos Ridge, Lasso y Elastic Net y trade off sesgo-varianza
 
 ### Clase 11: 28-11
 
-- [Prophet: implementacion de GAM para series de tiempo]()
+- [Prophet: implementacion de GAM para series de tiempo](clase 11/prophet_shopping.nb.html)
 
 
 ### Clase 12: 5-12
