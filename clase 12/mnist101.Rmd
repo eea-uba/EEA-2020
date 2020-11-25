@@ -1,12 +1,11 @@
 ---
-title: "Clase 11. Redes Neuronales I^[Estas notas estan basadas en https://tensorflow.rstudio.com/keras/#tutorials]"
-author: "Diego Kozlowski y Juan Barriola"
-date: 07-12-2019
+title: "Clase 11. Introducción a Redes Neuronales ^[Estas notas estan basadas en https://tensorflow.rstudio.com/keras/#tutorials]"
 output: 
   html_notebook: 
-    toc: true
-    toc_float: true
-    depth: 2
+    toc: yes
+    toc_float: yes
+author: "Juan Manuel Barriola y Sofia Perini"
+date: "28 de Noviembre de 2020"
 ---
 
 ```{r package_options, include=FALSE}
@@ -14,36 +13,47 @@ knitr::opts_knit$set(progress = FALSE, verbose = TRUE)
 ```
 
 
-# Fully connected layers
+# Fully connected Neural Network
 
+Las redes neuronales densas (**Fully Connected Neural Networks**) son un tipo de red neuronal artificial donde todas las neuronas de una capa (**layer**) se encuentran conectadas con todas las neuronas de la capa siguiente.
+
+Este tipo de redes neuronales se caracterizan por ser "agnósticas de la estructura o del input" (**structure agnostic**) ya que no es necesario realizar supuestos o tratamientos especiales a los datos de input de la red.
+
+Veamos la arquitectura de una red densa:
 
 ![red densa](img/nn.png)
 
-Vamos a utilizar la librería 
+Cuenta con:
 
-#### [__KERAS__](https://keras.rstudio.com/)
+ * **Input Layer**: capa de entrada de los datos, cada neurona/nodo es una variable o feature de nuestros datos
+ * **Hidden Layer I** y **Hidden Layer II**: capas ocultas con neuronas con funciones de activación
+ * **Output Layer**: capa de salida, respuesta de la red neuronal
 
+## Keras
 
-## instalación
+Vamos a utilizar la librería [__KERAS__](https://keras.rstudio.com/)
+
+### Instalación
 
 Keras utiliza como backend __TensorFlow__. Para poner todo en funcionamiento necesitamos instalar ambas cosas. Para eso usamos la función `install_keras()` que realiza una instalación por default de basada en el CPU.
 
 Si tienen una GPU (procesador gráfico), las redes funcionan mucho más rápido, porque la GPU permite optimizar las operaciones matriciales. Pero necesitan instalar keras para que corra en el lenguaje de la GPU ( _CUDA_ )
 
+```{r, message=FALSE}
+#devtools::install_github("rstudio/keras")
 
-```{r}
-# devtools::install_github("rstudio/keras")
 library(keras)
-# install_keras()
+#install_keras()
 library(tidyverse)
 library(knitr)
 ```
 
 
+
 ## Mnist
 
 Este es un problema clásico, de juguete, que sirve desde hace muchos años como benchmark para clasificación de imágenes. 
-Tiene 60.000 imágenes, de 28x28, de números escritos a mano.
+Tiene 60.000 imágenes, de 28x28 pixeles, de números escritos a mano.
 
 ```{r}
 mnist <- dataset_mnist()
@@ -53,16 +63,14 @@ x_test <- mnist$test$x
 y_test <- mnist$test$y
 ```
 
-
-Veamos la pinta de los datos
-
-__datos de entrada__
+Observemos los **datos de entrada** del modelo:
 
 ```{r}
 matrix.rotate <- function(img) { 
     t(apply(img, 2, rev))
 }
 
+# Observamos 9 registros
 par(mfrow=c(3, 3))
 for (idx in 1:9) {
     label <- y_train[idx]
@@ -71,43 +79,35 @@ for (idx in 1:9) {
 }
 ```
 
-
-> Pará pará pará... vos me querés decir que ahora cada observación es una matriz de 28x28?
-
-> SI
-
-
-- En estadística y Machine Learning estamos acostumbrados a pensar cada observación como una fila, con features en las columnas. Si queremos representar una imagen tenemos que _aplanarla_. Esto significa que tendríamos 28x28=784 features. Probablemente a continuación necesitaríamos una técnica de reducción de la dimensionalidad, y por ahí seguimos...
-
-- En las redes neuronales esto cambia. Si bien en el modelo de hoy (Fully conected layers) la capa de entrada sigue teniendo 784 nodos, la estructura de la red permite captar muy bien las relaciones no lineales propias de una imagen. 
-
-- Incluso más, cuando veamos las Convolutional Neural Networks, vamos a utilizar imagenes a color, lo que implica 3 matrices para los 3 canales de color (RGB)
-
-
-__¿qué pinta tiene un gráfico desde el punto de vista matricial?__
-
+Cada registro es una imagen de 28x28 pixeles. Veamos la primera observación en su forma matricial:
 
 ```{r}
 kable(data.frame(x_train[1,,]))
 ```
 
 
+Cada celda es un pixel, y su valor es su representación en la escala de grises (de 0 a 255). Es decir, cuando mayor es el valor es un pixel más oscuro. 
 
-Cada valor representa a un pixel, y su valor es su representación en la escala de grises (de 0 a 255). Es decir, cuando mayor es el valor, eso es un pixel más oscuro. 
-
-El dato esta en un array de 3 dimensiones (imagen,ancho,largo). Como tenemos 60K imagenes, esto tiene la forma de :
-
+El dato se encuentra en un array de 3 dimensiones (imagen,ancho,largo). Como tenemos 60K imagenes, esto tiene la forma de :
 ```{r}
 dim(x_train)
 ```
 
-
-Es decir, nuestros datos ahora conforman un Tensor:
+Es decir, nuestros datos ahora conforman un **Tensor**:
 
 ![Tensor^[https://hackernoon.com/learning-ai-if-you-suck-at-math-p4-tensors-illustrated-with-cats-27f0002c9b32]](img/Tensor.jpeg)
 
+Las dimensiones son:
 
-Como mencionabamos arriba lo primero es un _reshape_ de los datos:
+  * **Cantidad de registros**: 60.000 imágenes
+  * **Ancho de la imagen**: 28 pixeles
+  * **Alto de la imagen**: 28 pixeles
+  
+### Preparación de los datos
+
+Para utilizar las Redes Densas o Fully Connected con imagenes como inputs es necesario **aplanarlas** para que la red pueda interpretarla. Esto implica que cada celda o pixel es un variables, es decir, tenemos 28x28 = 784 features o variables.
+
+Para **aplanar** cada imágen debemos realizar un _reshape_ de los datos:
 
 - Pasar de estos arrays de 3 dimensiones a 2 dimensiones (como estamos acostumbrados, un vector por observación)
 - Además, necesitamos convertir la escala de los datos de íntegers entre 0 y 255 a numeros floating point entre 0 y 1
@@ -121,11 +121,19 @@ x_train <- x_train / 255
 x_test <- x_test / 255
 ```
 
+Ahora tenemos 60.000 registros de 784 elementos:
 
-obs: esto lo podríamos hacer con `dim <-`, pero sería menos performante.
+```{r}
+dim(x_train)
+```
 
+Veamos como luce el primer elemento luego de la transformación:
 
-__datos de salida__
+```{r}
+x_train[1,]
+```
+
+**Datos de salida**
 
 ```{r}
 y_train %>% head(.)
@@ -135,46 +143,50 @@ Es un vector de integers entre 0-9.
 
 Dada la implementación de las redes, necesitamos pasarlo a __one-hot encoding__ esto se hace con la función `to_categorical()` de Keras
 
-
 ```{r}
 y_train <- to_categorical(y_train, 10)
 y_test <- to_categorical(y_test, 10)
 ```
 
-
-¿qué pinta tiene esto?
+¿Cómo lucen los datos de salida?
 
 ```{r}
 y_train %>% head(.)
 ```
 
-
-
-
 ## Definción del modelo
-
 
 Para armar el modelo primero definimos el tipo de modelo. Para eso usamos `keras_model_sequential()` que nos permite simplemente apilar capas de la red. 
 
-- En la primera capa tenemos que aclarar el input_shape. En este caso el unidimensional (lo aplanamos recién), pero podría ser un tensor de cualquier dimensión (!!)
+- En la primera capa tenemos que aclarar el input_shape. En este caso es **unidimensional** (lo aplanamos previamente), pero podría ser un tensor de cualquier dimensión (!!)
+
 - Las capas se agregan con pipes `%>%`
+
 - La última capa tiene la misma cantidad de unidades que categorías nuestro output. La salida del modelo es un vector que asigna una probabilidad a cada una da las categorías
+
 - En cada capa tenemos que definir una función de activación
 - Además agregamos una regularización `layer_droput(x)` que lo que hace es, en cada iteración del ajuste, ignorar el x% de las conexiones. Esto evita el sobreajuste del modelo
 
-```{r}
+¿Cuál va a ser el tamaño de nuestra **input layer**? ¿Y de la **output layer**?
 
+Vamos a creer un modelo sencillo: con sus capas de input y output y una única **hidden layer**
+
+```{r}
+# Definimos el tipo de modelo
 model <- keras_model_sequential() 
+
 model %>% 
+  # Input layer
   layer_dense(units = 256, activation = 'relu', input_shape = c(784)) %>% 
   layer_dropout(rate = 0.4) %>% 
+  # Hidden layer
   layer_dense(units = 128, activation = 'relu') %>%
   layer_dropout(rate = 0.3) %>%
+  # Output layer
   layer_dense(units = 10, activation = 'softmax')
 ```
 
-
-#### Funciones de activación
+### Funciones de activación
 
 Para este modelo utilizamos dos funciones de activación: 
 
@@ -338,6 +350,5 @@ modelo_preentrenado %>% predict_classes(x_test) %>% head(.)
 
 
 [Diagramas de redes](http://alexlenail.me/NN-SVG/index.html)
-
 
 
