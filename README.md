@@ -102,15 +102,12 @@ Regularización: modelos Ridge, Lasso y Elastic Net y trade off sesgo-varianza
 - [Regularizacion: Ridge, Lasso y Elastic Net](clase 10/regularizacion.html)
 
 
-### Clase 11: 28-11
+### Clase 11: 21-11
 
 - [Prophet: implementacion de GAM para series de tiempo](clase 11/prophet_shopping.nb.html)
 
 
-### Clase 12: 5-12
+### Clase 12: 28-11
 
 - [Redes I: Fully Conected Neural Networks](clase 12/mnist101.nb.html)
-
-
-### [Ejercicios modelo lineal](ejercicios_modelo_lineal)
 
