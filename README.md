@@ -109,7 +109,7 @@ Regularización: modelos Ridge, Lasso y Elastic Net y trade off sesgo-varianza
 
 ### Clase 12: 5-12
 
-- [Redes I: Fully Conected Neural Networks]()
+- [Redes I: Fully Conected Neural Networks](clase 12/mnist101.nb.html)
 
 
 ### [Ejercicios modelo lineal](ejercicios_modelo_lineal)
