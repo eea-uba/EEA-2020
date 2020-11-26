@@ -154,7 +154,7 @@ y_test <- to_categorical(y_test, 10)
 y_train %>% head(.)
 ```
 
-## Definción del modelo
+## Definición del modelo
 
 Para armar el modelo primero definimos el tipo de modelo. Para eso usamos `keras_model_sequential()` que nos permite simplemente apilar capas de la red. 
 
@@ -169,17 +169,17 @@ Para armar el modelo primero definimos el tipo de modelo. Para eso usamos `keras
 
 ¿Cuál va a ser el tamaño de nuestra **input layer**? ¿Y de la **output layer**?
 
-Vamos a creer un modelo sencillo: con sus capas de input y output y una única **hidden layer**
+Vamos a creer un modelo sencillo: con sus capas de input y output y dos **hidden layers**
 
 ```{r}
 # Definimos el tipo de modelo
 model <- keras_model_sequential() 
 
 model %>% 
-  # Input layer
+  # Hidden layer I
   layer_dense(units = 256, activation = 'relu', input_shape = c(784)) %>% 
   layer_dropout(rate = 0.4) %>% 
-  # Hidden layer
+  # Hidden layer II
   layer_dense(units = 128, activation = 'relu') %>%
   layer_dropout(rate = 0.3) %>%
   # Output layer
@@ -195,24 +195,35 @@ Para este modelo utilizamos dos funciones de activación:
 
 Definidas en código y gráficamente:
 
+
 ```{r}
 
 relu <- function(x) ifelse(x >= 0, x, 0)
 softmax <- function(x) exp(x) / sum(exp(x))
 
-data.frame(x= seq(from=-1, to=1, by=0.1)) %>% 
-  mutate(softmax = softmax(x),
-         relu = relu(x)) %>% 
-  gather(variable,value,2:3) %>% 
+relu_df = data.frame(x= seq(from=-2, to=2, by=0.25)) %>% 
+  mutate(relu = relu(x)) 
 
-ggplot(., aes(x=x, y=value, group=variable, colour=variable))+
+softmax_df = data.frame(x= runif(min = -2, max=2, n=10)) %>% 
+  mutate(softmax = softmax(x))
+
+relu_plot = ggplot(relu_df, aes(x=x, y=relu))+
+  geom_line(size=1,  colour='steelblue') +
+  ggtitle("ReLU")+
+  theme_bw()
+
+softmax_plot = ggplot(softmax_df, aes(x=x, y=softmax, colour='firebrick'))+
   geom_line(size=1) +
-  ggtitle("ReLU & Softmax")+
-  theme_minimal()
+  ggtitle("Softmax")+
+  theme_bw()
+
+cowplot::plot_grid(relu_plot, softmax_plot)
 ```
 
 
-__ReLu__ es la función de activación que más se utiliza en la actualidad. 
+__ReLu__ es la función de activación que más se utiliza en la actualidad en las hidden layers. 
+
+### Estructura del modelo
 
 Si queremos ver un resumen del modelo:
 
@@ -225,20 +236,21 @@ summary(model)
 
 El modelo tiene 235,146 parámetros para optimizar:
 
-En la primera capa oculta tenemos 256 nodos que se conectan con cada nodo de la capa de entrada (784), además de un bias para cada nodo:
+En la **primera capa oculta** tenemos 256 nodos que se conectan con cada nodo de la capa de entrada (784), además de un bias para cada nodo:
 ```{r}
 784*256+256
 ```
 
-La capa de droput es una regularización y no ajusta ningún parámetro
+La capa de **dropout** es una regularización que elimina algunas conexiones entre neuronas aleatoriamente y no ajusta ningún parámetro
 
-la capa densa 2 se conecta con los 256 nodos de la primera capa:
+La **segunda capa oculta** se conecta con los 256 nodos de la primera capa y tiene 32,286 parámetros:
 
 ```{r}
 128*256+128
 ```
 
-La tercera capa
+La tercera capa, la **capa de salida** tiene 1290 parámetros:
+
 ```{r}
 128*10+10
 ```
@@ -317,15 +329,19 @@ __es importante guardar el modelo luego de entrenar, para poder reutilizarlo__
 model %>% save_model_hdf5("../Resultados/fc_model.h5")
 ```
 
-y para cargarlo
+Para cargarlo:
 
 ```{r}
 modelo_preentrenado <- load_model_hdf5("../Resultados/fc_model.h5")
 ```
 
+Observamos nuevamente un resumen de su estructura:
+
 ```{r}
 modelo_preentrenado
 ```
+
+## Dataset de testing
 
 Si queremos evaluar el modelo sobre el conjunto de test (distinto del de validación) podemos usar la función `evaluate()`
 
@@ -336,18 +352,59 @@ modelo_preentrenado %>% evaluate(x_test, y_test)
 Para obtener las predicciones sobre un nuevo conjunto de datos utilizamos `predict_classes()`
 
 ```{r}
-modelo_preentrenado %>% predict_classes(x_test) %>% head(.)
+clases_predichas = modelo_preentrenado %>% predict_classes(x_test)
+```
+
+Observemos las primeras 9 predicciones:
+
+```{r}
+clases_predichas %>% head(9)
+```
+
+Observemos las imagenes de estos nueve registros y su etiqueta real:
+
+```{r}
+par(mfrow=c(3, 3))
+for (idx in 1:9) {
+    label <- mnist$test$y[idx]
+    image(matrix.rotate(mnist$test$x[idx,,]), col = grey(level = seq(1, 0, by=-1/255)), axes=F, main=label)
+  
+}
+```
+
+### Errores de clasificacion
+
+Observemos algunos errores de clasificación
+
+```{r}
+errores = which(mnist$test$y != clases_predichas)
+```
+
+Las clases predichas son:
+
+```{r}
+clases_predichas[errores[1:9]] 
+```
+
+Las imagenes y clases reales son:
+
+```{r}
+par(mfrow=c(3, 3))
+for (idx in errores[1:9]) {
+    label <- mnist$test$y[idx]
+    image(matrix.rotate(mnist$test$x[idx,,]), col = grey(level = seq(1, 0, by=-1/255)), axes=F, main=label)
+  
+}
 ```
 
 
-## Otros recursos interesantes:
+## Otros recursos interesantes
 
 [Visualización de una Red Fully conected para clasificación de dígitos](http://scs.ryerson.ca/~aharley/vis/fc/)
 
 
 [Tensor Flow Playground](http://playground.tensorflow.org/#activation=tanh&batchSize=10&dataset=circle&regDataset=reg-plane&learningRate=0.03&regularizationRate=0&noise=0&networkShape=4,2&seed=0.59794&showTestData=false&discretize=false&percTrainData=50&x=true&y=true&xTimesY=false&xSquared=false&ySquared=false&cosX=false&sinX=false&cosY=false&sinY=false&collectStats=false&problem=classification&initZero=false&hideText=false
 )
-
 
 [Diagramas de redes](http://alexlenail.me/NN-SVG/index.html)
 
