@@ -516,7 +516,7 @@ table=table %>%
   mutate(predicted_class=if_else(.fitted>sel_cutoff, 1, 0) %>% as.factor(), 
          default= factor(default))
 # Creamos la matriz de confusión
-confusionMatrix(table(table$default, table$predicted_class), positive = "1")
+confusionMatrix(table(table$predicted_class, table$default), positive = "1")
 ```
 
 # Segunda parte
@@ -636,7 +636,7 @@ table= augment(x=full_model, newdata=test, type.predict='response')
 table=table %>% mutate(predicted_class=if_else(.fitted>0.9, 1, 0) %>% as.factor(),
            default= factor(default))
 
-confusionMatrix(table(table$default, table$predicted_class), positive = "1")
+confusionMatrix(table(table$predicted_class, table$default), positive = "1")
 ```
 
 
