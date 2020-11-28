@@ -456,10 +456,10 @@ Hasta ahora hemos evaluado el modelo de manera general, pero el resultado final 
 
 Probamos varios puntos de corte y graficamos el accuracy, la sensibilidad o recall, la especificidad y la precisión para cada uno de ellos.
 
-| Clases predichas / Clases | Positiva | Negativa  |
+| Clases predichas / Clases | Negativa | Positiva |
 |--------------------------|---------|----------|
-| Positiva                 | True Pos | False Pos |
-| Negativa                 | False Neg | True Neg |
+| Negativa                 | True Neg | False Neg |
+| Positiva                 | False Pos | True Pos |
 
 Recordemos que:
 
@@ -504,6 +504,7 @@ ggplot(logit_pred, aes(cutoff,estimate, group=term, color=term)) + geom_line(siz
 ### Dataset de testing
 
 Seleccionamos el modelo completo, ya que es el que maximizaba el porcentaje de deviance explicada y en base a lo que vimos definimos un punto de corte en 0.25 (pueden probar otros)
+
 
 ```{r}
 sel_cutoff = 0.27
@@ -633,7 +634,7 @@ full_model <- glm(logit_formulas$full, family = 'binomial', data = default, weig
 
 table= augment(x=full_model, newdata=test, type.predict='response') 
 
-table=table %>% mutate(predicted_class=if_else(.fitted>0.9, 1, 0) %>% as.factor(),
+table=table %>% mutate(predicted_class=if_else(.fitted>0.91, 1, 0) %>% as.factor(),
            default= factor(default))
 
 confusionMatrix(table(table$predicted_class, table$default), positive = "1")
